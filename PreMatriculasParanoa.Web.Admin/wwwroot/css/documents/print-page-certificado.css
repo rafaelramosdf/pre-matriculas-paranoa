@@ -1,0 +1,112 @@
+/*
+    Configura a impressão de certificado de conclusão de curso
+*/
+
+@page {
+    size: 28cm 21cm;
+    margin: 0;
+    padding: 0;
+}
+
+page {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: block;
+    position: relative;
+}
+
+body * {
+    visibility: hidden;
+}
+
+@media print {
+    body * {
+        visibility: visible;
+    }
+
+    html,
+    body {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0;
+    }
+
+    #impressao {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0;
+    }
+
+    div.page div.print-footer {
+        display: none;
+    }
+}
+
+.bordaRedonda {
+    border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+    border: 3px solid #0048a0;
+}
+
+.conteudoFrente {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0px solid #cccccc;
+    font-size: 12.5pt;
+    padding: 5.3cm 1.4cm 0cm 5.2cm;
+    line-height: 160%;
+    font-family: Arial;
+    position: absolute;
+    top: 0;
+}
+
+.conteudoVerso {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 15cm;
+    padding: 0 1cm 0 1cm;
+    font-size: 12pt;
+    font-family: Arial;
+    position: absolute;
+    top: 1cm;
+}
+
+.rodapeVerso {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 4cm;
+    padding: 0 1cm 0 1cm;
+    bottom: 1cm;
+    position: absolute;
+}
+
+.divTextoJustificado {
+    text-align: justify;
+}
+
+    .divTextoJustificado:after {
+        content: "";
+        display: inline-block;
+        width: 100%;
+    }
+
+.fundoAzulClaro {
+    background-color: #ccdffa;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}

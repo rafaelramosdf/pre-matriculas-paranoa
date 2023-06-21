@@ -1,0 +1,52 @@
+﻿@page "/"
+
+@inject StateContainer State
+
+<MudGrid>
+    <MudItem md="12" xs="12">
+        <MudPaper Elevation="0" Class="py-4 px-2">
+            <MudText Typo="Typo.h5">
+                <MudIcon Icon="@Icons.Material.Filled.LocalLibrary" Size="Size.Medium"></MudIcon>
+                SGPM PARANOÁ | Sistema de Gestão de Pré Matrículas do Paranoá/DF
+            </MudText>
+        </MudPaper>
+    </MudItem>
+
+    <MudItem md="3" xs="12">
+        <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" Square="true">
+            <MudText Typo="Typo.h3">10000</MudText>
+            <MudText>Total de Vagas na Rede</MudText>
+        </MudAlert>
+    </MudItem>
+    <MudItem md="3" xs="12">
+        <MudAlert Severity="Severity.Warning" Variant="Variant.Filled" Square="true">
+            <MudText Typo="Typo.h3">9000</MudText>
+            <MudText>Total de Matrículas Ocupadas</MudText>
+        </MudAlert>
+    </MudItem>
+    <MudItem md="3" xs="12">
+        <MudAlert Severity="Severity.Info" Variant="Variant.Filled" Square="true">
+            <MudText Typo="Typo.h3">1000</MudText>
+            <MudText>Total de Matrículas Liberadas</MudText>
+        </MudAlert>
+    </MudItem>
+    <MudItem md="3" xs="12">
+        <MudAlert Severity="Severity.Success" Variant="Variant.Filled" Square="true">
+            <MudText Typo="Typo.h3">2000</MudText>
+            <MudText>Saldo de Matrículas Disponíveis</MudText>
+        </MudAlert>
+    </MudItem>
+</MudGrid>
+
+@code{
+    protected override void OnInitialized()
+    {
+        State.OnChange += StateHasChanged;
+        State.TituloPagina = "Página Inicial";
+    }
+
+    public void Dispose()
+    {
+        State.OnChange -= StateHasChanged;
+    }
+}

@@ -1,0 +1,147 @@
+/*
+  PARAMETROS GERAIS DE ESTILO E TIPOGRAFIA
+*/
+
+.p-20 {
+  padding: 20px;
+}
+.p-tb-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.p-lr-30 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.justificado {
+  text-align: justify;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.padding-all-1cm {
+  padding: 1cm;
+}
+.padding-all-2cm {
+  padding: 2cm;
+}
+
+.font-6 {
+  font-size: 6pt !important;
+}
+.font-8 {
+  font-size: 8pt !important;
+}
+.font-10 {
+  font-size: 10pt !important;
+}
+.font-11 {
+  font-size: 11pt !important;
+}
+.font-12 {
+  font-size: 12pt !important;
+}
+.font-14 {
+  font-size: 14pt !important;
+}
+.font-16 {
+  font-size: 16pt !important;
+}
+.font-18 {
+  font-size: 18pt !important;
+}
+.font-22 {
+  font-size: 22pt !important;
+}
+
+.borda-suave {
+  border: 1px solid #dcdcdc;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+
+/*
+  PROPRIEDADES DO LAYOUT DE IMPRESSAO (Evitar Alterações)
+*/
+
+#impressao {
+  display: block;
+  position: relative;
+  background-color: #ffffff;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+
+#impressao > table {
+  width: 100%;
+}
+
+.header,
+.header-space {
+  height: 2.4cm;
+}
+.header {
+  top: 0;
+  width: 100%;
+  position: absolute;
+}
+.footer,
+.footer-space {
+  height: 2cm;
+}
+.footer {
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+}
+
+@media print {
+  html,
+  body {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0;
+  }
+
+  #impressao {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0;
+  }
+
+  #impressao > table {
+    width: 100%;
+  }
+
+  div.page div.print-footer {
+    display: none;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+  }
+  .footer {
+    position: fixed;
+    bottom: 0;
+  }
+}
+/*
+  FIM DAS PROPRIEDADES DE IMPRESSAO
+*/

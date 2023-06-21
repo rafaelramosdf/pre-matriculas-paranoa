@@ -1,0 +1,17 @@
+@import url("print.css");
+
+@page {
+  size: letter portrait;
+  margin: 0;
+  padding: 0;
+}
+
+body * {
+  visibility: hidden;
+}
+
+@media print {
+  body * {
+    visibility: visible;
+  }
+}
