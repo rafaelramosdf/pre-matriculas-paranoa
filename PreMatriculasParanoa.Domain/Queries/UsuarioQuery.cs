@@ -14,9 +14,7 @@ namespace PreMatriculasParanoa.Domain.Queries
                 return _ => true;
 
             return x => x.Nome.Contains(filtro.Search) 
-                || x.CpfUsuario == filtro.Search
-                || x.Login.ToLower() == filtro.Search.ToLower() 
-                || x.Email.ToLower() == filtro.Search.ToLower();
+                || x.Email.Contains(filtro.Search);
         }
 
         public Expression<Func<Usuario, object>> ObterOrdenacao(string campo)

@@ -36,18 +36,18 @@ public class ObterComboSelecaoUsuariosQueryHandler : IObterComboSelecaoUsuariosQ
         var selectList = new List<SelectResult>();
 
         var query = !string.IsNullOrEmpty(search)
-            ? Repository.List(x => x.Nome.Contains(search) || x.CpfUsuario == search)
+            ? Repository.List(x => x.Nome.Contains(search) || x.Email.Contains(search))
             : Repository.List();
 
         var list = query
-            .Where(x => x.IdUsuario > 0)
+            .Where(x => x.Ativo)
             .OrderBy(o => o.Nome)
             .Take(limit)
             .Select(s => new
             {
                 s.IdUsuario,
                 s.Nome,
-                s.CpfUsuario
+                s.Perfil
             }).ToList();
 
         if (list.Any())
@@ -57,7 +57,7 @@ public class ObterComboSelecaoUsuariosQueryHandler : IObterComboSelecaoUsuariosQ
                 selectList.Add(new SelectResult
                 {
                     Id = item.IdUsuario,
-                    Text = $"{item.Nome.ToUpper()} | CPF: {item.CpfUsuario}"
+                    Text = $"{item.Nome.ToUpper()} | Perfil: {item.Perfil}"
                 });
             }
         }
@@ -68,7 +68,7 @@ public class ObterComboSelecaoUsuariosQueryHandler : IObterComboSelecaoUsuariosQ
             selectList.Add(new SelectResult
             {
                 Id = entity.Id,
-                Text = $"{entity.Nome.ToUpper()} | CPF: {entity.CpfUsuario}"
+                Text = $"{entity.Nome.ToUpper()} | Perfil: {entity.Perfil}"
             });
 
             selectList = selectList.OrderBy(o => o.Text).ToList();

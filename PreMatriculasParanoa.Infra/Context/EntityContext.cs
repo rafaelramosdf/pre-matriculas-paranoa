@@ -1,20 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using PreMatriculasParanoa.Domain.Models.Entities;
 
 namespace PreMatriculasParanoa.Infra.Context
 {
     public partial class EntityContext : DbContext
     {
-        private readonly IConfiguration _configuration;
-
-        public EntityContext(IConfiguration configuration)
+        public EntityContext()
         {
-            _configuration = configuration;
         }
+
+        public EntityContext(DbContextOptions<EntityContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=DbSgpmParanoa;Trusted_Connection=True;");
+            }
         }
     }
 }
