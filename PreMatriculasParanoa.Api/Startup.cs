@@ -126,7 +126,7 @@ namespace PreMatriculasParanoa.Api
 
         private void RegisterRepositories(IServiceCollection services)
         {
-            services.AddDbContext<EntityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbCened")));
+            services.AddDbContext<EntityContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();

@@ -14,7 +14,7 @@
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "",
-      "applicationUrl": "https://localhost:6001;http://localhost:6000",
+      "applicationUrl": "https://localhost:8082;http://localhost:8083",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PrivateKey": "23CB5994E61E41B8A5AC2B6BAC591E24"

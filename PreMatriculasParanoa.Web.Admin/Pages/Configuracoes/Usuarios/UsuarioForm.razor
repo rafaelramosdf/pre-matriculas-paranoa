@@ -1,0 +1,73 @@
+﻿@page "/configuracoes/usuarios/formulario/{id:int?}"
+@using Domain.Models.Entities
+@using Domain.Models.ViewModels
+@using PreMatriculasParanoa.Domain.Queries.Filters;
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.FormPageBase<Usuario, UsuarioFilter, UsuarioViewModel, IUsuarioApiContract>
+
+<EditForm Model="@Model" OnSubmit="OnSubmit">
+
+    <DataAnnotationsValidator />
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Dados do Usuário</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem md="8" xs="12">
+                    <MudTextField Label="Nome" Placeholder="Nome completo do usuário"
+                                  @bind-Value="Model.Nome"
+                                  For="@(() => Model.Nome)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="4" xs="12">
+                    <MudTextField Label="Perfil" Placeholder="Perfil de acesso ao sistema"
+                    @bind-Value="Model.Perfil"
+                                  For="@(() => Model.Perfil)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+
+
+                <MudItem md="6" xs="12">
+                    <MudTextField Label="E-mail" Placeholder="E-mail para login"
+                    @bind-Value="Model.Email"
+                                  For="@(() => Model.Email)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="3" xs="12">
+                    <MudTextField Label="Senha" Placeholder="Senha de acesso ao sistema"
+                    @bind-Value="Model.Senha"
+                                  For="@(() => Model.Senha)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="3" xs="12">
+                    <MudTextField Label="Confirma Senha" Placeholder="Confirme a senha de acesso ao sistema"
+                    @bind-Value="Model.ConfirmaSenha"
+                                  For="@(() => Model.ConfirmaSenha)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <div style="position: fixed; bottom: 30px; right: 30px;">
+        <MudTooltip Text="Cancelar" Placement="Placement.Top">
+            <MudFab Icon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
+                    OnClick="@(() => OpenRoute(BackRoute))"
+                    DisableElevation="true" />
+        </MudTooltip>
+        <MudTooltip Text="Salvar" Placement="Placement.Top">
+            <MudFab Icon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Large" ButtonType="ButtonType.Submit" />
+        </MudTooltip>
+    </div>
+
+</EditForm>

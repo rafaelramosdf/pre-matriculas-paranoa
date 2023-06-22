@@ -8,6 +8,6 @@
         public string Nome { get; set; }
         public string Email { get; set; }
         public bool Autenticado { get; set; }
-        public string Permissoes { get; set; }
+        public string Perfil { get; set; }
     }
 }

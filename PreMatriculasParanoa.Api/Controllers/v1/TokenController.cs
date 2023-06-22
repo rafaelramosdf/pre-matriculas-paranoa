@@ -11,13 +11,13 @@ using PreMatriculasParanoa.Domain.Models.ViewModels;
 namespace PreMatriculasParanoa.Api.Controllers.v1
 {
     [ApiController]
-    [Route("api/v1/acessos")]
+    [Route("api/v1/token")]
     [Produces("application/json")]
-    [SwaggerTag("Rotas para autenticação e controle de acessos de usuaários de sistema")]
-    public class AcessoController : ControllerBase
+    [SwaggerTag("Rotas para autenticação e consulta de dados de usuário autenticado")]
+    public class TokenController : ControllerBase
     {
-        [HttpPost("autenticar")]
-        public ActionResult<TokenAutenticacaoViewModel> Autenticar(
+        [HttpPost]
+        public ActionResult<TokenAutenticacaoViewModel> Post(
             [FromBody] AutenticacaoUsuarioViewModel vm,
             [FromServices] IAutenticarUsuarioCommandHandler handler)
         {
@@ -26,9 +26,9 @@ namespace PreMatriculasParanoa.Api.Controllers.v1
             if (result == null)
                 return StatusCode(StatusCodes.Status401Unauthorized);
 
-            var tokenDto = TokenHelper.GenerateToken(result);
+            var token = TokenHelper.GenerateToken(result);
 
-            return StatusCode(StatusCodes.Status200OK, tokenDto);
+            return StatusCode(StatusCodes.Status200OK, token);
         }
 
         [Authorize]
@@ -44,7 +44,7 @@ namespace PreMatriculasParanoa.Api.Controllers.v1
                 Nome = User.Identity.Name,
                 Email = User.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).FirstOrDefault(),
                 Autenticado = User.Identity.IsAuthenticated,
-                Permissoes = string.Join(", ", User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList())
+                Perfil = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault()
             };
 
             return StatusCode(StatusCodes.Status200OK, status);

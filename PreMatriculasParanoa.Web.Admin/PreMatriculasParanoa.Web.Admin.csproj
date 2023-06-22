@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Configuracoes\" />
     <Folder Include="Pages\Relatorios\" />
     <Folder Include="Pages\Planejamento\" />
   </ItemGroup>

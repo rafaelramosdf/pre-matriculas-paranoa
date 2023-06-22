@@ -21,9 +21,6 @@ namespace PreMatriculasParanoa.Infra.Repository.Base
             DbSet = Db.Set<TEntity>();
         }
 
-        protected const string SchemaName = "Penitenciario";
-
-
         #region ***** READER *****
 
         public virtual TEntity Get(Expression<Func<TEntity, bool>> query) => DbSet.Where(query).FirstOrDefault();
