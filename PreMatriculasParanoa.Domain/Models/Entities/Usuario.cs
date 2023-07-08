@@ -14,6 +14,5 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
         public string Senha { get; set; }
         public string ConfirmaSenha { get; set; }
         public string Perfil { get; set; }
-        public bool Ativo { get; set; }
     }
 }

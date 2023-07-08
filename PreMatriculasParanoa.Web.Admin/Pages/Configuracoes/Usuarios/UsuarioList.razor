@@ -25,7 +25,7 @@
     <ToolBarContent>
         <MudSpacer />
         <MudTextField T="string" ValueChanged="@(s => OnSearch(s))"
-                      Placeholder="Pesquisar por Nome, Email ou Login"
+                      Placeholder="Pesquisar por Nome, E-mail ou Perfil"
                       Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"
@@ -34,10 +34,15 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
-            <MudMenu Icon="@Icons.Material.Filled.ViewList" Disabled="true">
+            <MudMenu Icon="@Icons.Material.Filled.ViewList" Color="Color.Primary" Disabled="true">
+                <MudMenuItem>...</MudMenuItem>
             </MudMenu>
         </MudTh>
-        <MudTh><MudTableSortLabel T="UsuarioViewModel" SortLabel="@nameof(UsuarioViewModel.Nome)" InitialDirection="SortDirection.Ascending">Nome</MudTableSortLabel></MudTh>
+        <MudTh>
+            <MudTableSortLabel T="UsuarioViewModel" SortLabel="@nameof(UsuarioViewModel.Nome)" InitialDirection="SortDirection.Ascending">
+                Nome
+            </MudTableSortLabel>
+        </MudTh>
         <MudTh><MudText>Email</MudText></MudTh>
         <MudTh><MudText>Perfil</MudText></MudTh>
         <MudTh><MudText>Ativo</MudText></MudTh>
@@ -45,14 +50,13 @@
     <RowTemplate>
         <MudTd>
             <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                <MudMenuItem>Alterar</MudMenuItem>
-                <MudMenuItem>Consultar</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenRoute($"/configuracoes/usuarios/formulario/{context.Id}"))">Abrir</MudMenuItem>
                 <MudMenuItem OnClick="@(() => Excluir(context.Id))">Excluir</MudMenuItem>
             </MudMenu>
         </MudTd>
         <MudTd DataLabel="Nome">@context.Nome.ToUpper()</MudTd>
         <MudTd DataLabel="Email">@context.Email</MudTd>
-        <MudTd DataLabel="Login">@context.Perfil</MudTd>
+        <MudTd DataLabel="Perfil">@context.Perfil</MudTd>
         <MudTd DataLabel="Ativo">@context.Ativo</MudTd>
     </RowTemplate>
     <PagerContent>

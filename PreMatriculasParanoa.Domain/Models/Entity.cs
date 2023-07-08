@@ -6,5 +6,6 @@ namespace PreMatriculasParanoa.Domain.Models.Base
     {
         [NotMapped]
         public virtual int Id { get; set; }
+        public bool Ativo { get; set; } = true;
     }
 }
