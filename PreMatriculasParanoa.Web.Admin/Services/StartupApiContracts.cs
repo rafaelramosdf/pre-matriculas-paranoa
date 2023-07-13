@@ -21,6 +21,11 @@ namespace PreMatriculasParanoa.Web.Admin.Services
             {
                 c.BaseAddress = new Uri($"{urlBase}/usuarios");
             });
+
+            builder.Services.AddRefitClient<IPlanejamentoAnoLetivoApiContract>(settings).ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri($"{urlBase}/planejamentos-anos-letivos");
+            });
         }
     }
 }

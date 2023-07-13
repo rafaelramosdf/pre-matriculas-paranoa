@@ -8,4 +8,6 @@ public abstract class ViewModel<TEntity> : IViewModel
     where TEntity : Entity
 {
     public virtual int Id { get; set; }
+
+    public virtual bool Ativo { get; set; } = true;
 }

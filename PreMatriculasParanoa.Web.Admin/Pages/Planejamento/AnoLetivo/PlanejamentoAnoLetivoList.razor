@@ -1,0 +1,68 @@
+﻿@page "/planejamento/ano-letivo"
+
+@using Domain.Models.ViewModels
+@using Domain.Models.Entities
+@using PreMatriculasParanoa.Domain.Queries.Filters
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.ListPageBase<PlanejamentoAnoLetivo, PlanejamentoAnoLetivoFilter, PlanejamentoAnoLetivoViewModel, IPlanejamentoAnoLetivoApiContract>
+@inject ISnackbar Snackbar
+
+<MudOverlay @bind-Visible="State.Carregando" DarkBackground="false" ZIndex="999999" AutoClose="true">
+    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+</MudOverlay>
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<PlanejamentoAnoLetivoViewModel>>>(ServerReload))"
+@ref="Table"
+          Dense="true"
+          Hover="true"
+          ReadOnly="true"
+          Striped="false"
+@bind-SelectedItem="ItemSelecionado"
+          SortLabel="Ordenar por"
+          Elevation="0">
+
+    <ToolBarContent>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s => OnSearch(s))"
+                      Placeholder="Pesquisar por Ano"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0">
+        </MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudMenu Icon="@Icons.Material.Filled.ViewList" Color="Color.Primary" Disabled="true">
+                <MudMenuItem>...</MudMenuItem>
+            </MudMenu>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel T="PlanejamentoAnoLetivoViewModel" SortLabel="@nameof(PlanejamentoAnoLetivoViewModel.AnoLetivo)" InitialDirection="SortDirection.Descending">
+                Ano Letivo
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh><MudText>Escola</MudText></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>
+            <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                <MudMenuItem OnClick="@(() => OpenRoute($"/planejamento/ano-letivo/formulario/{context.Id}"))">Abrir</MudMenuItem>
+                <MudMenuItem OnClick="@(() => Excluir(context.Id))">Excluir</MudMenuItem>
+            </MudMenu>
+        </MudTd>
+        <MudTd DataLabel="Nome">@context.AnoLetivo</MudTd>
+        <MudTd DataLabel="Escola">@context.Escola.Nome</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager Style="float: left;"
+                       RowsPerPageString="Itens por página: "
+                       PageSizeOptions="new int[] { 5, 10, 20, 50, 100 }"
+                       InfoFormat="{first_item}-{last_item} de {all_items}" />
+    </PagerContent>
+</MudTable>
+
+<MudFab Style="position: fixed; bottom: 30px; right: 30px;"
+        Color="Color.Success" Icon="@Icons.Material.Filled.Add"
+        OnClick="@(() => OpenRoute("/planejamento/ano-letivo/formulario"))" />

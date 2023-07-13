@@ -1,0 +1,110 @@
+﻿@page "/planejamento/ano-letivo/formulario/{id:int?}"
+@using Domain.Models.Entities
+@using Domain.Models.ViewModels
+@using PreMatriculasParanoa.Domain.Queries.Filters;
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.FormPageBase<PlanejamentoAnoLetivo, PlanejamentoAnoLetivoFilter, PlanejamentoAnoLetivoViewModel, IPlanejamentoAnoLetivoApiContract>
+
+<EditForm Model="@Model" OnSubmit="OnSubmit">
+
+    <DataAnnotationsValidator />
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Informações do planejamento do próximo ano letivo</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem md="4" xs="12">
+                    <MudTextField Label="Escola" Placeholder="Escola"
+                    @bind-Value="Model.IdEscola"
+                                  For="@(() => Model.IdEscola)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="2" xs="12">
+                    <MudTextField Label="Ano Letivo" Placeholder="Ano Letivo"
+                    @bind-Value="Model.AnoLetivo"
+                                  For="@(() => Model.AnoLetivo)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="3" xs="12">
+                    <MudDatePicker @bind-Date="Model.DataInicioPlanejamento"
+                                   For="@(() => Model.DataInicioPlanejamento)"
+                                   Label="Dt. Início"
+                                   Variant="Variant.Outlined"
+                                   Margin="Margin.Dense"
+                                   Editable="true"
+                                   Mask="@(new DateMask("dd/MM/yyyy"))"
+                                   DateFormat="dd/MM/yyyy" />
+                </MudItem>
+                <MudItem md="3" xs="12">
+                    <MudDatePicker @bind-Date="Model.DataTerminoPlanejamento"
+                                   For="@(() => Model.DataTerminoPlanejamento)"
+                                   Label="Dt. Término"
+                                   Variant="Variant.Outlined"
+                                   Margin="Margin.Dense"
+                                   Editable="true"
+                                   Mask="@(new DateMask("dd/MM/yyyy"))"
+                                   DateFormat="dd/MM/yyyy" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Séries / Anos</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTable Context="SerieAno" Items="@Model.SeriesAnos" Elevation="0" ReadOnly="false" Bordered="false" Dense="true" Breakpoint="Breakpoint.Sm" Loading="@State.Carregando" LoadingProgressColor="Color.Info">
+                <HeaderContent>
+                    <MudTh>Série/Ano</MudTh>
+                    <MudTh>+ Aprov. ano anterior</MudTh>
+                    <MudTh>+ Retidos</MudTh>
+                    <MudTh>+ Sequencial</MudTh>
+                    <MudTh>+ Central mat. (156)</MudTh>
+                    <MudTh>+ Remanejamento (entrando)</MudTh>
+                    <MudTh>- Remanejamento (saindo)</MudTh>
+                    <MudTh>Turmas</MudTh>
+                    <MudTh>Capacidade</MudTh>
+                    <MudTh>Vagas</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Série/Ano"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.SerieAno"></MudTextField></MudTd>
+                    <MudTd DataLabel="+ Aprov. ano anterior"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaAprovadosSerieAnoAnterior"></MudTextField></MudTd>
+                    <MudTd DataLabel="+ Retidos"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaRetidosSerieAnoAtual"></MudTextField></MudTd>
+                    <MudTd DataLabel="+ Sequencial"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaSequencial"></MudTextField></MudTd>
+                    <MudTd DataLabel="+ Central de mat. (156)"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaCentralMatricula"></MudTextField></MudTd>
+                    <MudTd DataLabel="+ Remanejamento (entrando)"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaRemanejamento"></MudTextField></MudTd>
+                    <MudTd DataLabel="- Remanejamento (saindo)"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.SaidaRemanejamento"></MudTextField></MudTd>
+                    <MudTd DataLabel="Turmas"><MudText>@SerieAno.TotalTurmas</MudText></MudTd>
+                    <MudTd DataLabel="Capacidade"><MudText>@SerieAno.TotalCapacidadeFisicaAcordada</MudText></MudTd>
+                    <MudTd DataLabel="Vagas"><MudText>@SerieAno.TotalVagasDisponiveis</MudText></MudTd>
+                    <MudTd>
+                        Ações
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudCardContent>
+    </MudCard>
+
+    <div style="position: fixed; bottom: 30px; right: 30px;">
+        <MudTooltip Text="Cancelar" Placement="Placement.Top">
+            <MudFab Icon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
+                    OnClick="@(() => OpenRoute(BackRoute))"
+                    DisableElevation="true" />
+        </MudTooltip>
+        <MudTooltip Text="Salvar" Placement="Placement.Top">
+            <MudFab Icon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Large" ButtonType="ButtonType.Submit" />
+        </MudTooltip>
+    </div>
+
+</EditForm>
