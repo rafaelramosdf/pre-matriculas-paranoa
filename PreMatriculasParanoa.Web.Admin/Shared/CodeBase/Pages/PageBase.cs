@@ -54,6 +54,17 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
             Alert(severity, $"• {string.Join("<br />• ", messages)}");
         }
 
+        protected RenderFragment ObterTextoPadraoConteudoVazioMudTable(string mensagem = "Nenhum item encontrado")
+        {
+            return new RenderFragment(builder =>
+            {
+                builder.OpenElement(0, "div");
+                builder.AddAttribute(1, "class", "mud-alert mud-alert-standard mud-alert-outlined mud-alert-info");
+                builder.AddContent(2, mensagem);
+                builder.CloseElement();
+            });
+        }
+
         public void Dispose()
         {
             State.OnChange -= StateHasChanged;

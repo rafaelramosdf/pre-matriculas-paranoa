@@ -34,5 +34,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
             TotalCapacidadeFisicaAcordada - 
                 ((EntradaAprovadosSerieAnoAnterior + EntradaCentralMatricula + EntradaRemanejamento + EntradaRetidosSerieAnoAtual + EntradaSequencial) - 
                     (SaidaAprovadosUltimaSerieAno + SaidaRemanejamento));
+
+        public bool ExibirDetalhesTurmas { get; set; } = false;
     }
 }
