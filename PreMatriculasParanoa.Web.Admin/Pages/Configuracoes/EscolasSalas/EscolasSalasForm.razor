@@ -1,0 +1,96 @@
+﻿@page "/configuracoes/escolas-salas/formulario/{id:int?}"
+@using Domain.Models.Entities
+@using Domain.Models.ViewModels
+@using PreMatriculasParanoa.Domain.Queries.Filters;
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.FormPageBase<Escola, EscolaFilter, EscolaViewModel, IEscolaSalaApiContract>
+
+<EditForm Model="@Model" OnSubmit="OnSubmit">
+
+    <DataAnnotationsValidator />
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Informações gerais da escola</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem md="6" xs="12">
+                    <MudTextField Label="Nome da escola" Placeholder="Nome da escola"
+                    @bind-Value="Model.Nome"
+                                  For="@(() => Model.Nome)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="3" xs="12">
+                    <MudTextField Label="Cidade" Placeholder="Cidade"
+                    @bind-Value="Model.Cidade"
+                                  For="@(() => Model.Cidade)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem md="3" xs="12">
+                    <MudTextField Label="Bairro" Placeholder="Bairro"
+                    @bind-Value="Model.Bairro"
+                                  For="@(() => Model.Bairro)"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Salas de aula</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => AdicionarSala())">
+                    <MudIcon Icon="@Icons.Material.Filled.Add"></MudIcon>
+                    <MudSpacer></MudSpacer>
+                    Adicionar Sala
+                </MudButton>
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTable Context="Sala" Items="@Model.Salas"
+                      FixedHeader="true" Elevation="0" ReadOnly="false" Bordered="false" Dense="true" Striped="true"
+                      Breakpoint="Breakpoint.Sm" Loading="@State.Carregando" LoadingProgressColor="Color.Info"
+                      NoRecordsContent='ObterTextoPadraoConteudoVazioMudTable($"Nenhuma sala de aula cadastrada")'>
+                <HeaderContent>
+                    <MudTh>Número</MudTh>
+                    <MudTh>Bloco</MudTh>
+                    <MudTh>Metragem</MudTh>
+                    <MudTh Style="text-align:center">Capacidade física padrão</MudTh>
+                    <MudTh Style="text-align:center"></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Número"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Numero" OnBlur="(() => OrdenarListaSalas())"></MudTextField></MudTd>
+                    <MudTd DataLabel="Bloco"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Bloco"></MudTextField></MudTd>
+                    <MudTd DataLabel="Metragem"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Metragem" OnBlur="(() => Sala.CalcularCapacidadeFisicaPadrao())"></MudTextField></MudTd>
+                    <MudTd DataLabel="Capacidade física padrão" Style="text-align:center"><MudText>@Sala.CapacidadeFisicaPadrao</MudText></MudTd>
+                    <MudTd Style="text-align:center">
+                        <MudIconButton Title="Excluir sala" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"
+                                       OnClick="(() => ExcluirSala(Sala))"></MudIconButton>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudCardContent>
+    </MudCard>
+
+    <div style="position: fixed; bottom: 30px; right: 30px;">
+        <MudTooltip Text="Cancelar" Placement="Placement.Top">
+            <MudFab StartIcon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
+                    OnClick="@(() => OpenRoute(BackRoute))"
+                    DisableElevation="true" />
+        </MudTooltip>
+        <MudTooltip Text="Salvar" Placement="Placement.Top">
+            <MudFab StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Large" ButtonType="ButtonType.Submit" />
+        </MudTooltip>
+    </div>
+
+</EditForm>

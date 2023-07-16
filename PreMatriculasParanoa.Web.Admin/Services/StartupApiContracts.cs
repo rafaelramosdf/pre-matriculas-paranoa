@@ -26,6 +26,11 @@ namespace PreMatriculasParanoa.Web.Admin.Services
             {
                 c.BaseAddress = new Uri($"{urlBase}/planejamentos-anos-letivos");
             });
+
+            builder.Services.AddRefitClient<IEscolaSalaApiContract>(settings).ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri($"{urlBase}/escolas-salas");
+            });
         }
     }
 }
