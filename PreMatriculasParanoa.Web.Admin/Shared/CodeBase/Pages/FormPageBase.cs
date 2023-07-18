@@ -10,13 +10,16 @@ using MudBlazor;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Models;
+using System.Collections.Generic;
 
 namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
 {
     public abstract partial class FormPageBase<TEntity, TFilter, TViewModel, TApiService> : PageBase
         where TEntity : Entity
         where TFilter : Filter
-        where TViewModel : ViewModel<TEntity> 
+        where TViewModel : ViewModel<TEntity>
         where TApiService : ICrudApiContract<TEntity, TFilter, TViewModel>
     {
         [Inject] protected ILogger<FormPageBase<TEntity, TFilter, TViewModel, TApiService>> Log { get; set; }
@@ -66,15 +69,15 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
                 return;
             }
 
-            CommandResult apiResponse;
+            var apiResponse = IsNewRegister
+            ? await ApiService.Incluir(Model)
+            : await ApiService.Alterar((int)Id, Model);
 
-            apiResponse = IsNewRegister
-                ? await ApiService.Incluir(Model)
-                : await ApiService.Alterar((int)Id, Model);
+            var commandResultErrors = GetCommandResultErrors(apiResponse);
 
-            if (apiResponse == null || apiResponse.HasError)
+            if (commandResultErrors?.Any() == true) 
             {
-                Alert(Severity.Error, apiResponse.Errors.ToList());
+                Alert(Severity.Error, commandResultErrors);
                 return;
             }
 

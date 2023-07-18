@@ -18,6 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using PreMatriculasParanoa.Domain.Handlers.EscolaSala;
+using System.Text.Json.Serialization;
 
 namespace PreMatriculasParanoa.Api
 {
@@ -36,7 +38,10 @@ namespace PreMatriculasParanoa.Api
             services.AddControllers(options =>
             {
                 options.Filters.Add(new ExceptionFilter());
-            });
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            }); 
 
             var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("PrivateKey"));
             services.AddAuthentication(x =>
@@ -130,11 +135,14 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IEscolaRepository, EscolaRepository>();
+            services.AddScoped<ISalaRepository, SalaRepository>();
         }
 
         private void RegisterQueries(IServiceCollection services)
         {
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();
+            services.AddScoped<IEscolaQuery, EscolaQuery>();
         }
 
         private void RegisterHandlers(IServiceCollection services)
@@ -147,6 +155,13 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IExcluirUsuarioCommandHandler, ExcluirUsuarioCommandHandler>();
             services.AddScoped<IIncluirUsuarioCommandHandler, IncluirUsuarioCommandHandler>();
             services.AddScoped<IAutenticarUsuarioCommandHandler, AutenticarUsuarioCommandHandler>();
+            #endregion
+
+            #region Escola
+            services.AddScoped<IIncluirOuAtualizarEscolaSalaCommandHandler, IncluirOuAtualizarEscolaSalaCommandHandler>();
+            services.AddScoped<IBuscarEscolaSalaPorIdQueryHandler, BuscarEscolaSalaPorIdQueryHandler>();
+            services.AddScoped<IObterDataTableEscolaSalaQueryHandler, ObterDataTableEscolaSalaQueryHandler>();
+            services.AddScoped<IExcluirEscolaSalaCommandHandler, ExcluirEscolaSalaCommandHandler>();
             #endregion
         }
     }

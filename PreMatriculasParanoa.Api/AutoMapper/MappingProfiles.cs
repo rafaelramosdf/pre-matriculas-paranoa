@@ -11,6 +11,8 @@ namespace Cened.Penitenciario.Api.AutoMapper
         public MappingProfiles()
         {
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
+            CreateMap<Escola, EscolaViewModel>().ReverseMap();
+            CreateMap<Sala, SalaViewModel>().ReverseMap();
         }
     }
 }

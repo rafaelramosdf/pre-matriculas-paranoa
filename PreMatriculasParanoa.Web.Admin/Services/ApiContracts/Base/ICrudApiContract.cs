@@ -11,16 +11,16 @@ namespace PreMatriculasParanoa.Web.Admin.Services.ApiContracts.Base
         where TViewModel : ViewModel<TEntity>
     {
         [Post("")]
-        Task<CommandResult> Incluir([Body] TViewModel model);
+        Task<ApiResponse<CommandResult>> Incluir([Body] TViewModel model);
 
         [Put("/{id}")]
-        Task<CommandResult> Alterar([AliasAs("id")] int id, [Body] TViewModel model);
+        Task<ApiResponse<CommandResult>> Alterar(int id, [Body] TViewModel model);
 
         [Delete("/{id}")]
-        Task<CommandResult> Excluir([AliasAs("id")] int id);
+        Task<ApiResponse<CommandResult>> Excluir(int id);
 
         [Get("/{id}")]
-        Task<TViewModel> Buscar([AliasAs("id")] int id);
+        Task<TViewModel> Buscar(int id);
 
         [Get("")]
         Task<DataTableModel<TViewModel>> Buscar([Query] TFilter filtro);

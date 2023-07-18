@@ -28,6 +28,6 @@ public class BuscarUsuarioPorIdQueryHandler : IBuscarUsuarioPorIdQueryHandler
     public UsuarioViewModel Execute(int id)
     {
         Logger.LogInformation($"Iniciando handler BuscarUsuarioPorIdQueryHandler");
-        return Mapper.Map<UsuarioViewModel>(Repository.Get(id));
+        return Mapper.Map<UsuarioViewModel>(Repository.GetOne(id));
     }
 }

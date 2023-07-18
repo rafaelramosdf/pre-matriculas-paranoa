@@ -23,13 +23,22 @@ namespace PreMatriculasParanoa.Infra.Repository.Base
 
         #region ***** READER *****
 
-        public virtual TEntity Get(Expression<Func<TEntity, bool>> query) => DbSet.Where(query).FirstOrDefault();
+        public virtual TEntity GetOne(Expression<Func<TEntity, bool>> query) => DbSet.Where(query).FirstOrDefault();
+        public virtual TEntity GetOne(Expression<Func<TEntity, bool>> query, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var queryable = DbSet.Where(query);
+            foreach (var include in includes)
+            {
+                queryable = queryable.Include(include);
+            }
+            return queryable.FirstOrDefault();
+        }
 
-        public virtual TEntity Get(int id) => DbSet.Find(id);
+        public virtual TEntity GetOne(int id) => DbSet.Find(id);
 
-        public virtual IQueryable<TEntity> List() => DbSet.AsNoTracking();
+        public virtual IQueryable<TEntity> GetQuery() => DbSet.AsNoTracking();
 
-        public virtual IQueryable<TEntity> List(Expression<Func<TEntity, bool>> query) => DbSet.Where(query).AsNoTracking();
+        public virtual IQueryable<TEntity> GetQuery(Expression<Func<TEntity, bool>> query) => DbSet.Where(query).AsNoTracking();
 
         #endregion
 
@@ -44,7 +53,16 @@ namespace PreMatriculasParanoa.Infra.Repository.Base
             }
         }
 
-        public virtual void Attach(in TEntity obj) => DbSet.Attach(obj);
+        /// <summary>
+        /// O método "Attach" altera dados de uma entidade do contexto, e só gera a instrução SQL após marcar o status da entidade como "Modified"
+        /// Obs.: Usado somente para alteração, não gera inclusão de novos registros.
+        /// </summary>
+        /// <param name="obj">Entidade</param>
+        public virtual void Attach(in TEntity obj)
+        {
+            DbSet.Attach(obj);
+            DbSet.Entry(obj).State = EntityState.Modified;
+        }
         public void Attach(in IEnumerable<TEntity> objList)
         {
             foreach (var obj in objList)
@@ -53,6 +71,11 @@ namespace PreMatriculasParanoa.Infra.Repository.Base
             }
         }
 
+        /// <summary>
+        /// Altera registros existentes e/ou insere registros novos.
+        /// Obs.: Caso a entidade (obj) tenha objetos "filhos", os "filhos" também serão atualizados ou inseridos
+        /// </summary>
+        /// <param name="obj">Entidade</param>
         public virtual void Update(in TEntity obj) => DbSet.Update(obj);
         public void Update(in IEnumerable<TEntity> objList)
         {

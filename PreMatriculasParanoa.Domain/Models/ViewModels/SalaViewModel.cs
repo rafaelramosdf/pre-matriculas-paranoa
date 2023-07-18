@@ -2,6 +2,7 @@
 using PreMatriculasParanoa.Domain.Models.Entities;
 using PreMatriculasParanoa.Domain.Models.ViewModels.Validations;
 using System;
+using System.Text.Json.Serialization;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -22,7 +23,11 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
 
         public int IdEscola { get; set; }
-        public EscolaViewModel Escola { get; set; } = new EscolaViewModel();
+
+        [JsonIgnore]
+        public EscolaViewModel Escola { get; set; }
+
+        public string NomeEscola => Escola?.Nome;
 
         public void CalcularCapacidadeFisicaPadrao() 
         {

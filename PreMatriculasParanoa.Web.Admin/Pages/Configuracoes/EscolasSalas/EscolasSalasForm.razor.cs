@@ -23,6 +23,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Configuracoes.EscolasSalas
             {
                 Model.Salas.Add(new SalaViewModel
                 {
+                    IdEscola = Model.IdEscola,
                     Numero = 1
                 });
             }
@@ -30,6 +31,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Configuracoes.EscolasSalas
             {
                 Model.Salas.Add(new SalaViewModel
                 {
+                    IdEscola = Model.IdEscola,
                     Numero = Model.Salas.OrderBy(o => o.Numero).Last().Numero + 1
                 });
 

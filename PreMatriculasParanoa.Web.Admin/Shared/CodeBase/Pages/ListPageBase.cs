@@ -66,12 +66,13 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
             if (excluir == true)
             {
                 State.Carregando = true;
-                CommandResult apiResponse = await ApiService.Excluir(id);
+                var apiResponse = await ApiService.Excluir(id);
                 State.Carregando = false;
 
-                if (apiResponse == null || apiResponse.HasError)
+                var commandResultErrors = GetCommandResultErrors(apiResponse);
+                if (commandResultErrors?.Any() == true)
                 {
-                    Alert(Severity.Error, apiResponse.Errors.ToList());
+                    Alert(Severity.Error, commandResultErrors);
                 }
                 else
                 {

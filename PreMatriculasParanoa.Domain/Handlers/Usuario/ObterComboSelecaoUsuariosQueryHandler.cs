@@ -36,8 +36,8 @@ public class ObterComboSelecaoUsuariosQueryHandler : IObterComboSelecaoUsuariosQ
         var selectList = new List<SelectResult>();
 
         var query = !string.IsNullOrEmpty(search)
-            ? Repository.List(x => x.Nome.Contains(search) || x.Email.Contains(search))
-            : Repository.List();
+            ? Repository.GetQuery(x => x.Nome.Contains(search) || x.Email.Contains(search))
+            : Repository.GetQuery();
 
         var list = query
             .Where(x => x.Ativo)
@@ -64,7 +64,7 @@ public class ObterComboSelecaoUsuariosQueryHandler : IObterComboSelecaoUsuariosQ
 
         if (selected > 0 && !selectList.Any(a => a.Id == selected))
         {
-            var entity = Repository.Get(selected);
+            var entity = Repository.GetOne(selected);
             selectList.Add(new SelectResult
             {
                 Id = entity.Id,

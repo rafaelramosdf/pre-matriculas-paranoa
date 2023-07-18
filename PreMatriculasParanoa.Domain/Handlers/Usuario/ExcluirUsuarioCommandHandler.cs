@@ -37,7 +37,7 @@ public class ExcluirUsuarioCommandHandler : IExcluirUsuarioCommandHandler
 
         try
         {
-            Repository.Remove(Repository.Get(id));
+            Repository.Remove(Repository.GetOne(id));
             UnitOfWork.Commit();
             return new CommandResult(StatusCodes.Status200OK);
         }

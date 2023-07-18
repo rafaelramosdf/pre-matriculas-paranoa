@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
+using Newtonsoft.Json;
+using PreMatriculasParanoa.Domain.Models.Base;
+using PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Models;
+using Refit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
@@ -63,6 +68,37 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
                 builder.AddContent(2, mensagem);
                 builder.CloseElement();
             });
+        }
+
+        protected List<string> GetCommandResultErrors(ApiResponse<CommandResult> apiResponse) 
+        {
+            List<string> messageErrors = new List<string>();
+
+            if (apiResponse?.IsSuccessStatusCode != true)
+            {
+                if (!string.IsNullOrEmpty(apiResponse?.Error?.Content))
+                {
+                    var error = JsonConvert.DeserializeObject<RefitApiError>(apiResponse.Error.Content);
+                    foreach (var err in error.Errors)
+                    {
+                        messageErrors.AddRange(err.Value);
+                    }
+                }
+                else
+                {
+                    messageErrors.Add("Houve um erro inesperado na requisição! verifique se os dados estão corretos, e tente novamente, ou procure o administrador do sistema.");
+                }
+            }
+            else
+            {
+                CommandResult result = apiResponse.Content;
+                if (result?.HasError == true)
+                {
+                    messageErrors.AddRange(result.Errors.ToList());
+                }
+            }
+
+            return messageErrors;
         }
 
         public void Dispose()
