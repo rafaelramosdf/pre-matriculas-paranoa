@@ -23,6 +23,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
             {
                 Model.SeriesAnos.Add(new PlanejamentoSerieAnoViewModel
                 {
+                    IdPlanejamentoAnoLetivo = Model.IdPlanejamentoAnoLetivo,
                     SerieAno = 1
                 });
             }
@@ -30,6 +31,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
             {
                 Model.SeriesAnos.Add(new PlanejamentoSerieAnoViewModel
                 {
+                    IdPlanejamentoAnoLetivo = Model.IdPlanejamentoAnoLetivo,
                     SerieAno = Model.SeriesAnos.OrderByDescending(o => o.SerieAno).First().SerieAno + 1
                 });
 
@@ -67,6 +69,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
                 {
                     serieAno.Turmas.Add(new PlanejamentoTurmaViewModel
                     {
+                        IdPlanejamentoSerieAno = serieAno.IdPlanejamentoSerieAno,
                         SiglaTurma = 'A'
                     });
                 }
@@ -74,6 +77,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
                 {
                     serieAno.Turmas.Add(new PlanejamentoTurmaViewModel
                     {
+                        IdPlanejamentoSerieAno = serieAno.IdPlanejamentoSerieAno,
                         SiglaTurma = (char)(serieAno.Turmas.OrderBy(o => o.SiglaTurma).Last().SiglaTurma + 1)
                     });
                 }

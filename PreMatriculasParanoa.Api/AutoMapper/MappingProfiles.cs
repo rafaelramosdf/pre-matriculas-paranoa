@@ -13,6 +13,10 @@ namespace Cened.Penitenciario.Api.AutoMapper
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Escola, EscolaViewModel>().ReverseMap();
             CreateMap<Sala, SalaViewModel>().ReverseMap();
+            CreateMap<PlanejamentoAnoLetivo, PlanejamentoAnoLetivoViewModel>().ReverseMap();
+            CreateMap<PlanejamentoSerieAno, PlanejamentoSerieAnoViewModel>().ReverseMap();
+            CreateMap<PlanejamentoTurma, PlanejamentoTurmaViewModel>().ReverseMap();
+            CreateMap<PlanejamentoMatriculaSequencial, PlanejamentoMatriculaSequencialViewModel>().ReverseMap();
         }
     }
 }

@@ -20,6 +20,7 @@ using System;
 using System.Text;
 using PreMatriculasParanoa.Domain.Handlers.EscolaSala;
 using System.Text.Json.Serialization;
+using PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 
 namespace PreMatriculasParanoa.Api
 {
@@ -137,12 +138,16 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IEscolaRepository, EscolaRepository>();
             services.AddScoped<ISalaRepository, SalaRepository>();
+            services.AddScoped<IPlanejamentoAnoLetivoRepository, PlanejamentoAnoLetivoRepository>();
+            services.AddScoped<IPlanejamentoSerieAnoRepository, PlanejamentoSerieAnoRepository>();
+            services.AddScoped<IPlanejamentoTurmaRepository, PlanejamentoTurmaRepository>();
         }
 
         private void RegisterQueries(IServiceCollection services)
         {
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();
             services.AddScoped<IEscolaQuery, EscolaQuery>();
+            services.AddScoped<IPlanejamentoAnoLetivoQuery, PlanejamentoAnoLetivoQuery>();
         }
 
         private void RegisterHandlers(IServiceCollection services)
@@ -162,6 +167,13 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IBuscarEscolaSalaPorIdQueryHandler, BuscarEscolaSalaPorIdQueryHandler>();
             services.AddScoped<IObterDataTableEscolaSalaQueryHandler, ObterDataTableEscolaSalaQueryHandler>();
             services.AddScoped<IExcluirEscolaSalaCommandHandler, ExcluirEscolaSalaCommandHandler>();
+            #endregion
+
+            #region PlanejamentoAnoLetivo
+            services.AddScoped<IIncluirOuAtualizarPlanejamentoAnoLetivoCommandHandler, IncluirOuAtualizarPlanejamentoAnoLetivoCommandHandler>();
+            services.AddScoped<IBuscarPlanejamentoAnoLetivoPorIdQueryHandler, BuscarPlanejamentoAnoLetivoPorIdQueryHandler>();
+            services.AddScoped<IObterDataTablePlanejamentoAnoLetivoQueryHandler, ObterDataTablePlanejamentoAnoLetivoQueryHandler>();
+            services.AddScoped<IExcluirPlanejamentoAnoLetivoCommandHandler, ExcluirPlanejamentoAnoLetivoCommandHandler>();
             #endregion
         }
     }

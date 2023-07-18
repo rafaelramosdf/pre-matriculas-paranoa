@@ -1,4 +1,5 @@
-﻿using PreMatriculasParanoa.Domain.Models.Base;
+﻿using Newtonsoft.Json;
+using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,13 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int AnoLetivo { get; set; }
         public DateTime? DataInicioPlanejamento { get; set; } = DateTime.Now;
         public DateTime? DataTerminoPlanejamento { get; set; } = DateTime.Now.AddMonths(3);
+
         public int IdEscola { get; set; }
-        public EscolaViewModel Escola { get; set; } = new EscolaViewModel();
+        public string NomeEscola => Escola?.Nome;
+
+        [JsonIgnore]
+        public EscolaViewModel Escola { get; set; }
+
         public List<PlanejamentoSerieAnoViewModel> SeriesAnos { get; set; } = new List<PlanejamentoSerieAnoViewModel>();
     }
 }

@@ -52,8 +52,8 @@
                 <MudMenuItem OnClick="@(() => Excluir(context.Id))">Excluir</MudMenuItem>
             </MudMenu>
         </MudTd>
-        <MudTd DataLabel="Nome">@context.AnoLetivo</MudTd>
-        <MudTd DataLabel="Escola">@context.Escola.Nome</MudTd>
+        <MudTd DataLabel="Ano Letivo">@context.AnoLetivo</MudTd>
+        <MudTd DataLabel="Escola">@context.NomeEscola</MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager Style="float: left;"
@@ -64,5 +64,5 @@
 </MudTable>
 
 <MudFab Style="position: fixed; bottom: 30px; right: 30px;"
-        Color="Color.Success" Icon="@Icons.Material.Filled.Add"
+        Color="Color.Success" StartIcon="@Icons.Material.Filled.Add"
         OnClick="@(() => OpenRoute("/planejamento/ano-letivo/formulario"))" />

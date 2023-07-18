@@ -1,4 +1,5 @@
-﻿using PreMatriculasParanoa.Domain.Extensions;
+﻿using Newtonsoft.Json;
+using PreMatriculasParanoa.Domain.Extensions;
 using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
 using System;
@@ -23,7 +24,9 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int SaidaRemanejamento { get; set; }
         public int SaidaAprovadosUltimaSerieAno { get; set; }
         public int IdPlanejamentoAnoLetivo { get; set; }
-        public PlanejamentoAnoLetivoViewModel PlanejamentoAnoLetivo { get; set; } = new PlanejamentoAnoLetivoViewModel();
+
+        [JsonIgnore]
+        public PlanejamentoAnoLetivoViewModel PlanejamentoAnoLetivo { get; set; }
 
         public List<PlanejamentoTurmaViewModel> Turmas { get; set; } = new List<PlanejamentoTurmaViewModel>();
 

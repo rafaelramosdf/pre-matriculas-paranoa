@@ -1,4 +1,5 @@
-﻿using PreMatriculasParanoa.Domain.Models.Base;
+﻿using Newtonsoft.Json;
+using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
@@ -11,13 +12,14 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public char SiglaTurma { get; set; }
         public string TurnoPeriodo { get; set; }
         public string TipoAtendimento { get; set; }
-
         public decimal CapacidadeFisicaAcordada { get; set; }
 
         public int IdSala { get; set; }
-        public SalaViewModel Sala { get; set; } = new SalaViewModel();
-
         public int IdPlanejamentoSerieAno { get; set; }
-        public PlanejamentoSerieAnoViewModel PlanejamentoSerieAno { get; set; } = new PlanejamentoSerieAnoViewModel();
+
+        [JsonIgnore]
+        public SalaViewModel Sala { get; set; }
+        [JsonIgnore]
+        public PlanejamentoSerieAnoViewModel PlanejamentoSerieAno { get; set; }
     }
 }
