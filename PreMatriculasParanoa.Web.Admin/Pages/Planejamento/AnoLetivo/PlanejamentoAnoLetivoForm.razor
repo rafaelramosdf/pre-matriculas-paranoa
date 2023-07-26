@@ -19,11 +19,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem md="4" xs="12">
-                    <MudTextField Label="Escola" Placeholder="Escola"
-                    @bind-Value="Model.IdEscola"
-                                  For="@(() => Model.IdEscola)"
-                                  Variant="Variant.Outlined"
-                                  Margin="Margin.Dense" />
+                    <EscolaSelect Label="Escola" @bind-Id="@Model.IdEscola" Dense="true" />
                 </MudItem>
                 <MudItem md="2" xs="12">
                     <MudTextField Label="Ano Letivo" Placeholder="Ano Letivo"
@@ -136,7 +132,7 @@
                                                 <MudTh>Turma</MudTh>
                                                 <MudTh>Turno</MudTh>
                                                 <MudTh>Sala</MudTh>
-                                                <MudTh>Tipo de atendimento</MudTh>
+                                                <MudTh>Tipo atendimento</MudTh>
                                                 <MudTh>Metragem</MudTh>
                                                 <MudTh>Capacidade padrão</MudTh>
                                                 <MudTh>Capacidade acordada</MudTh>
@@ -144,11 +140,17 @@
                                             </HeaderContent>
                                             <RowTemplate>
                                                 <MudTd DataLabel="Turma"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.SiglaTurma"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Turno"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.TurnoPeriodo"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Sala"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.Sala.Numero"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Tipo de atendimento"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.TipoAtendimento"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Metragem"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.Sala.Metragem"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Capacidade padrão"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.Sala.CapacidadeFisicaPadrao"></MudTextField></MudTd>
+                                                <MudTd DataLabel="Turno">
+                                                    <TurnoPeriodoSelect @bind-Value="@Turma.TurnoPeriodo" Dense="true" />
+                                                </MudTd>
+                                                <MudTd DataLabel="Sala">
+                                                    <SalaSelect @bind-Id="@Turma.IdSala" IdEscola="@Model.IdEscola" Dense="true" OnSelected="(s => ObterSalaSelecionada(s, Turma))" />
+                                                </MudTd>
+                                                <MudTd DataLabel="Tipo atendimento">
+                                                    <TipoAtendimentoSelect @bind-Value="@Turma.TipoAtendimento" Dense="true" />
+                                                </MudTd>
+                                                <MudTd DataLabel="Metragem"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="@Turma.MetragemSala"></MudTextField></MudTd>
+                                                <MudTd DataLabel="Capacidade padrão"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense"  ReadOnly="true" Value="@Turma.CapacidadeFisicaPadraoSala"></MudTextField></MudTd>
                                                 <MudTd DataLabel="Capacidade acordada"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.CapacidadeFisicaAcordada"></MudTextField></MudTd>
                                                 <MudTd Style="text-align:center">
                                                     <MudIconButton Title="Excluir turma" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"

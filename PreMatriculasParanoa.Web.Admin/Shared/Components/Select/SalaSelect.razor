@@ -1,0 +1,76 @@
+﻿@using PreMatriculasParanoa.Domain.Models.ViewModels
+@using PreMatriculasParanoa.Domain.Models.Base
+
+@namespace PreMatriculasParanoa.Web.Admin.Shared.Components.Select
+
+@inject PreMatriculasParanoa.Web.Admin.Services.ApiContracts.ISelectApiContract Service
+
+<MudAutocomplete T="SelectResult"
+                 Label="@Label"
+                 Value="@Selected"
+                 ValueChanged="@OnValueChanged"
+                 SearchFunc="@Search"
+                 ToStringFunc="@(p => p == null ? null : p.Text)"
+                 ResetValueOnEmptyText="false"
+                 CoerceText="true"
+                 Clearable="true"
+                 Placeholder="Pesquise..."
+                 Variant="@Variant"
+                 Margin="@(Dense ? Margin.Dense : Margin.Normal)"
+                 Dense="@Dense"
+                 MaxItems="20"
+                 DebounceInterval="500"
+                 ShowProgressIndicator="false" />
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id > 0)
+            await GetSelectedAsync(Id);
+    }
+
+    [Parameter] public int Id { get; set; }
+    [Parameter] public EventCallback<int> IdChanged { get; set; }
+
+    [Parameter] public EventCallback<SalaViewModel> OnSelected { get; set; }
+    [Parameter] public string Label { get; set; }
+    [Parameter] public Variant Variant { get; set; } = Variant.Outlined;
+    [Parameter] public bool Dense { get; set; } = false;
+
+    [Parameter]
+    [EditorRequired]
+    public int IdEscola { get; set; }
+
+    private IEnumerable<SelectResult> Items { get; set; }
+    private SelectResult Selected { get; set; }
+
+    private async Task<IEnumerable<SelectResult>> Search(string pesquisa)
+    {
+        Items = await Service.Salas(new SelectSearchParam(pesquisa, 20, Id), IdEscola);
+        return Items;
+    }
+
+    private async Task OnValueChanged(SelectResult value)
+    {
+        if (value != null)
+        {
+            var taskGetSelected = GetSelectedAsync(value.Id);
+            var taskIdChangedInvoke = IdChanged.InvokeAsync(value.Id);
+            await Task.WhenAll(taskGetSelected, taskIdChangedInvoke);
+        }
+    }
+
+    private async Task GetSelectedAsync(int id)
+    {
+        var vm = await Service.SalaPorId(id);
+
+        Selected = new SelectResult
+            {
+                Id = vm.Id,
+                Text = $"{vm.Numero}"
+            };
+
+        await OnSelected.InvokeAsync(vm);
+    }
+}

@@ -21,6 +21,7 @@ using System.Text;
 using PreMatriculasParanoa.Domain.Handlers.EscolaSala;
 using System.Text.Json.Serialization;
 using PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
+using PreMatriculasParanoa.Domain.Handlers.Select;
 
 namespace PreMatriculasParanoa.Api
 {
@@ -174,6 +175,13 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IBuscarPlanejamentoAnoLetivoPorIdQueryHandler, BuscarPlanejamentoAnoLetivoPorIdQueryHandler>();
             services.AddScoped<IObterDataTablePlanejamentoAnoLetivoQueryHandler, ObterDataTablePlanejamentoAnoLetivoQueryHandler>();
             services.AddScoped<IExcluirPlanejamentoAnoLetivoCommandHandler, ExcluirPlanejamentoAnoLetivoCommandHandler>();
+            #endregion
+
+            #region Select
+            services.AddScoped<IEscolaSelectQueryHandler, EscolaSelectQueryHandler>();
+            services.AddScoped<IEscolaPorIdSelectQueryHandler, EscolaPorIdSelectQueryHandler>();
+            services.AddScoped<ISalaSelectQueryHandler, SalaSelectQueryHandler>();
+            services.AddScoped<ISalaPorIdSelectQueryHandler, SalaPorIdSelectQueryHandler>();
             #endregion
         }
     }

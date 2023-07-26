@@ -2,7 +2,8 @@
 
 namespace PreMatriculasParanoa.Domain.Models.Enumerations
 {
-    public enum EnumPeriodoTurno
+    [DefaultValue(Matutino)]
+    public enum EnumTurnoPeriodo
     {
         [Description("Matutino")]
         Matutino = 0,

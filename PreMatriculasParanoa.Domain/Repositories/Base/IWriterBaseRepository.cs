@@ -1,4 +1,5 @@
-﻿using PreMatriculasParanoa.Domain.Models.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using PreMatriculasParanoa.Domain.Models.Base;
 using System.Collections.Generic;
 
 namespace PreMatriculasParanoa.Domain.Repositories.Base
@@ -27,5 +28,8 @@ namespace PreMatriculasParanoa.Domain.Repositories.Base
         /// <param name="obj">Entidade</param>
         void Attach(in TEntity obj);
         void Attach(in IEnumerable<TEntity> objList);
+        void Attach(in TEntity obj, EntityState state);
+        void Attach(in IEnumerable<TEntity> objList, EntityState state);
+        EntityState GetEntityState(in TEntity obj);
     }
 }

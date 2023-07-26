@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using PreMatriculasParanoa.Domain.Models.Base;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 
@@ -58,47 +59,58 @@ public class IncluirOuAtualizarPlanejamentoAnoLetivoCommandHandler : IIncluirOuA
             {
                 unitOfWork.BeginTransaction();
 
-                // Inicia as alterações das Séries/Anos
-                var idSeriesAnos = vm.SeriesAnos.Where(m => m.IdPlanejamentoSerieAno > 0).Select(s => s.IdPlanejamentoSerieAno);
-                var seriesAnosExcluidas = planejamentoSerieAnoRepository.GetQuery(m => m.IdPlanejamentoAnoLetivo == vm.IdPlanejamentoAnoLetivo && !idSeriesAnos.Contains(m.IdPlanejamentoSerieAno)).ToList();
-                var seriesAnosAlteradas = planejamentoAnoLetivo.SeriesAnos.Where(m => m.IdPlanejamentoSerieAno > 0).ToList();
+                // Preparando alterações das Séries/Anos
                 var seriesAnosNovas = planejamentoAnoLetivo.SeriesAnos.Where(m => m.IdPlanejamentoSerieAno < 1).ToList();
+                var seriesAnosAlteradas = planejamentoAnoLetivo.SeriesAnos.Where(m => m.IdPlanejamentoSerieAno > 0).ToList();
+                var idSeriesAnosAlteradas = seriesAnosAlteradas.Select(s => s.IdPlanejamentoSerieAno);
+                var seriesAnosExcluidas = planejamentoSerieAnoRepository.GetQuery(m => m.IdPlanejamentoAnoLetivo == vm.IdPlanejamentoAnoLetivo && !idSeriesAnosAlteradas.Contains(m.IdPlanejamentoSerieAno)).ToList();
+                var idSeriesAnosExcluidas = seriesAnosExcluidas.Select(s => s.IdPlanejamentoSerieAno);
 
-                if (seriesAnosExcluidas?.Any() == true) 
+                // Preparando alterações das Turmas
+                var turmasNovas = planejamentoAnoLetivo.SeriesAnos.Where(m => m.IdPlanejamentoSerieAno > 0).SelectMany(m => m.Turmas).Where(m => m.IdPlanejamentoTurma < 1).ToList();
+                var turmasAlteradas = seriesAnosAlteradas.SelectMany(m => m.Turmas).Where(m => m.IdPlanejamentoTurma > 0).ToList();
+                var idTurmasAlteradas = turmasAlteradas.Select(s => s.IdPlanejamentoTurma);
+                var turmasExcluidas = planejamentoTurmaRepository.GetQuery(m => 
+                    (idSeriesAnosAlteradas.Contains(m.IdPlanejamentoSerieAno) || idSeriesAnosExcluidas.Contains(m.IdPlanejamentoSerieAno)) 
+                    && !idTurmasAlteradas.Contains(m.IdPlanejamentoTurma)).ToList();
+
+                // 1 - Adiciona Series/Anos
+                foreach (var serieAnoNova in seriesAnosNovas)
                 {
-                    planejamentoSerieAnoRepository.Remove(seriesAnosExcluidas);
+                    planejamentoSerieAnoRepository.Attach(serieAnoNova, Microsoft.EntityFrameworkCore.EntityState.Added);
                     unitOfWork.Commit();
                 }
-
-                if(seriesAnosNovas?.Any() == true) 
+                // 2 - Altera Series/Anos
+                foreach (var serieAnoAlterada in seriesAnosAlteradas)
                 {
-                    planejamentoSerieAnoRepository.Add(seriesAnosNovas); 
+                    serieAnoAlterada.Turmas = null;
+                    planejamentoSerieAnoRepository.Attach(serieAnoAlterada, Microsoft.EntityFrameworkCore.EntityState.Modified);
                     unitOfWork.Commit();
                 }
-
-                planejamentoSerieAnoRepository.Attach(seriesAnosAlteradas);
-                unitOfWork.Commit();
-
-                // Inicia as alterações das Turmas
-                var idTurmas = vm.SeriesAnos.SelectMany(m => m.Turmas).Where(m => m.IdPlanejamentoTurma > 0).Select(s => s.IdPlanejamentoTurma);
-                var turmasExcluidas = planejamentoTurmaRepository.GetQuery(m => idSeriesAnos.Contains(m.IdPlanejamentoSerieAno) && !idTurmas.Contains(m.IdPlanejamentoTurma)).ToList();
-                var turmasAlteradas = planejamentoAnoLetivo.SeriesAnos.SelectMany(m => m.Turmas).Where(m => m.IdPlanejamentoTurma > 0).ToList();
-                var turmasNovas = planejamentoAnoLetivo.SeriesAnos.SelectMany(m => m.Turmas).Where(m => m.IdPlanejamentoTurma < 1).ToList();
-
-                if (turmasExcluidas?.Any() == true)
+                // 3 - Deleta Turmas
+                foreach (var turmaExcluida in turmasExcluidas)
                 {
-                    planejamentoTurmaRepository.Remove(turmasExcluidas);
+                    planejamentoTurmaRepository.Attach(turmaExcluida, Microsoft.EntityFrameworkCore.EntityState.Deleted);
                     unitOfWork.Commit();
                 }
-
-                if (turmasNovas?.Any() == true)
+                // 4 - Deleta Series/Anos
+                foreach (var serieAnoExcluida in seriesAnosExcluidas)
                 {
-                    planejamentoTurmaRepository.Add(turmasNovas);
+                    planejamentoSerieAnoRepository.Attach(serieAnoExcluida, Microsoft.EntityFrameworkCore.EntityState.Deleted);
                     unitOfWork.Commit();
                 }
-
-                planejamentoTurmaRepository.Attach(turmasAlteradas);
-                unitOfWork.Commit();
+                // 5 - Adiciona Turmas
+                foreach (var turmaNova in turmasNovas)
+                {
+                    planejamentoTurmaRepository.Attach(turmaNova, Microsoft.EntityFrameworkCore.EntityState.Added);
+                    unitOfWork.Commit();
+                }
+                // 6 - Altera Turmas
+                foreach (var turmaAlterada in turmasAlteradas)
+                {
+                    planejamentoTurmaRepository.Attach(turmaAlterada, Microsoft.EntityFrameworkCore.EntityState.Modified);
+                    unitOfWork.Commit();
+                }
 
                 // Salva a entidade principal PlanejamentoAnoLetivo
                 planejamentoAnoLetivoRepository.Attach(planejamentoAnoLetivo);

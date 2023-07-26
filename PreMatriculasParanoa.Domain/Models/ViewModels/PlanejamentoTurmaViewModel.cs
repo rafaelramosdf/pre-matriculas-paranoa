@@ -19,7 +19,11 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         [JsonIgnore]
         public SalaViewModel Sala { get; set; }
+
         [JsonIgnore]
         public PlanejamentoSerieAnoViewModel PlanejamentoSerieAno { get; set; }
+
+        public decimal MetragemSala => Sala?.Metragem ?? 0m;
+        public decimal CapacidadeFisicaPadraoSala => Sala?.CapacidadeFisicaPadrao ?? 0m;
     }
 }

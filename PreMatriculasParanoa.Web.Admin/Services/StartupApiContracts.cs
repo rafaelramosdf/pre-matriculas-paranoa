@@ -31,6 +31,11 @@ namespace PreMatriculasParanoa.Web.Admin.Services
             {
                 c.BaseAddress = new Uri($"{urlBase}/escolas-salas");
             });
+
+            builder.Services.AddRefitClient<ISelectApiContract>(settings).ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri($"{urlBase}/selects");
+            });
         }
     }
 }

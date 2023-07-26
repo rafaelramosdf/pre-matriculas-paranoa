@@ -70,6 +70,23 @@ namespace PreMatriculasParanoa.Infra.Repository.Base
                 Attach(obj);
             }
         }
+        public virtual void Attach(in TEntity obj, EntityState state)
+        {
+            DbSet.Attach(obj);
+            DbSet.Entry(obj).State = state;
+        }
+        public void Attach(in IEnumerable<TEntity> objList, EntityState state)
+        {
+            foreach (var obj in objList)
+            {
+                Attach(obj, state);
+            }
+        }
+
+        public virtual EntityState GetEntityState(in TEntity obj) 
+        {
+            return DbSet.Entry(obj).State;
+        }
 
         /// <summary>
         /// Altera registros existentes e/ou insere registros novos.

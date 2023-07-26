@@ -18,7 +18,6 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int IdEscola { get; set; }
         public string NomeEscola => Escola?.Nome;
 
-        [JsonIgnore]
         public EscolaViewModel Escola { get; set; }
 
         public List<PlanejamentoSerieAnoViewModel> SeriesAnos { get; set; } = new List<PlanejamentoSerieAnoViewModel>();

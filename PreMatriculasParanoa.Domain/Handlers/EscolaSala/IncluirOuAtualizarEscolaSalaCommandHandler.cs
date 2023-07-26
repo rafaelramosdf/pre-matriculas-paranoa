@@ -59,20 +59,23 @@ public class IncluirOuAtualizarEscolaSalaCommandHandler : IIncluirOuAtualizarEsc
                 var salasAlteradas = escola.Salas.Where(m => m.IdSala > 0).ToList();
                 var salasNovas = escola.Salas.Where(m => m.IdSala < 1).ToList();
 
-                if (salasExcluidas?.Any() == true) 
-                {
-                    salaRepository.Remove(salasExcluidas);
-                    unitOfWork.Commit();
-                }
-
                 if(salasNovas?.Any() == true) 
                 {
                     salaRepository.Add(salasNovas); 
                     unitOfWork.Commit();
                 }
 
-                salaRepository.Attach(salasAlteradas);
-                unitOfWork.Commit();
+                if (salasAlteradas?.Any() == true) 
+                {
+                    salaRepository.Attach(salasAlteradas);
+                    unitOfWork.Commit();
+                }
+
+                if (salasExcluidas?.Any() == true)
+                {
+                    salaRepository.Remove(salasExcluidas);
+                    unitOfWork.Commit();
+                }
 
                 escolaRepository.Attach(escola);
                 unitOfWork.Commit();

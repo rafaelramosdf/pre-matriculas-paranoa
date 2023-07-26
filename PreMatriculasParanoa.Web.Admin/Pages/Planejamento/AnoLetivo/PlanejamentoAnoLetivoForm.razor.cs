@@ -70,7 +70,8 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
                     serieAno.Turmas.Add(new PlanejamentoTurmaViewModel
                     {
                         IdPlanejamentoSerieAno = serieAno.IdPlanejamentoSerieAno,
-                        SiglaTurma = 'A'
+                        SiglaTurma = 'A',
+                        Sala = new SalaViewModel()
                     });
                 }
                 else
@@ -78,7 +79,8 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
                     serieAno.Turmas.Add(new PlanejamentoTurmaViewModel
                     {
                         IdPlanejamentoSerieAno = serieAno.IdPlanejamentoSerieAno,
-                        SiglaTurma = (char)(serieAno.Turmas.OrderBy(o => o.SiglaTurma).Last().SiglaTurma + 1)
+                        SiglaTurma = (char)(serieAno.Turmas.OrderBy(o => o.SiglaTurma).Last().SiglaTurma + 1),
+                        Sala = new SalaViewModel()
                     });
                 }
             });
@@ -93,6 +95,16 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
             {
                 serieAno.Turmas.Remove(turma);
             }
+        }
+
+        protected async Task ObterSalaSelecionada(SalaViewModel sala, PlanejamentoTurmaViewModel turma)
+        {
+            await Task.Run(() => 
+            { 
+                turma.Sala = sala;
+                turma.CapacidadeFisicaAcordada = turma.CapacidadeFisicaAcordada < 1m 
+                ? sala.CapacidadeFisicaPadrao : turma.CapacidadeFisicaAcordada;
+            });
         }
     }
 }

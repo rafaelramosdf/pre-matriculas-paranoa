@@ -19,6 +19,9 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         [Inject] protected IJSRuntime JSRun { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
 
+        const string INTERNAL_ERROR_MESSAGE_DEFAULT = "Erro interno";
+        const string USER_ERROR_MESSAGE_DEFAULT = "Houve um erro inesperado na requisição! verifique se os dados estão corretos, e tente novamente, ou procure o administrador do sistema.";
+
         protected virtual void OnInit() { }
 
         protected override void OnInitialized()
@@ -74,28 +77,33 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         {
             List<string> messageErrors = new List<string>();
 
-            if (apiResponse?.IsSuccessStatusCode != true)
+            try
             {
-                if (!string.IsNullOrEmpty(apiResponse?.Error?.Content))
+                if (apiResponse?.IsSuccessStatusCode != true)
                 {
-                    var error = JsonConvert.DeserializeObject<RefitApiError>(apiResponse.Error.Content);
-                    foreach (var err in error.Errors)
+                    if (apiResponse?.Error != null)
                     {
-                        messageErrors.AddRange(err.Value);
+                        messageErrors.Add(USER_ERROR_MESSAGE_DEFAULT);
+                        messageErrors.Add(apiResponse.Error.Message);
+
+                        Console.WriteLine(string.Concat(messageErrors));
+                        Console.WriteLine(JsonConvert.SerializeObject(apiResponse.Error));
                     }
                 }
                 else
                 {
-                    messageErrors.Add("Houve um erro inesperado na requisição! verifique se os dados estão corretos, e tente novamente, ou procure o administrador do sistema.");
+                    CommandResult result = apiResponse.Content;
+                    if (result?.HasError == true)
+                    {
+                        messageErrors.AddRange(result.Errors.ToList());
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                CommandResult result = apiResponse.Content;
-                if (result?.HasError == true)
-                {
-                    messageErrors.AddRange(result.Errors.ToList());
-                }
+                messageErrors.Add(USER_ERROR_MESSAGE_DEFAULT);
+                Console.WriteLine(INTERNAL_ERROR_MESSAGE_DEFAULT);
+                Console.WriteLine(JsonConvert.SerializeObject(ex));
             }
 
             return messageErrors;
