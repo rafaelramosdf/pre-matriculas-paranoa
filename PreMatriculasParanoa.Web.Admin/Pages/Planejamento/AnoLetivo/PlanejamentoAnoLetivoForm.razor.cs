@@ -17,6 +17,12 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
             Model = new PlanejamentoAnoLetivoViewModel();
         }
 
+        protected override async Task GetModel()
+        {
+            await base.GetModel();
+            await OrdenarListaSeriesAnos();
+        }
+
         protected async Task AdicionarSerieAno() 
         {
             if (Model.SeriesAnos.Count < 1) 

@@ -34,26 +34,28 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
-            <MudMenu Icon="@Icons.Material.Filled.ViewList" Color="Color.Primary" Disabled="true">
-                <MudMenuItem>...</MudMenuItem>
-            </MudMenu>
-        </MudTh>
-        <MudTh>
             <MudTableSortLabel T="PlanejamentoAnoLetivoViewModel" SortLabel="@nameof(PlanejamentoAnoLetivoViewModel.AnoLetivo)" InitialDirection="SortDirection.Descending">
                 Ano Letivo
             </MudTableSortLabel>
         </MudTh>
         <MudTh>Escola</MudTh>
+        <MudTh Style="text-align: center">Séries/Anos</MudTh>
+        <MudTh Style="text-align: center">Turmas</MudTh>
+        <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd>
-            <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                <MudMenuItem OnClick="@(() => OpenRoute($"/planejamento/ano-letivo/formulario/{context.Id}"))">Abrir</MudMenuItem>
-                <MudMenuItem OnClick="@(() => Excluir(context.Id))">Excluir</MudMenuItem>
-            </MudMenu>
-        </MudTd>
         <MudTd DataLabel="Ano Letivo">@context.AnoLetivo</MudTd>
         <MudTd DataLabel="Escola">@context.NomeEscola</MudTd>
+        <MudTd DataLabel="Séries/Anos" Style="text-align: center">@context.TotalSeriesAnosCadastrados</MudTd>
+        <MudTd DataLabel="Turmas" Style="text-align: center">@context.TotalTurmasCadastradas</MudTd>
+        <MudTd Style="text-align: right">
+            <MudTooltip Text="Editar/Visualizar">
+                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenRoute($"/planejamento/ano-letivo/formulario/{context.Id}"))"></MudIconButton>
+            </MudTooltip>
+            <MudTooltip Text="Excluir">
+                <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => Excluir(context.Id))"></MudIconButton>
+            </MudTooltip>
+        </MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager Style="float: left;"

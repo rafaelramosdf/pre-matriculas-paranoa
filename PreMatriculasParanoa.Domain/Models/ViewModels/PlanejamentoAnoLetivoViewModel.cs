@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using PreMatriculasParanoa.Domain.Models.Base;
+﻿using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -21,5 +21,8 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public EscolaViewModel Escola { get; set; }
 
         public List<PlanejamentoSerieAnoViewModel> SeriesAnos { get; set; } = new List<PlanejamentoSerieAnoViewModel>();
+
+        public int TotalSeriesAnosCadastrados => SeriesAnos?.Count ?? 0;
+        public int TotalTurmasCadastradas => SeriesAnos?.SelectMany(s => s.Turmas)?.Count() ?? 0;
     }
 }

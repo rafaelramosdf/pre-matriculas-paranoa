@@ -34,11 +34,6 @@
     </ToolBarContent>
     <HeaderContent>
         <MudTh>
-            <MudMenu Icon="@Icons.Material.Filled.ViewList" Color="Color.Primary" Disabled="true">
-                <MudMenuItem>...</MudMenuItem>
-            </MudMenu>
-        </MudTh>
-        <MudTh>
             <MudTableSortLabel T="UsuarioViewModel" SortLabel="@nameof(UsuarioViewModel.Nome)" InitialDirection="SortDirection.Ascending">
                 Nome
             </MudTableSortLabel>
@@ -46,27 +41,30 @@
         <MudTh><MudText>Email</MudText></MudTh>
         <MudTh><MudText>Perfil</MudText></MudTh>
         <MudTh><MudText>Ativo</MudText></MudTh>
+        <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd>
-            <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                <MudMenuItem OnClick="@(() => OpenRoute($"/configuracoes/usuarios/formulario/{context.Id}"))">Abrir</MudMenuItem>
-                <MudMenuItem OnClick="@(() => Excluir(context.Id))">Excluir</MudMenuItem>
-            </MudMenu>
-        </MudTd>
         <MudTd DataLabel="Nome">@context.Nome.ToUpper()</MudTd>
         <MudTd DataLabel="Email">@context.Email</MudTd>
         <MudTd DataLabel="Perfil">@context.Perfil</MudTd>
-        <MudTd DataLabel="Ativo">@context.Ativo</MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager Style="float: left;"
-                       RowsPerPageString="Itens por página: "
-                       PageSizeOptions="new int[] { 5, 10, 20, 50, 100 }"
-                       InfoFormat="{first_item}-{last_item} de {all_items}" />
-    </PagerContent>
-</MudTable>
+        <MudTd DataLabel="Ativo">@(context.Ativo ? "Sim" : "Não")</MudTd>
+            <MudTd Style="text-align: right">
+                <MudTooltip Text="Editar/Visualizar">
+                    <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenRoute($"/configuracoes/usuarios/formulario/{context.Id}"))"></MudIconButton>
+                </MudTooltip>
+                <MudTooltip Text="Excluir">
+                    <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => Excluir(context.Id))"></MudIconButton>
+                </MudTooltip>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager Style="float: left;"
+                           RowsPerPageString="Itens por página: "
+                           PageSizeOptions="new int[] { 5, 10, 20, 50, 100 }"
+                           InfoFormat="{first_item}-{last_item} de {all_items}" />
+        </PagerContent>
+    </MudTable>
 
-<MudFab Style="position: fixed; bottom: 30px; right: 30px;"
-        Color="Color.Success" Icon="@Icons.Material.Filled.Add"
-        OnClick="@(() => OpenRoute("/configuracoes/usuarios/formulario"))" />
+    <MudFab Style="position: fixed; bottom: 30px; right: 30px;"
+            Color="Color.Success" StartIcon="@Icons.Material.Filled.Add"
+            OnClick="@(() => OpenRoute("/configuracoes/usuarios/formulario"))" />

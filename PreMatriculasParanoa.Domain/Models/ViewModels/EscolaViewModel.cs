@@ -2,6 +2,7 @@
 using PreMatriculasParanoa.Domain.Models.Entities;
 using PreMatriculasParanoa.Domain.Models.ViewModels.Validations;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -18,5 +19,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public string Bairro { get; set; }
 
         public List<SalaViewModel> Salas { get; set; } = new List<SalaViewModel>();
+
+        public decimal CapacidadeFisica => Salas?.Sum(s => s.CapacidadeFisicaPadrao) ?? 0m;
     }
 }

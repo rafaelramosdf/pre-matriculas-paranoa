@@ -10,15 +10,15 @@
   },
   "profiles": {
     "PreMatriculasParanoa.Api": {
-      "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "launchUrl": "",
       "applicationUrl": "https://localhost:8082;http://localhost:8083",
+      "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PrivateKey": "23CB5994E61E41B8A5AC2B6BAC591E24"
-      }
+      },
+      "hotReloadProfile": "aspnetcore",
+      "launchBrowser": true,
+      "launchUrl": ""
     },
     "IIS Express": {
       "commandName": "IISExpress",

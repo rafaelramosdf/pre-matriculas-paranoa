@@ -39,7 +39,9 @@ public class ObterDataTablePlanejamentoAnoLetivoQueryHandler : IObterDataTablePl
 
         var dataTableModel = new DataTableModel<PlanejamentoAnoLetivoViewModel>();
 
-        IQueryable<Models.Entities.PlanejamentoAnoLetivo> queryList = repository.GetQuery(query.ObterPesquisa(filtro)).Include(i => i.Escola);
+        IQueryable<Models.Entities.PlanejamentoAnoLetivo> queryList = repository.GetQuery(query.ObterPesquisa(filtro))
+            .Include(i => i.Escola)
+            .Include(i => i.SeriesAnos).ThenInclude(t => t.Turmas);
 
         dataTableModel.SortAndPage(queryList, filtro, query, mapper);
 

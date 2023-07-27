@@ -52,14 +52,14 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
             }
         }
 
-        protected async Task GetModel()
+        protected virtual async Task GetModel()
         {
             State.Carregando = true;
             Model = await ApiService.Buscar(Id.Value);
             State.Carregando = false;
         }
 
-        protected async Task OnSubmit(EditContext context)
+        protected virtual async Task OnSubmit(EditContext context)
         {
             FormValid = context.Validate();
 
