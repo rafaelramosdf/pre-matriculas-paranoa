@@ -2,10 +2,10 @@
 using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Repositories.Base;
 using PreMatriculasParanoa.Domain.Repositories.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace PreMatriculasParanoa.Domain.Handlers.EscolaSala;
 
