@@ -31,8 +31,8 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public List<PlanejamentoTurmaViewModel> Turmas { get; set; } = new List<PlanejamentoTurmaViewModel>();
 
         public int TotalTurmas => Turmas.Count;
-        public int TotalCapacidadeFisicaPadrao => Turmas.Sum(t => Math.Ceiling(t.Sala?.CapacidadeFisicaPadrao ?? 0m).ToInt32());
-        public int TotalCapacidadeFisicaAcordada => Turmas.Sum(t => Math.Ceiling(t.CapacidadeFisicaAcordada).ToInt32());
+        public int TotalCapacidadeFisicaPadrao => Turmas.Sum(t => Math.Round(t.Sala?.CapacidadeFisicaPadrao ?? 0m).ToInt32());
+        public int TotalCapacidadeFisicaAcordada => Turmas.Sum(t => Math.Round(t.CapacidadeFisicaAcordada).ToInt32());
         public int TotalVagasDisponiveis =>
             TotalCapacidadeFisicaAcordada - 
                 ((EntradaAprovadosSerieAnoAnterior + EntradaCentralMatricula + EntradaRemanejamento + EntradaRetidosSerieAnoAtual + EntradaSequencial) - 

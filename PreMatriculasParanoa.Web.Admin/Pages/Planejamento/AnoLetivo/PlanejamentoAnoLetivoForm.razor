@@ -13,7 +13,7 @@
     <MudCard Elevation="0">
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Color="Color.Primary">Informações do planejamento do próximo ano letivo</MudText>
+                <MudText Color="Color.Primary">Informações gerais do planejamento de matrículas</MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
@@ -22,11 +22,12 @@
                     <EscolaSelect Label="Escola" @bind-Id="@Model.IdEscola" Dense="true" />
                 </MudItem>
                 <MudItem md="2" xs="12">
-                    <MudTextField Label="Ano Letivo" Placeholder="Ano Letivo"
+                    <MudNumericField Label="Ano Letivo" Placeholder="Ano Letivo"
                     @bind-Value="Model.AnoLetivo"
-                                  For="@(() => Model.AnoLetivo)"
-                                  Variant="Variant.Outlined"
-                                  Margin="Margin.Dense" />
+                                     For="@(() => Model.AnoLetivo)"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     MaxLength="4" />
                 </MudItem>
                 <MudItem md="3" xs="12">
                     <MudDatePicker @bind-Date="Model.DataInicioPlanejamento"
@@ -84,13 +85,34 @@
                     <MudTh Style="text-align:center"></MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel="Série/Ano"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.SerieAno" OnBlur="(() => OrdenarListaSeriesAnos())"></MudTextField></MudTd>
-                    <MudTd DataLabel="+ Aprov. ano anterior"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaAprovadosSerieAnoAnterior"></MudTextField></MudTd>
-                    <MudTd DataLabel="+ Retidos"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaRetidosSerieAnoAtual"></MudTextField></MudTd>
-                    <MudTd DataLabel="+ Sequencial"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaSequencial"></MudTextField></MudTd>
-                    <MudTd DataLabel="+ Central de mat. (156)"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaCentralMatricula"></MudTextField></MudTd>
-                    <MudTd DataLabel="+ Remanejamento (entrando)"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.EntradaRemanejamento"></MudTextField></MudTd>
-                    <MudTd DataLabel="- Remanejamento (saindo)"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@SerieAno.SaidaRemanejamento"></MudTextField></MudTd>
+                    <MudTd DataLabel="Série/Ano">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="2"
+                        @bind-Value="@SerieAno.SerieAno" OnBlur="(() => OrdenarListaSeriesAnos())"></MudNumericField>
+                    </MudTd>
+                    <MudTd DataLabel="+ Aprov. ano anterior">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@SerieAno.EntradaAprovadosSerieAnoAnterior"></MudNumericField>
+                    </MudTd>
+                    <MudTd DataLabel="+ Retidos">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@SerieAno.EntradaRetidosSerieAnoAtual"></MudNumericField>
+                    </MudTd>
+                    <MudTd DataLabel="+ Sequencial">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@SerieAno.EntradaSequencial"></MudNumericField>
+                    </MudTd>
+                    <MudTd DataLabel="+ Central de mat. (156)">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@SerieAno.EntradaCentralMatricula"></MudNumericField>
+                    </MudTd>
+                    <MudTd DataLabel="+ Remanejamento (entrando)">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@SerieAno.EntradaRemanejamento"></MudNumericField>
+                    </MudTd>
+                    <MudTd DataLabel="- Remanejamento (saindo)">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@SerieAno.SaidaRemanejamento"></MudNumericField>
+                    </MudTd>
                     <MudTd DataLabel="Turmas" Style="text-align:center">
                         <MudTooltip Text="Clique para visualizar as turmas">
                             <MudButton Color="Color.Primary" Variant="Variant.Outlined" OnClick="(() => SerieAno.ExibirDetalhesTurmas = !SerieAno.ExibirDetalhesTurmas)">
@@ -98,15 +120,19 @@
                             </MudButton>
                         </MudTooltip>
                     </MudTd>
-                    <MudTd DataLabel="Capacidade" Style="text-align:center"><MudText>@SerieAno.TotalCapacidadeFisicaAcordada</MudText></MudTd>
-                    <MudTd DataLabel="Vagas" Style="text-align:center"><MudText>@SerieAno.TotalVagasDisponiveis</MudText></MudTd>
+                    <MudTd DataLabel="Capacidade" Style="text-align:center">
+                        <MudText>@SerieAno.TotalCapacidadeFisicaAcordada</MudText>
+                    </MudTd>
+                    <MudTd DataLabel="Vagas" Style="text-align:center">
+                        <MudText>@SerieAno.TotalVagasDisponiveis</MudText>
+                    </MudTd>
                     <MudTd Style="text-align:center">
                         <MudIconButton Title="Excluir série/ano" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"
                                        OnClick="(() => ExcluirSerieAno(SerieAno))"></MudIconButton>
                     </MudTd>
                 </RowTemplate>
                 <ChildRowContent>
-                    @if(SerieAno.ExibirDetalhesTurmas)
+                    @if (SerieAno.ExibirDetalhesTurmas)
                     {
                         <MudTr>
                             <td colspan="11">
@@ -119,7 +145,7 @@
                                             <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => AdicionarTurma(SerieAno))">
                                                 <MudIcon Icon="@Icons.Material.Filled.Add"></MudIcon>
                                                 <MudSpacer></MudSpacer>
-                                                Adicionar Turma
+                                                Adicionar Turma 
                                             </MudButton>
                                         </CardHeaderActions>
                                     </MudCardHeader>
@@ -139,7 +165,10 @@
                                                 <MudTh></MudTh>
                                             </HeaderContent>
                                             <RowTemplate>
-                                                <MudTd DataLabel="Turma"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.SiglaTurma"></MudTextField></MudTd>
+                                                <MudTd DataLabel="Turma">
+                                                    <MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="1" 
+                                                    @bind-Value="@Turma.SiglaTurma"></MudTextField>
+                                                </MudTd>
                                                 <MudTd DataLabel="Turno">
                                                     <TurnoPeriodoSelect @bind-Value="@Turma.TurnoPeriodo" Dense="true" />
                                                 </MudTd>
@@ -149,9 +178,16 @@
                                                 <MudTd DataLabel="Tipo atendimento">
                                                     <TipoAtendimentoSelect @bind-Value="@Turma.TipoAtendimento" Dense="true" />
                                                 </MudTd>
-                                                <MudTd DataLabel="Metragem"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" ReadOnly="true" Value="@Turma.MetragemSala"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Capacidade padrão"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense"  ReadOnly="true" Value="@Turma.CapacidadeFisicaPadraoSala"></MudTextField></MudTd>
-                                                <MudTd DataLabel="Capacidade acordada"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Turma.CapacidadeFisicaAcordada"></MudTextField></MudTd>
+                                                <MudTd DataLabel="Metragem">
+                                                    <MudText>@Turma.MetragemSala</MudText>
+                                                </MudTd>
+                                                <MudTd DataLabel="Capacidade padrão">
+                                                    <MudText>@Turma.CapacidadeFisicaPadraoSala</MudText>
+                                                </MudTd>
+                                                <MudTd DataLabel="Capacidade acordada">
+                                                    <MudNumericField T="decimal" Format="N2" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="8"
+                                                    @bind-Value="@Turma.CapacidadeFisicaAcordada"></MudNumericField>
+                                                </MudTd>
                                                 <MudTd Style="text-align:center">
                                                     <MudIconButton Title="Excluir turma" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"
                                                                    OnClick="(() => ExcluirTurma(SerieAno, Turma))"></MudIconButton>
@@ -162,7 +198,7 @@
                                 </MudCard>
                             </td>
                         </MudTr>
-                    }                    
+                    }
                 </ChildRowContent>
             </MudTable>
         </MudCardContent>

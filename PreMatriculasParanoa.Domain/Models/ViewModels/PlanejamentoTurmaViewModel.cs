@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
+using PreMatriculasParanoa.Domain.Models.ViewModels.Validations;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -14,6 +15,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public string TipoAtendimento { get; set; }
         public decimal CapacidadeFisicaAcordada { get; set; }
 
+        [RequiredValidation("Sala")]
         public int IdSala { get; set; }
         public int IdPlanejamentoSerieAno { get; set; }
 
