@@ -4,6 +4,7 @@ using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
@@ -28,6 +29,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         [JsonIgnore]
         public PlanejamentoAnoLetivoViewModel PlanejamentoAnoLetivo { get; set; }
 
+        [ValidateComplexType]
         public List<PlanejamentoTurmaViewModel> Turmas { get; set; } = new List<PlanejamentoTurmaViewModel>();
 
         public int TotalTurmas => Turmas.Count;

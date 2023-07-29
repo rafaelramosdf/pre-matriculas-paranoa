@@ -2,6 +2,7 @@
 using PreMatriculasParanoa.Domain.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
@@ -20,6 +21,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public EscolaViewModel Escola { get; set; }
 
+        [ValidateComplexType]
         public List<PlanejamentoSerieAnoViewModel> SeriesAnos { get; set; } = new List<PlanejamentoSerieAnoViewModel>();
 
         public int TotalSeriesAnosCadastrados => SeriesAnos?.Count ?? 0;

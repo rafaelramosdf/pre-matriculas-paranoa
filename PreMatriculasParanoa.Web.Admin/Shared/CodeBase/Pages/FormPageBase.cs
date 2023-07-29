@@ -10,9 +10,6 @@ using MudBlazor;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Models;
-using System.Collections.Generic;
 
 namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
 {

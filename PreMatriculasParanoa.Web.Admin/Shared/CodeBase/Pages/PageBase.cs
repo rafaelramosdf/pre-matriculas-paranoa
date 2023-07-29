@@ -79,14 +79,11 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
 
             try
             {
-                if (apiResponse?.IsSuccessStatusCode != true)
+                if (apiResponse?.IsSuccessStatusCode != true && apiResponse?.Content == null)
                 {
                     if (apiResponse?.Error != null)
                     {
-                        messageErrors.Add(USER_ERROR_MESSAGE_DEFAULT);
                         messageErrors.Add(apiResponse.Error.Message);
-
-                        Console.WriteLine(string.Concat(messageErrors));
                         Console.WriteLine(JsonConvert.SerializeObject(apiResponse.Error));
                     }
                 }
