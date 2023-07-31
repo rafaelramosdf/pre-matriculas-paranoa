@@ -5,6 +5,7 @@ using PreMatriculasParanoa.Domain.Repositories.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
+using PreMatriculasParanoa.Domain.Resources;
 
 namespace PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 
@@ -44,7 +45,8 @@ public class ExcluirPlanejamentoAnoLetivoCommandHandler : IExcluirPlanejamentoAn
         }
         catch (Exception ex)
         {
-            return new CommandResult(ex);
+            logger.LogError(ex.Message);
+            return new CommandResult(StatusCodes.Status500InternalServerError, ErrorMessageResource.ErroExclusaoRegistro);
         }
     }
 }

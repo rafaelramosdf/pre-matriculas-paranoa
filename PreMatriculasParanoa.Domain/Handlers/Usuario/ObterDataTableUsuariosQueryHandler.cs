@@ -41,7 +41,7 @@ public class ObterDataTableUsuariosQueryHandler : IObterDataTableUsuariosQueryHa
         IQueryable<Models.Entities.Usuario> queryList = Repository
             .GetQuery(Query.ObterPesquisa(filtro));
 
-        dataTableModel.SortAndPage(queryList, filtro, Query, Mapper);
+        dataTableModel.ExecuteQuerySortAndPage(queryList, filtro, Query, Mapper);
 
         return dataTableModel;
     }

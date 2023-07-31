@@ -62,6 +62,18 @@ namespace PreMatriculasParanoa.Infra.Context
                 .HasForeignKey(e => e.IdPlanejamentoSerieAno)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<PlanejamentoMatriculaSequencial>()
+                .HasOne(e => e.EscolaOrigem)
+                .WithMany(e => e.PlanejamentosMatriculasSequenciaisOrigens)
+                .HasForeignKey(e => e.IdEscolaOrigem)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PlanejamentoMatriculaSequencial>()
+                .HasOne(e => e.EscolaDestino)
+                .WithMany(e => e.PlanejamentosMatriculasSequenciaisDestinos)
+                .HasForeignKey(e => e.IdEscolaDestino)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(modelBuilder);
         }
     }

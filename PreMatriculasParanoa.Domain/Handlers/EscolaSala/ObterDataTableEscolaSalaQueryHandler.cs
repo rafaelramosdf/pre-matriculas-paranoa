@@ -41,7 +41,7 @@ public class ObterDataTableEscolaSalaQueryHandler : IObterDataTableEscolaSalaQue
 
         IQueryable<Models.Entities.Escola> queryList = repository.GetQuery(query.ObterPesquisa(filtro)).Include(i => i.Salas);
 
-        dataTableModel.SortAndPage(queryList, filtro, query, mapper);
+        dataTableModel.ExecuteQuerySortAndPage(queryList, filtro, query, mapper);
 
         return dataTableModel;
     }

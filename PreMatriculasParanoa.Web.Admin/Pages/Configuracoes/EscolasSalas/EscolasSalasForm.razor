@@ -9,6 +9,7 @@
 <EditForm Model="@Model" OnSubmit="OnSubmit">
 
     <DataAnnotationsValidator />
+    <ObjectGraphDataAnnotationsValidator />
 
     <MudCard Elevation="0">
         <MudCardHeader>
@@ -69,9 +70,9 @@
                     <MudTh Style="text-align:center"></MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel="Número"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Numero" OnBlur="(() => OrdenarListaSalas())"></MudTextField></MudTd>
+                    <MudTd DataLabel="Número"><MudNumericField T="int" Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Numero" OnBlur="(() => OrdenarListaSalas())"></MudNumericField></MudTd>
                     <MudTd DataLabel="Bloco"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Bloco"></MudTextField></MudTd>
-                    <MudTd DataLabel="Metragem"><MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Metragem" OnBlur="(() => Sala.CalcularCapacidadeFisicaPadrao())"></MudTextField></MudTd>
+                    <MudTd DataLabel="Metragem"><MudNumericField T="decimal" Format="N2" Variant="Variant.Outlined" Margin="Margin.Dense" @bind-Value="@Sala.Metragem" OnBlur="(() => Sala.CalcularCapacidadeFisicaPadrao())"></MudNumericField></MudTd>
                     <MudTd DataLabel="Capacidade física padrão" Style="text-align:center"><MudText>@Sala.CapacidadeFisicaPadrao</MudText></MudTd>
                     <MudTd Style="text-align:center">
                         <MudIconButton Title="Excluir sala" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using PreMatriculasParanoa.Domain.Resources;
 
 namespace PreMatriculasParanoa.Domain.Handlers.EscolaSala;
 
@@ -57,7 +58,8 @@ public class ExcluirEscolaSalaCommandHandler : IExcluirEscolaSalaCommandHandler
         }
         catch (Exception ex)
         {
-            return new CommandResult(ex);
+            logger.LogError(ex.Message);
+            return new CommandResult(StatusCodes.Status500InternalServerError, ErrorMessageResource.ErroExclusaoRegistro);
         }
     }
 }

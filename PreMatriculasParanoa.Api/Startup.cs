@@ -22,6 +22,7 @@ using PreMatriculasParanoa.Domain.Handlers.EscolaSala;
 using System.Text.Json.Serialization;
 using PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 using PreMatriculasParanoa.Domain.Handlers.Select;
+using PreMatriculasParanoa.Domain.Handlers.PlanejamentoMatriculaSequencial;
 
 namespace PreMatriculasParanoa.Api
 {
@@ -142,6 +143,7 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IPlanejamentoAnoLetivoRepository, PlanejamentoAnoLetivoRepository>();
             services.AddScoped<IPlanejamentoSerieAnoRepository, PlanejamentoSerieAnoRepository>();
             services.AddScoped<IPlanejamentoTurmaRepository, PlanejamentoTurmaRepository>();
+            services.AddScoped<IPlanejamentoMatriculaSequencialRepository, PlanejamentoMatriculaSequencialRepository>();
         }
 
         private void RegisterQueries(IServiceCollection services)
@@ -149,6 +151,7 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IUsuarioQuery, UsuarioQuery>();
             services.AddScoped<IEscolaQuery, EscolaQuery>();
             services.AddScoped<IPlanejamentoAnoLetivoQuery, PlanejamentoAnoLetivoQuery>();
+            services.AddScoped<IPlanejamentoMatriculaSequencialQuery, PlanejamentoMatriculaSequencialQuery>();
         }
 
         private void RegisterHandlers(IServiceCollection services)
@@ -175,6 +178,13 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IBuscarPlanejamentoAnoLetivoPorIdQueryHandler, BuscarPlanejamentoAnoLetivoPorIdQueryHandler>();
             services.AddScoped<IObterDataTablePlanejamentoAnoLetivoQueryHandler, ObterDataTablePlanejamentoAnoLetivoQueryHandler>();
             services.AddScoped<IExcluirPlanejamentoAnoLetivoCommandHandler, ExcluirPlanejamentoAnoLetivoCommandHandler>();
+            #endregion
+
+            #region PlanejamentoMatriculaSequencial
+            services.AddScoped<IIncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler, IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler>();
+            services.AddScoped<IBuscarPlanejamentoMatriculaSequencialPorIdQueryHandler, BuscarPlanejamentoMatriculaSequencialPorIdQueryHandler>();
+            services.AddScoped<IObterDataTablePlanejamentoMatriculaSequencialQueryHandler, ObterDataTablePlanejamentoMatriculaSequencialQueryHandler>();
+            services.AddScoped<IExcluirPlanejamentoMatriculaSequencialCommandHandler, ExcluirPlanejamentoMatriculaSequencialCommandHandler>();
             #endregion
 
             #region Select

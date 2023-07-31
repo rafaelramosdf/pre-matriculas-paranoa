@@ -43,7 +43,7 @@ public class ObterDataTablePlanejamentoAnoLetivoQueryHandler : IObterDataTablePl
             .Include(i => i.Escola)
             .Include(i => i.SeriesAnos).ThenInclude(t => t.Turmas);
 
-        dataTableModel.SortAndPage(queryList, filtro, query, mapper);
+        dataTableModel.ExecuteQuerySortAndPage(queryList, filtro, query, mapper);
 
         return dataTableModel;
     }

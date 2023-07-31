@@ -17,6 +17,7 @@ namespace Cened.Penitenciario.Api.AutoMapper
             CreateMap<PlanejamentoSerieAno, PlanejamentoSerieAnoViewModel>().ReverseMap();
             CreateMap<PlanejamentoTurma, PlanejamentoTurmaViewModel>().ReverseMap();
             CreateMap<PlanejamentoMatriculaSequencial, PlanejamentoMatriculaSequencialViewModel>().ReverseMap();
+            CreateMap<PlanejamentoMatriculaSequencialAgrupado, PlanejamentoMatriculaSequencialAgrupadoViewModel>().ReverseMap();
         }
     }
 }

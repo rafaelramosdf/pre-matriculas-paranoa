@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using PreMatriculasParanoa.Domain.Models.Base;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 

@@ -7,24 +7,24 @@ using Microsoft.Extensions.Logging;
 using System;
 using PreMatriculasParanoa.Domain.Resources;
 
-namespace PreMatriculasParanoa.Domain.Handlers.Usuario;
+namespace PreMatriculasParanoa.Domain.Handlers.PlanejamentoMatriculaSequencial;
 
-public interface IExcluirUsuarioCommandHandler : IDeleteCommandHandler
+public interface IExcluirPlanejamentoMatriculaSequencialCommandHandler : IDeleteCommandHandler
 {
 }
 
-public class ExcluirUsuarioCommandHandler : IExcluirUsuarioCommandHandler
+public class ExcluirPlanejamentoMatriculaSequencialCommandHandler : IExcluirPlanejamentoMatriculaSequencialCommandHandler
 {
-    private readonly ILogger<ExcluirUsuarioCommandHandler> logger;
-    private readonly IUsuarioRepository repository;
+    private readonly ILogger<ExcluirPlanejamentoMatriculaSequencialCommandHandler> logger;
+    private readonly IPlanejamentoMatriculaSequencialRepository repository;
     protected readonly IUnitOfWork unitOfWork;
     private readonly IMapper mapper;
 
-    public ExcluirUsuarioCommandHandler(
-        IUsuarioRepository repository,
+    public ExcluirPlanejamentoMatriculaSequencialCommandHandler(
+        IPlanejamentoMatriculaSequencialRepository repository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        ILogger<ExcluirUsuarioCommandHandler> logger)
+        ILogger<ExcluirPlanejamentoMatriculaSequencialCommandHandler> logger)
     {
         this.logger = logger;
         this.repository = repository;
@@ -34,11 +34,12 @@ public class ExcluirUsuarioCommandHandler : IExcluirUsuarioCommandHandler
 
     public CommandResult Execute(int id)
     {
-        logger.LogInformation($"Iniciando handler ExcluirUsuarioCommandHandler");
+        logger.LogInformation($"Iniciando handler ExcluirPlanejamentoMatriculaSequencialCommandHandler");
 
         try
         {
-            repository.Remove(repository.GetOne(id));
+            var PlanejamentoMatriculaSequencial = repository.GetOne(id);
+            repository.Remove(PlanejamentoMatriculaSequencial);
             unitOfWork.Commit();
             return new CommandResult(StatusCodes.Status200OK);
         }

@@ -11,11 +11,14 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public int IdPlanejamentoTurma { get; set; }
         public char SiglaTurma { get; set; }
+
+        [RequiredValidation("Turno da Turma")]
         public string TurnoPeriodo { get; set; }
+
         public string TipoAtendimento { get; set; }
         public decimal CapacidadeFisicaAcordada { get; set; }
 
-        [RequiredValidation("Sala")]
+        [RequiredValidation("Sala da Turma")]
         public int IdSala { get; set; }
         public int IdPlanejamentoSerieAno { get; set; }
 

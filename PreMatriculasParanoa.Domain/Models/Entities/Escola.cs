@@ -10,6 +10,7 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
 
         [Key]
         public int IdEscola { get; set; }
+
         [Required]
         public string Nome { get; set; }
         public string Cidade { get; set; }
@@ -17,5 +18,7 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
 
         public ICollection<Sala> Salas { get; set; }
         public ICollection<PlanejamentoAnoLetivo> PlanejamentosAnosLetivos { get; set; }
+        public ICollection<PlanejamentoMatriculaSequencial> PlanejamentosMatriculasSequenciaisOrigens { get; set; }
+        public ICollection<PlanejamentoMatriculaSequencial> PlanejamentosMatriculasSequenciaisDestinos { get; set; }
     }
 }

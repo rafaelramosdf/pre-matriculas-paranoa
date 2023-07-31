@@ -12,13 +12,15 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public int IdSala { get; set; }
 
+        [RequiredValidation("Número da Sala")]
         public int Numero { get; set; }
 
         public string Bloco { get; set; }
 
-        [RequiredValidation("Metragem")]
+        [RequiredValidation("Metragem da Sala")]
         public decimal Metragem { get; set; }
 
+        [RequiredValidation("Capacidade física padrão da Sala")]
         public decimal CapacidadeFisicaPadrao { get; set; }
 
 

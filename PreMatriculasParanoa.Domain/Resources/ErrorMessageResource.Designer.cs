@@ -61,6 +61,15 @@ namespace PreMatriculasParanoa.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não foi possível excluir o registro selecionado! Verifique se existem dados vinculados ao registro, que precisam ser excluídos primeiro..
+        /// </summary>
+        public static string ErroExclusaoRegistro {
+            get {
+                return ResourceManager.GetString("ErroExclusaoRegistro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ocorreu um erro de persistência de dados.
         /// </summary>
         public static string ErroPersistencia {
