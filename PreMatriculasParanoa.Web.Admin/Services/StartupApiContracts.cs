@@ -27,6 +27,11 @@ namespace PreMatriculasParanoa.Web.Admin.Services
                 c.BaseAddress = new Uri($"{urlBase}/planejamentos-anos-letivos");
             });
 
+            builder.Services.AddRefitClient<IPlanejamentoMatriculaSequencialApiContract>(settings).ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri($"{urlBase}/planejamentos-matriculas-sequenciais");
+            });
+
             builder.Services.AddRefitClient<IEscolaSalaApiContract>(settings).ConfigureHttpClient(c =>
             {
                 c.BaseAddress = new Uri($"{urlBase}/escolas-salas");

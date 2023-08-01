@@ -1,0 +1,116 @@
+﻿@page "/planejamento/matricula-sequencial/formulario/{id:int?}"
+@using Domain.Models.Entities
+@using Domain.Models.ViewModels
+@using PreMatriculasParanoa.Domain.Queries.Filters;
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.FormPageBase<PlanejamentoMatriculaSequencialAgrupado, PlanejamentoMatriculaSequencialFilter, PlanejamentoMatriculaSequencialAgrupadoViewModel, IPlanejamentoMatriculaSequencialApiContract>
+
+<EditForm Model="@Model" OnSubmit="OnSubmit">
+
+    <DataAnnotationsValidator />
+    <ObjectGraphDataAnnotationsValidator />
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Informações da origem das matrículas</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem md="6" xs="12">
+                    <EscolaSelect Label="Escola origem" @bind-Id="@Model.IdEscolaOrigem" Dense="true" OnSelected="@((vm) => Model.EscolaOrigem = vm)" />
+                </MudItem>
+                <MudItem md="2" xs="12">
+                    <MudNumericField Label="Ano letivo" Placeholder="Ano letivo"
+                    @bind-Value="Model.AnoLetivo"
+                                     For="@(() => Model.AnoLetivo)"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     MaxLength="4" />
+                </MudItem>
+                <MudItem md="2" xs="12">
+                    <MudNumericField Label="Série/ano origem" Placeholder="Série/ano origem"
+                    @bind-Value="Model.SerieAnoOrigem"
+                                     For="@(() => Model.SerieAnoOrigem)"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     MaxLength="2" />
+                </MudItem>
+                <MudItem md="2" xs="12">
+                    <MudNumericField Label="Série/ano destino" Placeholder="Série/ano destino"
+                        Value="Model.SerieAnoDestino"
+                        ReadOnly="true"
+                        Variant="Variant.Outlined"
+                        Margin="Margin.Dense"
+                        MaxLength="2" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudCard Elevation="0">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Color="Color.Primary">Escolas destinadas</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => AdicionarMatriculaSequencial())">
+                    <MudIcon Icon="@Icons.Material.Filled.Add"></MudIcon>
+                    <MudSpacer></MudSpacer>
+                    Adicionar Escola Destino
+                </MudButton>
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTable Context="MatriculaSequencial" Items="@Model.MatriculasSequenciais"
+                      FixedHeader="true" Elevation="0" ReadOnly="false" Bordered="false" Dense="true" Striped="true"
+                      Breakpoint="Breakpoint.Sm" Loading="@State.Carregando" LoadingProgressColor="Color.Info"
+                      NoRecordsContent='ObterTextoPadraoConteudoVazioMudTable($"Nenhuma escola destino cadastrada")'>
+                <HeaderContent>
+                    <MudTh>Escola origem</MudTh>
+                    <MudTh>Série/ano origem</MudTh>
+                    <MudTh>Escola destino</MudTh>
+                    <MudTh>Série/ano destino</MudTh>
+                    <MudTh>Total de matrículas destinadas</MudTh>
+                    <MudTh Style="text-align:center"></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Escola origem">
+                        <MudText>@Model.NomeEscolaOrigem</MudText>
+                    </MudTd>
+                    <MudTd DataLabel="Série/ano origem">
+                        <MudText>@MatriculaSequencial.SerieAnoOrigem</MudText>
+                    </MudTd>
+                    <MudTd DataLabel="Escola destino">
+                        <EscolaSelect Label="" @bind-Id="@MatriculaSequencial.IdEscolaDestino" Dense="true" />
+                    </MudTd>
+                    <MudTd DataLabel="Série/ano destino">
+                        <MudText>@MatriculaSequencial.SerieAnoDestino</MudText>
+                    </MudTd>
+                    <MudTd DataLabel="Total de matrículas destinadas">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        @bind-Value="@MatriculaSequencial.TotalMatriculas"></MudNumericField>
+                    </MudTd>
+                    <MudTd Style="text-align:center">
+                        <MudIconButton Title="Excluir série/ano" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"
+                                       OnClick="(() => ExcluirMatriculaSequencial(MatriculaSequencial))"></MudIconButton>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudCardContent>
+    </MudCard>
+
+    <div style="position: fixed; bottom: 30px; right: 30px;">
+        <MudTooltip Text="Cancelar" Placement="Placement.Top">
+            <MudFab StartIcon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
+                    OnClick="@(() => OpenRoute(BackRoute))"
+                    DisableElevation="true" />
+        </MudTooltip>
+        <MudTooltip Text="Salvar" Placement="Placement.Top">
+            <MudFab StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Large" ButtonType="ButtonType.Submit" />
+        </MudTooltip>
+    </div>
+
+</EditForm>

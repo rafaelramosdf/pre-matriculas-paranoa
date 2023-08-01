@@ -16,9 +16,8 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         [RequiredValidation("Ano Letivo")]
         public int AnoLetivo { get; set; }
 
-        [RequiredValidation("Série/Ano origem")]
         public int SerieAnoOrigem { get; set; }
-        public int SerieAnoDestino => SerieAnoOrigem++;
+        public int SerieAnoDestino => SerieAnoOrigem + 1;
 
 
         [RequiredValidation("EscolaOrigem")]
@@ -37,16 +36,15 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int TotalMatriculas { get; set; }
     }
 
-    public class PlanejamentoMatriculaSequencialAgrupadoViewModel : ViewModel<PlanejamentoMatriculaSequencial> 
+    public class PlanejamentoMatriculaSequencialAgrupadoViewModel : ViewModel<PlanejamentoMatriculaSequencialAgrupado> 
     {
         public List<PlanejamentoMatriculaSequencialViewModel> MatriculasSequenciais { get; set; } = new List<PlanejamentoMatriculaSequencialViewModel>();
 
         [RequiredValidation("Ano Letivo")]
         public int AnoLetivo { get; set; }
 
-        [RequiredValidation("Série/Ano origem")]
         public int SerieAnoOrigem { get; set; }
-        public int SerieAnoDestino => SerieAnoOrigem++;
+        public int SerieAnoDestino => SerieAnoOrigem + 1;
 
 
         [RequiredValidation("EscolaOrigem")]

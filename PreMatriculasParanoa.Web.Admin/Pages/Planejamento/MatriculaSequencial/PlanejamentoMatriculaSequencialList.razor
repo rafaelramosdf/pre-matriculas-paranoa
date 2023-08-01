@@ -1,0 +1,72 @@
+﻿@page "/planejamento/matricula-sequencial"
+
+@using Domain.Models.ViewModels
+@using Domain.Models.Entities
+@using PreMatriculasParanoa.Domain.Queries.Filters
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.ListPageBase<PlanejamentoMatriculaSequencialAgrupado, PlanejamentoMatriculaSequencialFilter, PlanejamentoMatriculaSequencialAgrupadoViewModel, IPlanejamentoMatriculaSequencialApiContract>
+@inject ISnackbar Snackbar
+
+<MudOverlay @bind-Visible="State.Carregando" DarkBackground="false" ZIndex="999999" AutoClose="true">
+    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+</MudOverlay>
+
+<MudTable ServerData="@(new Func<TableState, Task<TableData<PlanejamentoMatriculaSequencialAgrupadoViewModel>>>(ServerReload))"
+@ref="Table"
+          Dense="true"
+          Hover="true"
+          ReadOnly="true"
+          Striped="false"
+@bind-SelectedItem="ItemSelecionado"
+          SortLabel="Ordenar por"
+          Elevation="0">
+
+    <ToolBarContent>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s => OnSearch(s))"
+                      Placeholder="Pesquisar por Escola origem"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0">
+        </MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel T="PlanejamentoMatriculaSequencialAgrupadoViewModel" SortLabel="@nameof(PlanejamentoMatriculaSequencialAgrupadoViewModel.NomeEscolaOrigem)" InitialDirection="SortDirection.Ascending">
+                Escola origem
+            </MudTableSortLabel>
+        </MudTh>
+        <MudTh Style="text-align: center">Ano letivo</MudTh>
+        <MudTh Style="text-align: center">Série/ano origem</MudTh>
+        <MudTh Style="text-align: center">Série/ano destino</MudTh>
+        <MudTh Style="text-align: center">Total escolas destinadas</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Escola origem">@context.NomeEscolaOrigem</MudTd>
+        <MudTd DataLabel="Ano letivo" Style="text-align: center">@context.AnoLetivo</MudTd>
+        <MudTd DataLabel="Série/ano origem" Style="text-align: center">@context.SerieAnoOrigem</MudTd>
+        <MudTd DataLabel="Série/ano destino" Style="text-align: center">@context.SerieAnoDestino</MudTd>
+        <MudTd DataLabel="Total escolas destinadas" Style="text-align: center">@context.MatriculasSequenciais.Count</MudTd>
+        <MudTd Style="text-align: right">
+            <MudTooltip Text="Editar/Visualizar">
+                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenRoute($"/planejamento/matricula-sequencial/formulario/{context.MatriculasSequenciais.FirstOrDefault().Id}"))"></MudIconButton>
+            </MudTooltip>
+            <MudTooltip Text="Excluir">
+                <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => Excluir(context.Id))"></MudIconButton>
+            </MudTooltip>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager Style="float: left;"
+                       RowsPerPageString="Itens por página: "
+                       PageSizeOptions="new int[] { 5, 10, 20, 50, 100 }"
+                       InfoFormat="{first_item}-{last_item} de {all_items}" />
+    </PagerContent>
+</MudTable>
+
+<MudFab Style="position: fixed; bottom: 30px; right: 30px;"
+        Color="Color.Success" StartIcon="@Icons.Material.Filled.Add"
+        OnClick="@(() => OpenRoute("/planejamento/matricula-sequencial/formulario"))" />
