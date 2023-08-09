@@ -31,5 +31,15 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public int TotalSeriesAnosCadastrados => SeriesAnos?.Count ?? 0;
         public int TotalTurmasCadastradas => SeriesAnos?.SelectMany(s => s.Turmas)?.Count() ?? 0;
+
+        public int TotalSequencialEntrando => 0; // TODO: A fazer: Criar relacionamento no banco de dados para buscar via "Include", e montar totalizador.        
+        public int TotalCentralMatriculasEntrando => SeriesAnos?.Sum(s => s.EntradaCentralMatricula) ?? 0;
+        public int TotalRetidosEntrando => SeriesAnos?.Sum(s => s.EntradaRetidosSerieAnoAtual) ?? 0;
+        public int TotalRemanejamentoEntrando => SeriesAnos?.Sum(s => s.EntradaRemanejamento) ?? 0;
+        public int TotalAprovadosUltimoAnoSaindo => SeriesAnos?.Where(s => s.UltimaSerieAno)?.Sum(s => s.SaidaAprovadosAnoAtual) ?? 0;
+        public int TotalRemanejamentoSaindo => SeriesAnos?.Sum(s => s.SaidaRemanejamento) ?? 0;
+
+        public int TotalCapacidade => SeriesAnos?.Sum(s => s.TotalCapacidadeFisicaAcordada) ?? 0;
+        public int TotalVagasDisponiveis => SeriesAnos?.Sum(s => s.TotalVagasDisponiveis) ?? 0;
     }
 }

@@ -23,7 +23,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int EntradaCentralMatricula { get; set; }
         public int EntradaRemanejamento { get; set; }
         public int SaidaRemanejamento { get; set; }
-        public int SaidaAprovadosUltimaSerieAno { get; set; }
+        public int SaidaAprovadosAnoAtual { get; set; }
         public int IdPlanejamentoAnoLetivo { get; set; }
 
         [JsonIgnore]
@@ -33,12 +33,12 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public List<PlanejamentoTurmaViewModel> Turmas { get; set; } = new List<PlanejamentoTurmaViewModel>();
 
         public int TotalTurmas => Turmas.Count;
-        public int TotalCapacidadeFisicaPadrao => Turmas.Sum(t => Math.Round(t.Sala?.CapacidadeFisicaPadrao ?? 0m).ToInt32());
-        public int TotalCapacidadeFisicaAcordada => Turmas.Sum(t => Math.Round(t.CapacidadeFisicaAcordada).ToInt32());
+        public int TotalCapacidadeFisicaPadrao => Turmas.Sum(t => Math.Round(t.Sala?.CapacidadeFisicaPadrao ?? 0m, 0, MidpointRounding.AwayFromZero).ToInt32());
+        public int TotalCapacidadeFisicaAcordada => Turmas.Sum(t => Math.Round(t.CapacidadeFisicaAcordada, 0, MidpointRounding.AwayFromZero).ToInt32());
         public int TotalVagasDisponiveis =>
             TotalCapacidadeFisicaAcordada - 
                 ((EntradaAprovadosSerieAnoAnterior + EntradaCentralMatricula + EntradaRemanejamento + EntradaRetidosSerieAnoAtual + EntradaSequencial) - 
-                    (SaidaAprovadosUltimaSerieAno + SaidaRemanejamento));
+                    (SaidaAprovadosAnoAtual + SaidaRemanejamento));
 
         public bool ExibirDetalhesTurmas { get; set; } = false;
     }

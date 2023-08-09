@@ -20,7 +20,7 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
         public int EntradaCentralMatricula { get; set; }
         public int EntradaRemanejamento { get; set; }
         public int SaidaRemanejamento { get; set; }
-        public int SaidaAprovadosUltimaSerieAno { get; set; }
+        public int SaidaAprovadosAnoAtual { get; set; }
 
         [ForeignKey("PlanejamentoAnoLetivo")]
         public int IdPlanejamentoAnoLetivo { get; set; }

@@ -36,7 +36,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
             const decimal METRAGEM_POR_ALUNO = 1.2m;
             if (Metragem > METRAGEM_POR_ALUNO)
             {
-                CapacidadeFisicaPadrao = Math.Round(Metragem / METRAGEM_POR_ALUNO, 2);
+                CapacidadeFisicaPadrao = Math.Round(Metragem / METRAGEM_POR_ALUNO, 0, MidpointRounding.AwayFromZero);
             }
         }
     }

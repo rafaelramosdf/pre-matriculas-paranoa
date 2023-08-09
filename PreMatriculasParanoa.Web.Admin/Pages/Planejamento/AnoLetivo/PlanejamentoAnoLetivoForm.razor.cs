@@ -38,7 +38,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
                 Model.SeriesAnos.Add(new PlanejamentoSerieAnoViewModel
                 {
                     IdPlanejamentoAnoLetivo = Model.IdPlanejamentoAnoLetivo,
-                    SerieAno = Model.SeriesAnos.OrderByDescending(o => o.SerieAno).First().SerieAno + 1
+                    SerieAno = Model.SeriesAnos.OrderBy(o => o.SerieAno).Last().SerieAno + 1
                 });
 
                 await OrdenarListaSeriesAnos();
@@ -63,7 +63,37 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
         {
             await Task.Run(() =>
             {
-                Model.SeriesAnos = Model.SeriesAnos.OrderByDescending(o => o.SerieAno).ToList();
+                Model.SeriesAnos = Model.SeriesAnos.OrderBy(o => o.SerieAno).ToList();
+                foreach (var s in Model.SeriesAnos)
+                {
+                    s.PrimeiraSerieAno = false;
+                    s.UltimaSerieAno = false;
+                }
+                Model.SeriesAnos.First().PrimeiraSerieAno = true;
+                Model.SeriesAnos.Last().UltimaSerieAno = true;
+            });
+        }
+
+        protected async Task AoSelecionarBotaoExibirTurmas(PlanejamentoSerieAnoViewModel serieAno) 
+        {
+            await Task.Run(() => 
+            {
+                foreach (var s in Model.SeriesAnos.Where(m => m != serieAno))
+                    s.ExibirDetalhesTurmas = false;
+
+                serieAno.ExibirDetalhesTurmas = !serieAno.ExibirDetalhesTurmas;
+            });
+        }
+
+        protected async Task SomarSequencialAprovadosAnoAnterior(PlanejamentoSerieAnoViewModel serieAno) 
+        {
+            await Task.Run(() => 
+            {
+                if(serieAno.UltimaSerieAno == false) 
+                {
+                    var indiceProximaSerieAno = Model.SeriesAnos.IndexOf(serieAno) + 1;
+                    Model.SeriesAnos[indiceProximaSerieAno].EntradaAprovadosSerieAnoAnterior = serieAno.SaidaAprovadosAnoAtual;
+                }
             });
         }
 

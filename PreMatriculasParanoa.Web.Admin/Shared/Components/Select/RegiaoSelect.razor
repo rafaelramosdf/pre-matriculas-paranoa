@@ -1,0 +1,32 @@
+﻿@namespace PreMatriculasParanoa.Web.Admin.Shared.Components.Select
+
+@using PreMatriculasParanoa.Domain.Models.Enumerations
+
+<MudSelect T="EnumRegiao"
+           Value="@Value"
+           Label="@Label"
+           ValueChanged="@OnValueChanged"
+           Variant="@Variant"
+           Margin="@(Dense ? Margin.Dense : Margin.Normal)"
+           Dense="@Dense"
+           Clearable="false">
+    @{
+        foreach (var item in Enum.GetValues<EnumRegiao>())
+        {
+            <MudSelectItem Value="@item">@item.EnumDescription()</MudSelectItem>
+        }
+    }
+</MudSelect>
+
+@code {
+    [Parameter] public EnumRegiao Value { get; set; }
+    [Parameter] public string Label { get; set; }
+    [Parameter] public Variant Variant { get; set; } = Variant.Outlined;
+    [Parameter] public bool Dense { get; set; } = false;
+    [Parameter] public EventCallback<EnumRegiao> ValueChanged { get; set; }
+
+    private void OnValueChanged(EnumRegiao value)
+    {
+        ValueChanged.InvokeAsync(value);
+    }
+}
