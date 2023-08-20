@@ -1,0 +1,84 @@
+﻿@using PreMatriculasParanoa.Domain.Models.ViewModels;
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.PageBase
+
+<MudSimpleTable Elevation="0" Striped="true">
+    <thead>
+        <tr>
+            <th></th>
+            @foreach (var escolaDestino in Model.EscolasDestino)
+            {
+                <th style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <MudTooltip Text="@escolaDestino.Nome">
+                        @escolaDestino.Nome
+                    </MudTooltip>
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var escolaOrigem in Model.EscolasOrigem)
+        {
+            <tr>
+                <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right;">
+                    <MudTooltip Text="@escolaOrigem.Nome">
+                        @escolaOrigem.Nome
+                    </MudTooltip>
+                </td>
+                @foreach (var escolaDestino in Model.EscolasDestino)
+                {
+                    var matriculaSequencial = Model.MatriculasSequenciais
+                    .First(m => m.IdEscolaOrigem == escolaOrigem.Id && m.IdEscolaDestino == escolaDestino.Id);
+
+                    <td style="text-align: center">
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="2" @bind-Value="@matriculaSequencial.TotalMatriculas"
+                                         OnInternalInputChanged="(() => AtualizarMatriculaSequencial(matriculaSequencial))">
+                        </MudNumericField>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</MudSimpleTable>
+
+<div style="position: fixed; bottom: 30px; right: 30px;">
+    <MudTooltip Text="Cancelar" Placement="Placement.Top">
+        <MudFab StartIcon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
+                OnClick="@(() => OpenRoute("/"))"
+                DisableElevation="true" />
+    </MudTooltip>
+    <MudTooltip Text="Salvar" Placement="Placement.Top">
+        <MudFab StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Large" ButtonType="ButtonType.Button" OnClick="(() => Salvar())" />
+    </MudTooltip>
+</div>
+
+@code {
+    [Inject] protected IPlanejamentoMatriculaSequencialApiContract ApiService { get; set; }
+
+    [Parameter] public PlanejamentoMatriculaSequencialAgrupadoViewModel Model { get; set; }
+    [Parameter] public EventCallback<PlanejamentoMatriculaSequencialAgrupadoViewModel> ModelChanged { get; set; }
+
+    protected async Task AtualizarMatriculaSequencial(PlanejamentoMatriculaSequencialViewModel matriculaSequencial)
+    {
+        await Task.Run(() =>
+        {
+            Model.MatriculasSequenciais.First(m => m.IdEscolaOrigem == matriculaSequencial.IdEscolaOrigem 
+                && m.IdEscolaDestino == matriculaSequencial.IdEscolaDestino).TotalMatriculas = matriculaSequencial.TotalMatriculas;
+        });
+    }
+
+    protected async Task Salvar()
+    {
+        var apiResponse = await ApiService.Incluir(Model);
+
+        var commandResultErrors = GetCommandResultErrors(apiResponse);
+        if (commandResultErrors?.Any() == true)
+        {
+            Alert(Severity.Error, commandResultErrors);
+            return;
+        }
+
+        Alert(Severity.Success, "Dados salvos com sucesso!");
+        StateHasChanged();
+    }
+}

@@ -1,7 +1,9 @@
 ﻿using PreMatriculasParanoa.Domain.Models.Entities;
+using PreMatriculasParanoa.Domain.Models.Enumerations;
 using PreMatriculasParanoa.Domain.Queries.Contracts;
 using PreMatriculasParanoa.Domain.Queries.Filters;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace PreMatriculasParanoa.Domain.Queries

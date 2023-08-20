@@ -3,7 +3,6 @@ using Microsoft.JSInterop;
 using MudBlazor;
 using Newtonsoft.Json;
 using PreMatriculasParanoa.Domain.Models.Base;
-using PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Models;
 using Refit;
 using System;
 using System.Collections.Generic;

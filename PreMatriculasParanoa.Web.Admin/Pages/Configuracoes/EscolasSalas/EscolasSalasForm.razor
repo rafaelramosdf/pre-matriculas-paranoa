@@ -19,29 +19,32 @@
         </MudCardHeader>
         <MudCardContent>
             <MudGrid>
-                <MudItem md="4" xs="12">
+                <MudItem md="5" xs="12">
                     <MudTextField Label="Nome da escola" Placeholder="Nome da escola"
                     @bind-Value="Model.Nome"
                                   For="@(() => Model.Nome)"
                                   Variant="Variant.Outlined"
                                   Margin="Margin.Dense" />
                 </MudItem>
-                <MudItem md="2" xs="12">
+                <MudItem md="3" xs="12">
                     <MudTextField Label="Cidade" Placeholder="Cidade"
                     @bind-Value="Model.Cidade"
                                   For="@(() => Model.Cidade)"
                                   Variant="Variant.Outlined"
                                   Margin="Margin.Dense" />
                 </MudItem>
-                <MudItem md="3" xs="12">
+                <MudItem md="4" xs="12">
                     <MudTextField Label="Bairro" Placeholder="Bairro"
                     @bind-Value="Model.Bairro"
                                   For="@(() => Model.Bairro)"
                                   Variant="Variant.Outlined"
                                   Margin="Margin.Dense" />
                 </MudItem>
-                <MudItem md="3" xs="12">
-                    <RegiaoSelect @bind-Value="@Model.Regiao" Dense="true" />
+                <MudItem md="4" xs="12">
+                    <RegiaoSelect Label="Reigião (localidade)" @bind-Value="@Model.Regiao" Dense="true" />
+                </MudItem>
+                <MudItem md="8" xs="12">
+                    <ModalidadeEducacaoSelect Label="Modalidade educação (infantil, fundamental, médio, etc)" @bind-Value="@Model.ModalidadeEnsino" Dense="true" />
                 </MudItem>
             </MudGrid>
         </MudCardContent>

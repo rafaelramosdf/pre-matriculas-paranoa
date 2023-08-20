@@ -1,0 +1,45 @@
+﻿@page "/planejamento/matricula-sequencial"
+
+@using Domain.Models.ViewModels
+@using Domain.Models.Entities
+@using PreMatriculasParanoa.Domain.Queries.Filters
+@using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.PageBase
+@inject ISnackbar Snackbar
+
+<MudOverlay @bind-Visible="State.Carregando" DarkBackground="false" ZIndex="999999" AutoClose="true">
+    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+</MudOverlay>
+
+<MudCard Elevation="0">
+    <MudCardContent>
+        <MudGrid>
+            <MudItem md="6" xs="12">
+                <PeriodoMatriculaSequencialSelect Label="Período" @bind-Value="@Filtro.PeriodoMatriculaSequencial" Dense="true" />
+            </MudItem>
+            <MudItem md="3" xs="12">
+                <RegiaoSelect Label="Região" @bind-Value="@Filtro.Regiao" Dense="true" />
+            </MudItem>
+            <MudItem md="2" xs="12">
+                <MudNumericField Label="Ano Letivo" Placeholder="Ano Letivo"
+                @bind-Value="Filtro.AnoLetivo"
+                                 For="@(() => Filtro.AnoLetivo)"
+                                 Variant="Variant.Outlined"
+                                 Margin="Margin.Dense"
+                                 MaxLength="4" />
+            </MudItem>
+            <MudItem md="1" xs="12">
+                <MudButton Color="Color.Primary" Variant="Variant.Outlined" Size="Size.Large" FullWidth="true" OnClick="(() => Buscar())">
+                    Buscar
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+<MudCard Elevation="0">
+    <MudCardContent>
+        <MatriculaSequencialTable @bind-Model="Model"></MatriculaSequencialTable>
+    </MudCardContent>
+</MudCard>

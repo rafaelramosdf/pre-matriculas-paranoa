@@ -16,6 +16,19 @@ public interface IByIdQueryHandlerAsync<TViewModel>
     Task<TViewModel> Execute(int id);
 }
 
+public interface IByFilterQueryHandler<out TViewModel, in TFilter>
+    where TViewModel : IViewModel
+    where TFilter : Filter
+{
+    TViewModel Execute(TFilter filtro);
+}
+public interface IByFilterQueryHandlerAsync<TViewModel, in TFilter>
+    where TViewModel : IViewModel
+    where TFilter : Filter
+{
+    Task<TViewModel> Execute(TFilter filtro);
+}
+
 public interface IDataTableQueryHandler<TViewModel, TFilter>
     where TViewModel : IViewModel
     where TFilter : Filter
@@ -27,19 +40,6 @@ public interface IDataTableQueryHandlerAsync<TViewModel, TFilter>
     where TFilter : Filter
 {
     Task<DataTableModel<TViewModel>> Execute(TFilter filtro);
-}
-
-public interface IEnumerableQueryHandler<out TViewModel, in TFilter>
-    where TViewModel : IViewModel
-    where TFilter : Filter
-{
-    IEnumerable<TViewModel> Execute(TFilter filtro);
-}
-public interface IEnumerableQueryHandlerAsync<TViewModel, in TFilter>
-    where TViewModel : IViewModel
-    where TFilter : Filter
-{
-    Task<IEnumerable<TViewModel>> Execute(TFilter filtro);
 }
 
 public interface ISelectQueryHandler 

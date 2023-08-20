@@ -1,4 +1,6 @@
 ﻿using PreMatriculasParanoa.Domain.Models.Base;
+using PreMatriculasParanoa.Domain.Models.Enumerations;
+using PreMatriculasParanoa.Domain.Models.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,11 +13,8 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
 
         [Key]
         public int IdPlanejamentoMatriculaSequencial { get; set; }
-
         public int AnoLetivo { get; set; }
-
-        public int SerieAnoOrigem { get; set; }
-        public int SerieAnoDestino { get; set; }
+        public EnumPeriodoMatriculaSequencial PeriodoMatriculaSequencial { get; set; }
 
         [ForeignKey("EscolaOrigem")]
         public int IdEscolaOrigem { get; set; }
@@ -30,16 +29,13 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
 
     public class PlanejamentoMatriculaSequencialAgrupado : Entity
     {
-        public IEnumerable<PlanejamentoMatriculaSequencial> MatriculasSequenciais { get; set; } = new List<PlanejamentoMatriculaSequencial>();
-
         public int AnoLetivo { get; set; }
+        public EnumPeriodoMatriculaSequencial PeriodoMatriculaSequencial { get; set; }
 
-        public int SerieAnoOrigem { get; set; }
-        public int SerieAnoDestino { get; set; }
+        public List<PlanejamentoMatriculaSequencial> MatriculasSequenciais { get; set; } =
+            new List<PlanejamentoMatriculaSequencial>();
 
-        public int IdEscolaOrigem { get; set; }
-        public Escola EscolaOrigem { get; set; }
-
-        public int TotalGeralMatriculas { get; set; }
+        public List<EscolaViewModel> EscolasOrigem { get; set; } = new List<EscolaViewModel>();
+        public List<EscolaViewModel> EscolasDestino { get; set; } = new List<EscolaViewModel>();
     }
 }

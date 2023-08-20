@@ -182,8 +182,7 @@ namespace PreMatriculasParanoa.Api
 
             #region PlanejamentoMatriculaSequencial
             services.AddScoped<IIncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler, IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler>();
-            services.AddScoped<IBuscarPlanejamentoMatriculaSequencialPorIdQueryHandler, BuscarPlanejamentoMatriculaSequencialPorIdQueryHandler>();
-            services.AddScoped<IObterDataTablePlanejamentoMatriculaSequencialQueryHandler, ObterDataTablePlanejamentoMatriculaSequencialQueryHandler>();
+            services.AddScoped<IBuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler, BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler>();
             services.AddScoped<IExcluirPlanejamentoMatriculaSequencialCommandHandler, ExcluirPlanejamentoMatriculaSequencialCommandHandler>();
             #endregion
 

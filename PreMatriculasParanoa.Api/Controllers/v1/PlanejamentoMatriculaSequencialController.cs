@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using PreMatriculasParanoa.Domain.Resources;
 using PreMatriculasParanoa.Domain.Handlers.PlanejamentoMatriculaSequencial;
 using PreMatriculasParanoa.Domain.Queries.Filters;
+using System.Threading.Tasks;
 
 namespace PreMatriculasParanoa.Api.Controllers.v1
 {
@@ -14,57 +15,60 @@ namespace PreMatriculasParanoa.Api.Controllers.v1
     public class PlanejamentoMatriculaSequencialController : ControllerBase
     {
         [HttpPost]
-        public ActionResult<CommandResult> Incluir(
+        public async Task<ActionResult<CommandResult>> Incluir(
             [FromServices] IIncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler handler,
             [FromBody] PlanejamentoMatriculaSequencialAgrupadoViewModel vm)
         {
-            var result = handler.Execute(vm);
-            return StatusCode(result.StatusCode, result);
+            return await Task.Run(() => 
+            {
+                var result = handler.Execute(vm);
+                return StatusCode(result.StatusCode, result);
+            });
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<PlanejamentoMatriculaSequencialAgrupadoViewModel> Buscar(int id,
-            [FromServices] IBuscarPlanejamentoMatriculaSequencialPorIdQueryHandler handler)
+        public ActionResult<PlanejamentoMatriculaSequencialAgrupadoViewModel> Buscar(int id)
         {
-            var result = handler.Execute(id);
-
-            if (result == null)
-                return NotFound(GeneralMessageResource.NenhumRecursoEncontradoParaID);
-
-            return StatusCode(StatusCodes.Status200OK, result);
+            return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
         [HttpGet]
-        public ActionResult<DataTableModel<PlanejamentoMatriculaSequencialAgrupadoViewModel>> Buscar(
-            [FromServices] IObterDataTablePlanejamentoMatriculaSequencialQueryHandler handler,
+        public async Task<ActionResult<PlanejamentoMatriculaSequencialAgrupadoViewModel>> Buscar(
+            [FromServices] IBuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler handler,
             [FromQuery] PlanejamentoMatriculaSequencialFilter filtro)
         {
-            var result = handler.Execute(filtro);
+            var result = await handler.Execute(filtro);
             return StatusCode(StatusCodes.Status200OK, result);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<CommandResult> Alterar(int id,
+        public async Task<ActionResult<CommandResult>> Alterar(int id,
             [FromServices] IIncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler handler,
             [FromBody] PlanejamentoMatriculaSequencialAgrupadoViewModel vm)
         {
-            if (id != vm.Id)
+            return await Task.Run(() => 
             {
-                var commandResult = new CommandResult(StatusCodes.Status400BadRequest);
-                commandResult.SetError(ValidationMessageResource.IdInvalido);
-                return StatusCode(commandResult.StatusCode, commandResult);
-            }
+                if (id != vm.Id)
+                {
+                    var commandResult = new CommandResult(StatusCodes.Status400BadRequest);
+                    commandResult.SetError(ValidationMessageResource.IdInvalido);
+                    return StatusCode(commandResult.StatusCode, commandResult);
+                }
 
-            var result = handler.Execute(vm);
-            return StatusCode(result.StatusCode, result);
+                var result = handler.Execute(vm);
+                return StatusCode(result.StatusCode, result);
+            });
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult<CommandResult> Excluir(int id,
+        public async Task<ActionResult<CommandResult>> Excluir(int id,
             [FromServices] IExcluirPlanejamentoMatriculaSequencialCommandHandler handler)
         {
-            var result = handler.Execute(id);
-            return StatusCode(result.StatusCode, result);
+            return await Task.Run(() => 
+            {
+                var result = handler.Execute(id);
+                return StatusCode(result.StatusCode, result);
+            });
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
+using PreMatriculasParanoa.Domain.Models.Enumerations;
 using PreMatriculasParanoa.Domain.Models.ViewModels.Validations;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -16,8 +16,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         [RequiredValidation("Ano Letivo")]
         public int AnoLetivo { get; set; }
 
-        public int SerieAnoOrigem { get; set; }
-        public int SerieAnoDestino => SerieAnoOrigem + 1;
+        public EnumPeriodoMatriculaSequencial PeriodoMatriculaSequencial { get; set; }
 
 
         [RequiredValidation("EscolaOrigem")]
@@ -36,22 +35,17 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int TotalMatriculas { get; set; }
     }
 
-    public class PlanejamentoMatriculaSequencialAgrupadoViewModel : ViewModel<PlanejamentoMatriculaSequencialAgrupado> 
+    public class PlanejamentoMatriculaSequencialAgrupadoViewModel : ViewModel<PlanejamentoMatriculaSequencialAgrupado>
     {
-        public List<PlanejamentoMatriculaSequencialViewModel> MatriculasSequenciais { get; set; } = new List<PlanejamentoMatriculaSequencialViewModel>();
 
         [RequiredValidation("Ano Letivo")]
         public int AnoLetivo { get; set; }
+        public EnumPeriodoMatriculaSequencial PeriodoMatriculaSequencial { get; set; }
 
-        public int SerieAnoOrigem { get; set; }
-        public int SerieAnoDestino => SerieAnoOrigem + 1;
+        public List<PlanejamentoMatriculaSequencialViewModel> MatriculasSequenciais { get; set; } = 
+            new List<PlanejamentoMatriculaSequencialViewModel>();
 
-
-        [RequiredValidation("EscolaOrigem")]
-        public int IdEscolaOrigem { get; set; }
-        public string NomeEscolaOrigem => EscolaOrigem?.Nome;
-        public EscolaViewModel EscolaOrigem { get; set; }
-
-        public int TotalGeralMatriculas => MatriculasSequenciais.Sum(s => s.TotalMatriculas);
+        public List<EscolaViewModel> EscolasOrigem { get; set; } = new List<EscolaViewModel>();
+        public List<EscolaViewModel> EscolasDestino { get; set; } = new List<EscolaViewModel>();
     }
 }

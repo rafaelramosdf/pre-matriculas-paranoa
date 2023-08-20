@@ -38,12 +38,14 @@
                 Nome
             </MudTableSortLabel>
         </MudTh>
+        <MudTh>Modalidade ensino</MudTh>
         <MudTh Style="text-align: center">Salas</MudTh>
         <MudTh Style="text-align: center">Capacidade física</MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nome">@context.Nome</MudTd>
+        <MudTd DataLabel="Modalidade ensino">@context.ModalidadeEnsino.EnumDescription()</MudTd>
         <MudTd DataLabel="Salas" Style="text-align: center">@context.Salas.Count</MudTd>
         <MudTd DataLabel="Capacidade física" Style="text-align: center">@context.CapacidadeFisica</MudTd>
         <MudTd Style="text-align: right">

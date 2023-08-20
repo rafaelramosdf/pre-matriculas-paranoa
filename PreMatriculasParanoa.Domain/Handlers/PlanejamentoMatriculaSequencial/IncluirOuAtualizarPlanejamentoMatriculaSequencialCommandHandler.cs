@@ -42,8 +42,9 @@ public class IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler : I
             var planejamentoMatriculasSequenciaisAgrupadasResult = new PlanejamentoMatriculaSequencialAgrupadoViewModel 
             {
                 AnoLetivo = vm.AnoLetivo,
-                EscolaOrigem = vm.EscolaOrigem,
-                SerieAnoOrigem = vm.SerieAnoOrigem,
+                EscolasOrigem = vm.EscolasOrigem,
+                EscolasDestino = vm.EscolasDestino,
+                PeriodoMatriculaSequencial = vm.PeriodoMatriculaSequencial,
                 MatriculasSequenciais = new List<PlanejamentoMatriculaSequencialViewModel>()
             };
 

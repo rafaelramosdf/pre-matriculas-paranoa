@@ -22,6 +22,9 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public EnumRegiao Regiao { get; set; }
 
+        public EnumModalidadeEducacao ModalidadeEnsino { get; set; }
+
+
         [ValidateComplexType]
         public List<SalaViewModel> Salas { get; set; } = new List<SalaViewModel>();
 

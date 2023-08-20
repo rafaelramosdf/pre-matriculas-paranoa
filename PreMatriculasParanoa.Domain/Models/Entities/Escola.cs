@@ -17,6 +17,7 @@ namespace PreMatriculasParanoa.Domain.Models.Entities
         public string Cidade { get; set; }
         public string Bairro { get; set; }
         public EnumRegiao Regiao { get; set; }
+        public EnumModalidadeEducacao ModalidadeEnsino { get; set; }
 
         public ICollection<Sala> Salas { get; set; }
         public ICollection<PlanejamentoAnoLetivo> PlanejamentosAnosLetivos { get; set; }
