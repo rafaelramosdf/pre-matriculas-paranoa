@@ -7,6 +7,7 @@ using System;
 using PreMatriculasParanoa.Domain.Models.Base;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 
 namespace PreMatriculasParanoa.Domain.Handlers.PlanejamentoMatriculaSequencial;
 
@@ -18,17 +19,20 @@ public class IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler : I
 {
     private readonly ILogger<IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler> logger;
     private readonly IPlanejamentoMatriculaSequencialRepository repository;
+    private readonly IAtualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler atualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler;
     protected readonly IUnitOfWork unitOfWork;
     private readonly IMapper mapper;
 
     public IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler(
         IPlanejamentoMatriculaSequencialRepository repository,
+        IAtualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler atualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler,
         IUnitOfWork unitOfWork,
         IMapper mapper,
         ILogger<IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler> logger)
     {
         this.logger = logger;
         this.repository = repository;
+        this.atualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler = atualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler;
         this.unitOfWork = unitOfWork;
         this.mapper = mapper;
     }
@@ -56,7 +60,11 @@ public class IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler : I
                 repository.Update(matriculaSequencial);
                 unitOfWork.Commit();
 
-                planejamentoMatriculasSequenciaisAgrupadasResult.MatriculasSequenciais.Add(mapper.Map<PlanejamentoMatriculaSequencialViewModel>(matriculaSequencial));
+                planejamentoMatriculasSequenciaisAgrupadasResult.MatriculasSequenciais
+                    .Add(mapper.Map<PlanejamentoMatriculaSequencialViewModel>(matriculaSequencial));
+
+                // Atualiza o total de matriculas sequenciais no planejamento da escola destino
+                atualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler.Execute(mapper.Map<PlanejamentoMatriculaSequencialViewModel>(matriculaSequencial));
             }
 
             unitOfWork.CommitTransaction();

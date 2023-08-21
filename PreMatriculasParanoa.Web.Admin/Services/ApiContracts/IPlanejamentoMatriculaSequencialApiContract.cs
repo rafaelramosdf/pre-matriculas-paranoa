@@ -11,5 +11,8 @@ namespace PreMatriculasParanoa.Web.Admin.Services.ApiContracts
     {
         [Get("")]
         Task<PlanejamentoMatriculaSequencialAgrupadoViewModel> BuscarSequencialAgrupado([Query] PlanejamentoMatriculaSequencialFilter filtro);
+
+        [Get("/escolas/{idEscolaDestino}/anos-letivos/{ano}")]
+        Task<int> BuscarTotalPorEscolaEAnoLetivo(int idEscolaDestino, int ano);
     }
 }

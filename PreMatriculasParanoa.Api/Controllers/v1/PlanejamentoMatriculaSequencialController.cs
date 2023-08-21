@@ -70,5 +70,20 @@ namespace PreMatriculasParanoa.Api.Controllers.v1
                 return StatusCode(result.StatusCode, result);
             });
         }
+
+        [HttpGet("escolas/{idEscolaDestino:int}/anos-letivos/{ano:int}")]
+        public async Task<ActionResult<int>> BuscarTotalPorEscolaEAnoLetivo(
+            int idEscolaDestino, int ano,
+            [FromServices] IBuscarTotalMatriculasSequencialPorPlanejamentoQueryHandler handler
+            )
+        {
+            var filtro = new PlanejamentoMatriculaSequencialFilter 
+            {
+                IdEscolaDestino = idEscolaDestino,
+                AnoLetivo = ano
+            };
+            var result = await handler.Execute(filtro);
+            return StatusCode(StatusCodes.Status200OK, result);
+        }
     }
 }

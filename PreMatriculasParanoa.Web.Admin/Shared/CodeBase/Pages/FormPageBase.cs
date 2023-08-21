@@ -19,7 +19,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         where TViewModel : ViewModel<TEntity>
         where TApiService : ICrudApiContract<TEntity, TFilter, TViewModel>
     {
-        [Inject] protected ILogger<FormPageBase<TEntity, TFilter, TViewModel, TApiService>> Log { get; set; }
+        [Inject] protected ILogger<FormPageBase<TEntity, TFilter, TViewModel, TApiService>> Logger { get; set; }
         [Inject] protected TApiService ApiService { get; set; }
         [Inject] protected IDialogService Dialog { get; set; }
 

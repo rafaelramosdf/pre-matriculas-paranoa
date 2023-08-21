@@ -5,6 +5,15 @@ using System.Threading.Tasks;
 
 namespace PreMatriculasParanoa.Domain.Handlers;
 
+public interface IQueryHandler<out TOutput, in TInput>
+{
+    TOutput Execute(TInput filtro);
+}
+public interface IQueryHandlerAsync<TOutput, in TInput>
+{
+    Task<TOutput> Execute(TInput filtro);
+}
+
 public interface IByIdQueryHandler<out TViewModel>
     where TViewModel : IViewModel
 {

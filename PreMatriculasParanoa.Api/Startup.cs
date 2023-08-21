@@ -178,12 +178,14 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IBuscarPlanejamentoAnoLetivoPorIdQueryHandler, BuscarPlanejamentoAnoLetivoPorIdQueryHandler>();
             services.AddScoped<IObterDataTablePlanejamentoAnoLetivoQueryHandler, ObterDataTablePlanejamentoAnoLetivoQueryHandler>();
             services.AddScoped<IExcluirPlanejamentoAnoLetivoCommandHandler, ExcluirPlanejamentoAnoLetivoCommandHandler>();
+            services.AddScoped<IAtualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler, AtualizarEntradaSequencialPlanejamentoAnoLetivoCommandHandler>();
             #endregion
 
             #region PlanejamentoMatriculaSequencial
             services.AddScoped<IIncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler, IncluirOuAtualizarPlanejamentoMatriculaSequencialCommandHandler>();
             services.AddScoped<IBuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler, BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler>();
             services.AddScoped<IExcluirPlanejamentoMatriculaSequencialCommandHandler, ExcluirPlanejamentoMatriculaSequencialCommandHandler>();
+            services.AddScoped<IBuscarTotalMatriculasSequencialPorPlanejamentoQueryHandler, BuscarTotalMatriculasSequencialPorPlanejamentoQueryHandler>();
             #endregion
 
             #region Select
