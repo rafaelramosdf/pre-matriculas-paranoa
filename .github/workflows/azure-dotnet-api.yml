@@ -20,9 +20,7 @@
 name: CI/CD - API
 
 env:
-  AZURE_WEBAPP_NAME: pre-matriculas-paranoa-api    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: 'pre-matriculas-paranoa-api.azurewebsites.net'      # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '7.0'                 # set this to the .NET Core version to use
+  DOTNET_VERSION: '7.0'
   PACKAGE_NAME: "pre-matriculas-paranoa-api"
   DIRECTORY_APP: "PreMatriculasParanoa.Api"
 
@@ -85,6 +83,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-name: ${{env.PACKAGE_NAME}}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          package: .
