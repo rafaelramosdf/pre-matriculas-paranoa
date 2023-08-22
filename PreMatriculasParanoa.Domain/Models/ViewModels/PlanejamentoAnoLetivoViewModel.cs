@@ -1,10 +1,12 @@
 ﻿using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
+using PreMatriculasParanoa.Domain.Models.Enumerations;
 using PreMatriculasParanoa.Domain.Models.ViewModels.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -23,6 +25,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         [RequiredValidation("Escola")]
         public int IdEscola { get; set; }
         public string NomeEscola => Escola?.Nome;
+        public EnumModalidadeEducacao ModalidadeEducacaoEscola => Escola?.ModalidadeEnsino ?? EnumModalidadeEducacao.CrechePreEscola;
 
         public EscolaViewModel Escola { get; set; }
 

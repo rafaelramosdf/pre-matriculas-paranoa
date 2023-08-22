@@ -4,6 +4,7 @@ using PreMatriculasParanoa.Domain.Models.ViewModels;
 using PreMatriculasParanoa.Domain.Queries.Filters;
 using PreMatriculasParanoa.Web.Admin.Services.ApiContracts;
 using PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.MatriculaSequencial
@@ -52,9 +53,17 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.MatriculaSequencial
 
         protected async Task Salvar()
         {
-            State.Carregando = true;
-            // TODO: Salvar dados alterados
-            State.Carregando = false;
+            var apiResponse = await ApiService.Incluir(Model);
+
+            var commandResultErrors = GetCommandResultErrors(apiResponse);
+            if (commandResultErrors?.Any() == true)
+            {
+                Alert(Severity.Error, commandResultErrors);
+                return;
+            }
+
+            Alert(Severity.Success, "Dados salvos com sucesso!");
+            StateHasChanged();
         }
     }
 }

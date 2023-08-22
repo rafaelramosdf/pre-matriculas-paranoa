@@ -21,6 +21,7 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
     private readonly ILogger<BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler> logger;
     private readonly IPlanejamentoMatriculaSequencialQuery query;
     private readonly IPlanejamentoMatriculaSequencialRepository repository;
+    private readonly IPlanejamentoSerieAnoRepository planejamentoSerieAnoRepository;
     private readonly IEscolaRepository escolaRepository;
     private readonly IEscolaQuery escolaQuery;
     private readonly IMapper mapper;
@@ -28,6 +29,7 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
     public BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler(
         IPlanejamentoMatriculaSequencialQuery query,
         IPlanejamentoMatriculaSequencialRepository repository,
+        IPlanejamentoSerieAnoRepository planejamentoSerieAnoRepository,
         IEscolaRepository escolaRepository,
         IEscolaQuery escolaQuery,
         IMapper mapper,
@@ -36,6 +38,7 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
         this.logger = logger;
         this.query = query;
         this.repository = repository;
+        this.planejamentoSerieAnoRepository = planejamentoSerieAnoRepository;
         this.escolaRepository = escolaRepository;
         this.escolaQuery = escolaQuery;
         this.mapper = mapper;
@@ -59,7 +62,7 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
         queryListSequencial = queryListSequencial.Where(query.ObterFiltroMatriculaSequencial(filtro));
 
         planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais =
-            mapper.Map<List<PlanejamentoMatriculaSequencialViewModel>>(queryListSequencial.ToList() 
+            mapper.Map<List<PlanejamentoMatriculaSequencialViewModel>>(queryListSequencial.ToList()
             ?? new List<Models.Entities.PlanejamentoMatriculaSequencial>());
 
         // Buscar escolas origem:
@@ -83,14 +86,14 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
         {
             foreach (var escolaDestino in planejamentoMatriculaSequencialAgrupadoViewModel.EscolasDestino)
             {
-                if(planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais
-                    .Any(m => m.IdEscolaOrigem == escolaOrigem.Id && m.IdEscolaDestino == escolaDestino.Id)) 
+                if (planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais
+                    .Any(m => m.IdEscolaOrigem == escolaOrigem.Id && m.IdEscolaDestino == escolaDestino.Id))
                 {
                     continue;
                 }
                 else
                 {
-                    planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais.Add(new PlanejamentoMatriculaSequencialViewModel 
+                    planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais.Add(new PlanejamentoMatriculaSequencialViewModel
                     {
                         AnoLetivo = planejamentoMatriculaSequencialAgrupadoViewModel.AnoLetivo,
                         IdEscolaDestino = escolaDestino.Id,
@@ -102,6 +105,29 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
             }
         }
 
+        planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais =
+            AtualizarTotalVagasDisponiveis(planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais);
+
         return planejamentoMatriculaSequencialAgrupadoViewModel;
+    }
+
+    private List<PlanejamentoMatriculaSequencialViewModel> AtualizarTotalVagasDisponiveis(List<PlanejamentoMatriculaSequencialViewModel> matriculasSequenciais)
+    {
+        foreach (var s in matriculasSequenciais)
+        {
+            var planejamentoSerieAnoDestino = mapper.Map<PlanejamentoSerieAnoViewModel>(planejamentoSerieAnoRepository
+                .GetOne(m => m.PlanejamentoAnoLetivo.IdEscola == s.IdEscolaDestino
+                && m.PlanejamentoAnoLetivo.AnoLetivo == s.AnoLetivo
+                && m.PrimeiraSerieAno, i => i.Turmas) ?? new PlanejamentoSerieAno());
+
+            var vagas = planejamentoSerieAnoDestino.TotalCapacidadeFisicaAcordada
+                - (planejamentoSerieAnoDestino.EntradaCentralMatricula
+                + planejamentoSerieAnoDestino.EntradaRemanejamento
+                + planejamentoSerieAnoDestino.EntradaRetidosSerieAnoAtual);
+
+            s.TotalVagasDisponiveis = vagas;
+        }
+
+        return matriculasSequenciais;
     }
 }

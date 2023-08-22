@@ -18,21 +18,21 @@ namespace PreMatriculasParanoa.Domain.Models.Enumerations
         PreEscolaMaisFundamentalI = 1,
 
         /// <summary>
-        /// Ensino Fundamento I (do 1° ao 5° ano)
+        /// Ensino Fundamental I (do 1° ao 5° ano)
         /// </summary>
-        [Description("Ensino Fundamento I (do 1° ao 5° ano)")]
+        [Description("Ensino Fundamental I (do 1° ao 5° ano)")]
         EnsinoFundamentalI = 2,
 
         /// <summary>
-        /// Ensino Fundamento II (do 6° ao 9° ano)
+        /// Ensino Fundamental II (do 6° ao 9° ano)
         /// </summary>
-        [Description("Ensino Fundamento II (do 6° ao 9° ano)")]
+        [Description("Ensino Fundamental II (do 6° ao 9° ano)")]
         EnsinoFundamentalII = 3,
 
         /// <summary>
-        /// Ensino Fundamento Completo (do 1° ao 9° ano)
+        /// Ensino Fundamental Completo (do 1° ao 9° ano)
         /// </summary>
-        [Description("Ensino Fundamento Completo (do 1° ao 9° ano)")]
+        [Description("Ensino Fundamental Completo (do 1° ao 9° ano)")]
         EnsinoFundamentalCompleto = 4,
 
         /// <summary>

@@ -8,10 +8,19 @@
             <th></th>
             @foreach (var escolaDestino in Model.EscolasDestino)
             {
+                var totalVagas = (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalVagasDisponiveis ?? 0);
+                var vagasPreenchidas = Model.MatriculasSequenciais.Where(m => m.IdEscolaDestino == escolaDestino.Id).Sum(s => s.TotalMatriculas);
+                var vagasDisponiveis = (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalVagasDisponiveis ?? 0)
+                - (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalMatriculas ?? 0);
+
                 <th style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     <MudTooltip Text="@escolaDestino.Nome">
                         @escolaDestino.Nome
                     </MudTooltip>
+                    <br />
+                    <MudText Style="font-size: 9pt;">
+                        Total de vagas: @totalVagas | vagas preenchidas: @vagasPreenchidas | vagas disponíveis: @vagasDisponiveis
+                    </MudText>
                 </th>
             }
         </tr>
@@ -41,17 +50,6 @@
     </tbody>
 </MudSimpleTable>
 
-<div style="position: fixed; bottom: 30px; right: 30px;">
-    <MudTooltip Text="Cancelar" Placement="Placement.Top">
-        <MudFab StartIcon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
-                OnClick="@(() => OpenRoute("/"))"
-                DisableElevation="true" />
-    </MudTooltip>
-    <MudTooltip Text="Salvar" Placement="Placement.Top">
-        <MudFab StartIcon="@Icons.Material.Filled.Save" Color="Color.Success" Size="Size.Large" ButtonType="ButtonType.Button" OnClick="(() => Salvar())" />
-    </MudTooltip>
-</div>
-
 @code {
     [Inject] protected IPlanejamentoMatriculaSequencialApiContract ApiService { get; set; }
 
@@ -62,23 +60,8 @@
     {
         await Task.Run(() =>
         {
-            Model.MatriculasSequenciais.First(m => m.IdEscolaOrigem == matriculaSequencial.IdEscolaOrigem 
+            Model.MatriculasSequenciais.First(m => m.IdEscolaOrigem == matriculaSequencial.IdEscolaOrigem
                 && m.IdEscolaDestino == matriculaSequencial.IdEscolaDestino).TotalMatriculas = matriculaSequencial.TotalMatriculas;
         });
-    }
-
-    protected async Task Salvar()
-    {
-        var apiResponse = await ApiService.Incluir(Model);
-
-        var commandResultErrors = GetCommandResultErrors(apiResponse);
-        if (commandResultErrors?.Any() == true)
-        {
-            Alert(Severity.Error, commandResultErrors);
-            return;
-        }
-
-        Alert(Severity.Success, "Dados salvos com sucesso!");
-        StateHasChanged();
     }
 }

@@ -31,22 +31,28 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
         {
             if (Model.SeriesAnos.Count < 1)
             {
-                Model.SeriesAnos.Add(new PlanejamentoSerieAnoViewModel
+                var seriesAnosPorModalidadeEducacao = EnumSerieAnoEscolarHelper.ObterSeriesAnosPorModalidadeEducacao(Model.Escola.ModalidadeEnsino);
+
+                foreach (var serie in seriesAnosPorModalidadeEducacao)
                 {
-                    IdPlanejamentoAnoLetivo = Model.IdPlanejamentoAnoLetivo,
-                    SerieAno = 1
-                });
+                    Model.SeriesAnos.Add(new PlanejamentoSerieAnoViewModel 
+                    {
+                        IdPlanejamentoAnoLetivo = Model.IdPlanejamentoAnoLetivo,
+                        EnumSerieAnoEscolar = serie
+                    });
+                }
             }
             else
             {
                 Model.SeriesAnos.Add(new PlanejamentoSerieAnoViewModel
                 {
                     IdPlanejamentoAnoLetivo = Model.IdPlanejamentoAnoLetivo,
-                    SerieAno = Model.SeriesAnos.OrderBy(o => o.SerieAno).Last().SerieAno + 1
+                    EnumSerieAnoEscolar = EnumSerieAnoEscolarHelper.ObterProximaSerieAnoPorModalidadeEducacao(
+                        Model.Escola.ModalidadeEnsino, Model.SeriesAnos.OrderBy(o => o.SerieAno).Last().EnumSerieAnoEscolar)
                 });
-
-                await OrdenarListaSeriesAnos();
             }
+
+            await OrdenarListaSeriesAnos();
         }
 
         protected async Task ExcluirSerieAno(PlanejamentoSerieAnoViewModel serieAno)

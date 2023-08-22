@@ -1,6 +1,7 @@
 ﻿@page "/planejamento/ano-letivo/formulario/{id:int?}"
 @using Domain.Models.Entities
 @using Domain.Models.ViewModels
+@using PreMatriculasParanoa.Domain.Models.Enumerations;
 @using PreMatriculasParanoa.Domain.Queries.Filters;
 @using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
 
@@ -20,7 +21,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem md="4" xs="12">
-                    <EscolaSelect Label="Escola" @bind-Id="@Model.IdEscola" Dense="true" />
+                    <EscolaSelect Label="Escola" @bind-Id="@Model.IdEscola" Dense="true" OnSelected="((e) => Model.Escola = e)" />
                 </MudItem>
                 <MudItem md="2" xs="12">
                     <MudNumericField Label="Ano Letivo" Placeholder="Ano Letivo"
@@ -126,8 +127,7 @@
                         </MudTooltip>
                     </MudTd>
                     <MudTd DataLabel="Série/Ano">
-                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="2"
-                        @bind-Value="@SerieAno.SerieAno" OnBlur="(() => OrdenarListaSeriesAnos())"></MudNumericField>
+                        <SerieAnoEscolarSelect @bind-Value="@SerieAno.EnumSerieAnoEscolar" ModalidadeEducacaoEscola="Model.ModalidadeEducacaoEscola" Dense="true" />
                     </MudTd>
                     <MudTd DataLabel="Possíveis aprovados">
                         <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"

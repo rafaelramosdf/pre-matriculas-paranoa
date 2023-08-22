@@ -1,0 +1,34 @@
+﻿@namespace PreMatriculasParanoa.Web.Admin.Shared.Components.Select
+
+@using PreMatriculasParanoa.Domain.Models.Enumerations
+
+<MudSelect T="EnumSerieAnoEscolar"
+           Value="@Value"
+           Label="@Label"
+           ValueChanged="@OnValueChanged"
+           Variant="@Variant"
+           Margin="@(Dense ? Margin.Dense : Margin.Normal)"
+           Dense="@Dense"
+           Clearable="false">
+    @{
+        List<EnumSerieAnoEscolar> seriesAnos = EnumSerieAnoEscolarHelper.ObterSeriesAnosPorModalidadeEducacao(ModalidadeEducacaoEscola);
+        foreach (var item in seriesAnos)
+        {
+            <MudSelectItem Value="@item">@item.EnumDescription()</MudSelectItem>
+        }
+    }
+</MudSelect>
+
+@code {
+    [Parameter] public EnumSerieAnoEscolar Value { get; set; }
+    [Parameter] public string Label { get; set; }
+    [Parameter] public Variant Variant { get; set; } = Variant.Outlined;
+    [Parameter] public bool Dense { get; set; } = false;
+    [Parameter] public EventCallback<EnumSerieAnoEscolar> ValueChanged { get; set; }
+    [Parameter][EditorRequired] public EnumModalidadeEducacao ModalidadeEducacaoEscola { get; set; }
+
+    private void OnValueChanged(EnumSerieAnoEscolar value)
+    {
+        ValueChanged.InvokeAsync(value);
+    }
+}

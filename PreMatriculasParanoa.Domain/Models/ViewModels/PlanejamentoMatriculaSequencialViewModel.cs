@@ -33,6 +33,8 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public EscolaViewModel EscolaDestino { get; set; }
 
         public int TotalMatriculas { get; set; }
+
+        public int TotalVagasDisponiveis { get; set; }
     }
 
     public class PlanejamentoMatriculaSequencialAgrupadoViewModel : ViewModel<PlanejamentoMatriculaSequencialAgrupado>

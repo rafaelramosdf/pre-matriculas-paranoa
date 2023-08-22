@@ -2,6 +2,7 @@
 using PreMatriculasParanoa.Domain.Extensions;
 using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
+using PreMatriculasParanoa.Domain.Models.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,11 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public int IdPlanejamentoSerieAno { get; set; }
         public int SerieAno { get; set; }
+        public EnumSerieAnoEscolar EnumSerieAnoEscolar 
+        { 
+            get => (EnumSerieAnoEscolar)SerieAno; 
+            set => SerieAno = value.GetHashCode(); 
+        }
         public bool PrimeiraSerieAno { get; set; }
         public bool UltimaSerieAno { get; set; }
         public int EntradaAprovadosSerieAnoAnterior { get; set; }
