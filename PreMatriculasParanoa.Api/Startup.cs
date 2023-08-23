@@ -115,6 +115,8 @@ namespace PreMatriculasParanoa.Api
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseStaticFiles();
+
             app.UseHsts();
 
             app.UseCors();
