@@ -37,6 +37,7 @@ namespace PreMatriculasParanoa.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks();
 
             services.AddControllers(options =>
             {
@@ -44,7 +45,7 @@ namespace PreMatriculasParanoa.Api
             }).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            }); 
+            });
 
             var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("PrivateKey"));
             services.AddAuthentication(x =>
@@ -107,6 +108,8 @@ namespace PreMatriculasParanoa.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHealthChecks("/health");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
