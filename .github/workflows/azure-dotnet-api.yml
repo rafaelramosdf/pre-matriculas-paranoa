@@ -24,7 +24,7 @@ jobs:
 
       - name: Build with dotnet
         run: 
-          cd PreMatriculasParanoa.Api
+          cd "PreMatriculasParanoa.Api"
           dotnet build --configuration Release
 
       - name: dotnet publish
