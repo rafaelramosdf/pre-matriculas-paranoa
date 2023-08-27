@@ -10,16 +10,30 @@
             {
                 var totalVagas = (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalVagasDisponiveis ?? 0);
                 var vagasPreenchidas = Model.MatriculasSequenciais.Where(m => m.IdEscolaDestino == escolaDestino.Id).Sum(s => s.TotalMatriculas);
-                var vagasDisponiveis = (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalVagasDisponiveis ?? 0)
-                - (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalMatriculas ?? 0);
+                var vagasDisponiveis = totalVagas - vagasPreenchidas;
 
                 <th style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     <MudTooltip Text="@escolaDestino.Nome">
                         @escolaDestino.Nome
                     </MudTooltip>
-                    <br />
-                    <MudText Style="font-size: 9pt;">
-                        Total de vagas: @totalVagas | vagas preenchidas: @vagasPreenchidas | vagas disponíveis: @vagasDisponiveis
+                    <MudDivider />
+                    <MudText Style="font-size: 8pt;">
+                        TOTAL DE VAGAS:
+                        <MudChip Variant="Variant.Text" Size="Size.Small" Color="Color.Primary">
+                            @totalVagas
+                        </MudChip>
+                        &nbsp;&nbsp; PREENCHIDAS:
+                        <MudTooltip Text="Vagas preenchidas">
+                            <MudChip Variant="Variant.Text" Size="Size.Small" Color="@(vagasDisponiveis > 0 ? Color.Success : Color.Error)">
+                                @vagasPreenchidas
+                            </MudChip>
+                        </MudTooltip>
+                        &nbsp;&nbsp; DISPONÍVEIS:
+                        <MudTooltip Text="Vagas disponíveis">
+                            <MudChip Variant="Variant.Text" Size="Size.Small" Color="@(vagasDisponiveis > 0 ? Color.Success : Color.Error)">
+                                @vagasDisponiveis
+                            </MudChip>
+                        </MudTooltip>
                     </MudText>
                 </th>
             }

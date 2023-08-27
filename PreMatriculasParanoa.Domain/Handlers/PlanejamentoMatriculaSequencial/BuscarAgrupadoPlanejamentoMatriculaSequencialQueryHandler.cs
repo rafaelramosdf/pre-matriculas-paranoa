@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PreMatriculasParanoa.Domain.Models.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
 
 namespace PreMatriculasParanoa.Domain.Handlers.PlanejamentoMatriculaSequencial;
 
@@ -60,6 +61,7 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
 
         queryListSequencial = queryListSequencial.Where(query.ObterFiltroAnoLetivo(filtro.AnoLetivo));
         queryListSequencial = queryListSequencial.Where(query.ObterFiltroMatriculaSequencial(filtro));
+        queryListSequencial = queryListSequencial.Where(m => m.EscolaOrigem.Regiao == filtro.Regiao && m.EscolaDestino.Regiao == filtro.Regiao);
 
         planejamentoMatriculaSequencialAgrupadoViewModel.MatriculasSequenciais =
             mapper.Map<List<PlanejamentoMatriculaSequencialViewModel>>(queryListSequencial.ToList()
@@ -68,7 +70,8 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
         // Buscar escolas origem:
         IQueryable<Escola> queryListEscolasOrigem =
             escolaRepository.GetQuery(escolaQuery.ObterPesquisa(new EscolaFilter()))
-            .Where(query.ObterFiltroEscolaSequencial(filtro.PeriodoMatriculaSequencial, true));
+            .Where(query.ObterFiltroEscolaSequencial(filtro.PeriodoMatriculaSequencial, true))
+            .Where(e => e.Regiao == filtro.Regiao);
 
         planejamentoMatriculaSequencialAgrupadoViewModel.EscolasOrigem =
             mapper.Map<List<EscolaViewModel>>(queryListEscolasOrigem.ToList() ?? new List<Escola>());
@@ -76,7 +79,8 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
         // Buscar escolas destino:
         IQueryable<Escola> queryListEscolasDestino =
             escolaRepository.GetQuery(escolaQuery.ObterPesquisa(new EscolaFilter()))
-            .Where(query.ObterFiltroEscolaSequencial(filtro.PeriodoMatriculaSequencial, false));
+            .Where(query.ObterFiltroEscolaSequencial(filtro.PeriodoMatriculaSequencial, false))
+            .Where(e => e.Regiao == filtro.Regiao);
 
         planejamentoMatriculaSequencialAgrupadoViewModel.EscolasDestino =
             mapper.Map<List<EscolaViewModel>>(queryListEscolasDestino.ToList() ?? new List<Escola>());

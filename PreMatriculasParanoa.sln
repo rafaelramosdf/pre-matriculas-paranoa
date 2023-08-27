@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreMatriculasParanoa.Api", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreMatriculasParanoa.Web.Admin", "PreMatriculasParanoa.Web.Admin\PreMatriculasParanoa.Web.Admin.csproj", "{06417C34-AE83-4EF9-9B71-520DED881E25}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{CF07F65F-4E42-4949-BEE1-D1AF421CA488}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\azure-dotnet-api.yml = .github\workflows\azure-dotnet-api.yml
+		.github\workflows\azure-dotnet-web-admin.yml = .github\workflows\azure-dotnet-web-admin.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

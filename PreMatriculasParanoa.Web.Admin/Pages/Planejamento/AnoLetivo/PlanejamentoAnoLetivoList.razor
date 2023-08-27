@@ -39,15 +39,17 @@
             </MudTableSortLabel>
         </MudTh>
         <MudTh>Escola</MudTh>
-        <MudTh Style="text-align: center">Séries/Anos</MudTh>
-        <MudTh Style="text-align: center">Turmas</MudTh>
+        <MudTh Style="text-align: center">Turmas cadastradas</MudTh>
+        <MudTh Style="text-align: center">Capacidade física</MudTh>
+        <MudTh Style="text-align: center">Vagas disponíveis</MudTh>
         <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Ano Letivo">@context.AnoLetivo</MudTd>
         <MudTd DataLabel="Escola">@context.NomeEscola</MudTd>
-        <MudTd DataLabel="Séries/Anos" Style="text-align: center">@context.TotalSeriesAnosCadastrados</MudTd>
-        <MudTd DataLabel="Turmas" Style="text-align: center">@context.TotalTurmasCadastradas</MudTd>
+        <MudTd DataLabel="Turmas cadastradas" Style="text-align: center">@context.TotalTurmasCadastradas</MudTd>
+        <MudTd DataLabel="Capacidade física" Style="text-align: center">@context.TotalCapacidade</MudTd>
+        <MudTd DataLabel="Vagas disponíveis" Style="text-align: center">@context.TotalVagasDisponiveis</MudTd>
         <MudTd Style="text-align: right">
             <MudTooltip Text="Editar/Visualizar">
                 <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenRoute($"/planejamento/ano-letivo/formulario/{context.Id}"))"></MudIconButton>
