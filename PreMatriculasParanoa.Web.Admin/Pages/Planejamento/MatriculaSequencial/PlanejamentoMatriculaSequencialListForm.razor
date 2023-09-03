@@ -44,8 +44,8 @@
     </MudCardContent>
 </MudCard>
 
-<div style="position: fixed; bottom: 30px; right: 30px;">
-    <MudTooltip Text="Cancelar" Placement="Placement.Top">
+<div style="position: fixed; bottom: 30px; right: 30px; z-index: 999999999">
+    <MudTooltip Text="Sair" Placement="Placement.Top">
         <MudFab StartIcon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
                 OnClick="@(() => OpenRoute("/"))"
                 DisableElevation="true" />

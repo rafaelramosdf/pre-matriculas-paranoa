@@ -1,12 +1,13 @@
-﻿using PreMatriculasParanoa.Domain.Models.Base;
+﻿using PreMatriculasParanoa.Domain.Extensions;
+using PreMatriculasParanoa.Domain.Models.Base;
 using PreMatriculasParanoa.Domain.Models.Entities;
 using PreMatriculasParanoa.Domain.Models.Enumerations;
 using PreMatriculasParanoa.Domain.Models.ViewModels.Validations;
+using PreMatriculasParanoa.Domain.Utils.EqualityComparers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 
 namespace PreMatriculasParanoa.Domain.Models.ViewModels
 {
@@ -16,9 +17,9 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public int IdPlanejamentoAnoLetivo { get; set; }
 
-        [RequiredValidation("Ano Letivo")]
+        [RequiredValidation("Ano letivo")]
         public int AnoLetivo { get; set; }
-        
+
         public DateTime? DataInicioPlanejamento { get; set; } = DateTime.Now;
         public DateTime? DataTerminoPlanejamento { get; set; } = DateTime.Now.AddMonths(3);
 
@@ -35,7 +36,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int TotalSeriesAnosCadastrados => SeriesAnos?.Count ?? 0;
         public int TotalTurmasCadastradas => SeriesAnos?.SelectMany(s => s.Turmas)?.Count() ?? 0;
 
-        public int TotalSequencialEntrando => SeriesAnos?.Sum(s => s.EntradaSequencial) ?? 0;        
+        public int TotalSequencialEntrando => SeriesAnos?.Sum(s => s.EntradaSequencial) ?? 0;
         public int TotalCentralMatriculasEntrando => SeriesAnos?.Sum(s => s.EntradaCentralMatricula) ?? 0;
         public int TotalRetidosEntrando => SeriesAnos?.Sum(s => s.EntradaRetidosSerieAnoAtual) ?? 0;
         public int TotalRemanejamentoEntrando => SeriesAnos?.Sum(s => s.EntradaRemanejamento) ?? 0;
@@ -44,5 +45,21 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
 
         public int TotalCapacidade => SeriesAnos?.Sum(s => s.TotalCapacidadeFisicaAcordada) ?? 0;
         public int TotalVagasDisponiveis => SeriesAnos?.Sum(s => s.TotalVagasDisponiveis) ?? 0;
+
+        public override CommandResult ViewModelValidations()
+        {
+            var result = new CommandResult();
+            var comparer = new PlanejamentoTurmaViewModelComparer();
+            foreach (var serieAno in SeriesAnos)
+            {
+                if (serieAno.Turmas.Distinct(comparer).Count() != serieAno.Turmas.Count)
+                    result.Errors.Add($"A série/ano \"{serieAno.EnumSerieAnoEscolar.EnumDescription()}\" possui turma duplicada!");
+
+                if (serieAno.TotalValoresInformados > serieAno.TotalCapacidadeFisicaAcordada)
+                    result.Errors.Add($"O total de matrículas informadas na série/ano \"{serieAno.EnumSerieAnoEscolar.EnumDescription()}\", " +
+                        $"ultrapassou a CAPACIDADE física acordada! ");
+            }
+            return result;
+        }
     }
 }

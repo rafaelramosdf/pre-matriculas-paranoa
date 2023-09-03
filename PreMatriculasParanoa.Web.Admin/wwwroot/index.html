@@ -75,6 +75,16 @@
     <script src="js/plugins/jquery/jquery.js"></script>
     <script src="js/plugins/jquery-mask/jquery.mask.js"></script>
     <script src="js/plugins/jquery-mask/masks.js"></script>
+
+    <script>
+        var blazor = {
+            registerGetAlertSaveChangesOnBeforeUnload: async (dotNetObjectReference, methodName) => {
+                window.onbeforeunload = async (event) => {
+                    return await dotNetObjectReference.invokeMethodAsync(methodName).then(result => { return result; });
+                }; 
+            }
+        };
+    </script>
 </body>
 
 </html>

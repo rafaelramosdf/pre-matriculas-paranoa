@@ -11,5 +11,7 @@ namespace PreMatriculasParanoa.Domain.Models.Enumerations
         Vespertino = 1,
         [Description("Integral")]
         Integral = 2,
+        [Description("Noturno")]
+        Noturno = 3,
     }
 }

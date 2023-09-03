@@ -32,11 +32,13 @@ namespace PreMatriculasParanoa.Domain.Queries
                 case EnumPeriodoMatriculaSequencial.SegundoPeriodoPreEscolaParaPrimeiroAnoFundamental:
                     return x => (x.EscolaOrigem.ModalidadeEnsino == EnumModalidadeEducacao.CrechePreEscola)
                     && (x.EscolaDestino.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalI
+                    || x.EscolaDestino.ModalidadeEnsino == EnumModalidadeEducacao.CrecheMaisPreEscolaMaisFundamentalI 
                     || x.EscolaDestino.ModalidadeEnsino == EnumModalidadeEducacao.PreEscolaMaisFundamentalI
                     || x.EscolaDestino.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalCompleto);
 
                 case EnumPeriodoMatriculaSequencial.QuintoAnoFundamentalParaSextoAnoFundamental:
-                    return x => (x.EscolaOrigem.ModalidadeEnsino == EnumModalidadeEducacao.PreEscolaMaisFundamentalI
+                    return x => (x.EscolaOrigem.ModalidadeEnsino == EnumModalidadeEducacao.CrecheMaisPreEscolaMaisFundamentalI
+                    || x.EscolaOrigem.ModalidadeEnsino == EnumModalidadeEducacao.PreEscolaMaisFundamentalI
                     || x.EscolaOrigem.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalI)
                     && (x.EscolaDestino.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalII
                     || x.EscolaDestino.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalCompleto
@@ -64,12 +66,14 @@ namespace PreMatriculasParanoa.Domain.Queries
                     return x => escolaOrigem 
                     ? (x.ModalidadeEnsino == EnumModalidadeEducacao.CrechePreEscola)
                     : (x.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalI
+                    || x.ModalidadeEnsino == EnumModalidadeEducacao.CrecheMaisPreEscolaMaisFundamentalI
                     || x.ModalidadeEnsino == EnumModalidadeEducacao.PreEscolaMaisFundamentalI
                     || x.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalCompleto);
 
                 case EnumPeriodoMatriculaSequencial.QuintoAnoFundamentalParaSextoAnoFundamental:
                     return x => escolaOrigem
                     ? (x.ModalidadeEnsino == EnumModalidadeEducacao.PreEscolaMaisFundamentalI
+                    || x.ModalidadeEnsino == EnumModalidadeEducacao.CrecheMaisPreEscolaMaisFundamentalI
                     || x.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalI)
                     : (x.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalII
                     || x.ModalidadeEnsino == EnumModalidadeEducacao.EnsinoFundamentalCompleto

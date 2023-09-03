@@ -15,30 +15,56 @@ public static class EnumSerieAnoEscolarHelper
             case EnumModalidadeEducacao.CrechePreEscola:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() <= EnumSerieAnoEscolar.SegundoPeriodo.GetHashCode()).ToList();
                 break;
+
+            case EnumModalidadeEducacao.CrecheMaisPreEscolaMaisFundamentalI:
+                seriesAnos = seriesAnos.Where(m => m.GetHashCode() <= EnumSerieAnoEscolar.QuintoAnoFundamental.GetHashCode()).ToList();
+                break;
+
             case EnumModalidadeEducacao.PreEscolaMaisFundamentalI:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiroPeriodo.GetHashCode()
                 && m.GetHashCode() <= EnumSerieAnoEscolar.QuintoAnoFundamental.GetHashCode()).ToList();
                 break;
+
             case EnumModalidadeEducacao.EnsinoFundamentalI:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiroAnoFundamental.GetHashCode()
                 && m.GetHashCode() <= EnumSerieAnoEscolar.QuintoAnoFundamental.GetHashCode()).ToList();
                 break;
+
             case EnumModalidadeEducacao.EnsinoFundamentalII:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.SextoAnoFundamental.GetHashCode()
                 && m.GetHashCode() <= EnumSerieAnoEscolar.NonoAnoFundamental.GetHashCode()).ToList();
                 break;
+
             case EnumModalidadeEducacao.EnsinoFundamentalCompleto:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiroAnoFundamental.GetHashCode()
                 && m.GetHashCode() <= EnumSerieAnoEscolar.NonoAnoFundamental.GetHashCode()).ToList();
                 break;
+
             case EnumModalidadeEducacao.FundamentalEMedio:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiroAnoFundamental.GetHashCode()
                 && m.GetHashCode() <= EnumSerieAnoEscolar.TerceiraSerieMedio.GetHashCode()).ToList();
                 break;
+
             case EnumModalidadeEducacao.EnsinoMedio:
                 seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiraSerieMedio.GetHashCode()
                 && m.GetHashCode() <= EnumSerieAnoEscolar.TerceiraSerieMedio.GetHashCode()).ToList();
                 break;
+
+            case EnumModalidadeEducacao.EjaFaseI:
+                seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiroAnoFundamental.GetHashCode()
+                && m.GetHashCode() <= EnumSerieAnoEscolar.QuintoAnoFundamental.GetHashCode()).ToList();
+                break;
+
+            case EnumModalidadeEducacao.EjaFaseII:
+                seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.SextoAnoFundamental.GetHashCode()
+                && m.GetHashCode() <= EnumSerieAnoEscolar.NonoAnoFundamental.GetHashCode()).ToList();
+                break;
+
+            case EnumModalidadeEducacao.EjaMedio:
+                seriesAnos = seriesAnos.Where(m => m.GetHashCode() >= EnumSerieAnoEscolar.PrimeiraSerieMedio.GetHashCode()
+                && m.GetHashCode() <= EnumSerieAnoEscolar.TerceiraSerieMedio.GetHashCode()).ToList();
+                break;
+
             default:
                 break;
         }
@@ -53,7 +79,11 @@ public static class EnumSerieAnoEscolarHelper
             case EnumModalidadeEducacao.CrechePreEscola:
                 return (serieAnoAtual != EnumSerieAnoEscolar.SegundoPeriodo)
                     ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
-            
+
+            case EnumModalidadeEducacao.CrecheMaisPreEscolaMaisFundamentalI:
+                return (serieAnoAtual != EnumSerieAnoEscolar.QuintoAnoFundamental)
+                    ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
+
             case EnumModalidadeEducacao.PreEscolaMaisFundamentalI:
                 return (serieAnoAtual != EnumSerieAnoEscolar.QuintoAnoFundamental)
                     ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
@@ -75,6 +105,18 @@ public static class EnumSerieAnoEscolarHelper
                     ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
 
             case EnumModalidadeEducacao.EnsinoMedio:
+                return (serieAnoAtual != EnumSerieAnoEscolar.TerceiraSerieMedio)
+                    ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
+
+            case EnumModalidadeEducacao.EjaFaseI:
+                return (serieAnoAtual != EnumSerieAnoEscolar.QuintoAnoFundamental)
+                    ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
+
+            case EnumModalidadeEducacao.EjaFaseII:
+                return (serieAnoAtual != EnumSerieAnoEscolar.NonoAnoFundamental)
+                    ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
+
+            case EnumModalidadeEducacao.EjaMedio:
                 return (serieAnoAtual != EnumSerieAnoEscolar.TerceiraSerieMedio)
                     ? ((EnumSerieAnoEscolar)(serieAnoAtual.GetHashCode() + 1)) : serieAnoAtual;
 

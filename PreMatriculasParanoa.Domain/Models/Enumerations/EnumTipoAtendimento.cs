@@ -2,11 +2,11 @@
 
 namespace PreMatriculasParanoa.Domain.Models.Enumerations
 {
-    [DefaultValue(Indefinido)]
+    [DefaultValue(CC)]
     public enum EnumTipoAtendimento
     {
-        [Description("Indefinido")]
-        Indefinido = 0,
+        [Description("CC - Classe Comum")]
+        CC = 0,
         [Description("CCI - Classe Comum Inclusiva")]
         CCI = 1,
         [Description("CII - Classe de Integração Inversa")]

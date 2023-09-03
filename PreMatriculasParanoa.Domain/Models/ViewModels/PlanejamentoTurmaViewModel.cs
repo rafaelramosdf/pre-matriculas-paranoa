@@ -10,16 +10,22 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public override int Id => IdPlanejamentoTurma;
 
         public int IdPlanejamentoTurma { get; set; }
+
+        [RequiredValidation("Sigla da turma")]
         public char SiglaTurma { get; set; }
 
-        [RequiredValidation("Turno da Turma")]
+        [RequiredValidation("Turno da turma")]
         public string TurnoPeriodo { get; set; }
 
+        [RequiredValidation("Tipo atendimento da turma")]
         public string TipoAtendimento { get; set; }
+
+        [RequiredValidation("Capacidade física acordada da turma")]
         public decimal CapacidadeFisicaAcordada { get; set; }
 
-        [RequiredValidation("Sala da Turma")]
+        [RequiredValidation("Sala da turma")]
         public int IdSala { get; set; }
+
         public int IdPlanejamentoSerieAno { get; set; }
 
         [JsonIgnore]

@@ -7,7 +7,7 @@
 
 @inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.FormPageBase<PlanejamentoAnoLetivo, PlanejamentoAnoLetivoFilter, PlanejamentoAnoLetivoViewModel, IPlanejamentoAnoLetivoApiContract>
 
-<EditForm Model="@Model" OnSubmit="OnSubmit">
+<EditForm Model="@Model" OnSubmit="Submit">
 
     <DataAnnotationsValidator />
     <ObjectGraphDataAnnotationsValidator />
@@ -78,8 +78,22 @@
                         <td style="text-align: center">@Model.TotalRemanejamentoEntrando</td>
                         <td style="text-align: center">@Model.TotalAprovadosUltimoAnoSaindo</td>
                         <td style="text-align: center">@Model.TotalRemanejamentoSaindo</td>
-                        <td style="text-align: center"><strong>@Model.TotalCapacidade</strong></td>
-                        <td style="text-align: center"><strong>@Model.TotalVagasDisponiveis</strong></td>
+                        <td style="text-align: center">
+                            <MudTooltip Text="Capacidade física total">
+                                <MudChip Variant="Variant.Text"
+                                         Color="@(Model.TotalCapacidade > 0 ? Color.Primary : Color.Error)">
+                                    <strong>@Model.TotalCapacidade</strong>
+                                </MudChip>
+                            </MudTooltip>
+                        </td>
+                        <td style="text-align: center">
+                            <MudTooltip Text="Total de vagas disponíveis">
+                                <MudChip Variant="Variant.Text"
+                                         Color="@(Model.TotalVagasDisponiveis > 0 && Model.TotalVagasDisponiveis <= Model.TotalCapacidade ? Color.Success : Color.Error)">
+                                    <strong>@Model.TotalVagasDisponiveis</strong>
+                                </MudChip>
+                            </MudTooltip>
+                        </td>
                     </tr>
                 </tbody>
             </MudSimpleTable>
@@ -134,7 +148,7 @@
                         @bind-Value="@SerieAno.SaidaAprovadosAnoAtual" OnBlur="(() => SomarSequencialAprovadosAnoAnterior(SerieAno))"></MudNumericField>
                     </MudTd>
                     <MudTd DataLabel="Retidos">
-                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6" 
                         @bind-Value="@SerieAno.EntradaRetidosSerieAnoAtual"></MudNumericField>
                     </MudTd>
                     <MudTd DataLabel="Central mat. (156)">
@@ -150,10 +164,20 @@
                         @bind-Value="@SerieAno.SaidaRemanejamento"></MudNumericField>
                     </MudTd>
                     <MudTd DataLabel="Capacidade" Style="text-align:center">
-                        <MudText>@SerieAno.TotalCapacidadeFisicaAcordada</MudText>
+                        <MudTooltip Text="Capacidade física acordada">
+                            <MudChip Variant="Variant.Text"
+                                     Color="@(SerieAno.TotalCapacidadeFisicaAcordada > 0 ? Color.Primary : Color.Error)">
+                                <strong>@SerieAno.TotalCapacidadeFisicaAcordada</strong>
+                            </MudChip>
+                        </MudTooltip>
                     </MudTd>
                     <MudTd DataLabel="Vagas" Style="text-align:center">
-                        <MudText>@SerieAno.TotalVagasDisponiveis</MudText>
+                        <MudTooltip Text="Vagas disponíveis">
+                            <MudChip Variant="Variant.Text"
+                                     Color="@(SerieAno.TotalVagasDisponiveis > 0 && SerieAno.TotalVagasDisponiveis <= SerieAno.TotalCapacidadeFisicaAcordada ? Color.Success : Color.Error)">
+                                <strong>@SerieAno.TotalVagasDisponiveis</strong>
+                            </MudChip>
+                        </MudTooltip>
                     </MudTd>
                     <MudTd Style="text-align:center">
                         <MudTooltip Text="Excluir série/ano">
@@ -170,13 +194,13 @@
                                 <MudCard>
                                     <MudCardHeader>
                                         <CardHeaderContent>
-                                            <MudText Color="Color.Primary">Turmas da série/ano: @SerieAno.SerieAno</MudText>
+                                            <MudText Color="Color.Primary">Turmas: <strong>@SerieAno.EnumSerieAnoEscolar.EnumDescription()</strong></MudText>
                                         </CardHeaderContent>
                                         <CardHeaderActions>
                                             <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => AdicionarTurma(SerieAno))">
                                                 <MudIcon Icon="@Icons.Material.Filled.Add"></MudIcon>
                                                 <MudSpacer></MudSpacer>
-                                                Adicionar Turma
+                                                Adicionar turma
                                             </MudButton>
                                         </CardHeaderActions>
                                     </MudCardHeader>
@@ -209,19 +233,21 @@
                                                 <MudTd DataLabel="Tipo atendimento">
                                                     <TipoAtendimentoSelect @bind-Value="@Turma.TipoAtendimento" Dense="true" />
                                                 </MudTd>
-                                                <MudTd DataLabel="Metragem">
+                                                <MudTd DataLabel="Metragem" Style="text-align:center">
                                                     <MudText>@Turma.MetragemSala</MudText>
                                                 </MudTd>
-                                                <MudTd DataLabel="Capacidade">
-                                                    <MudText>@Turma.CapacidadeFisicaPadraoSala</MudText>
+                                                <MudTd DataLabel="Capacidade" Style="text-align:center">
+                                                    <MudText>@Turma.CapacidadeFisicaPadraoSala.ToString("N0")</MudText>
                                                 </MudTd>
-                                                <MudTd DataLabel="Capacidade acordada">
-                                                    <MudNumericField T="decimal" Format="N2" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="8"
+                                                <MudTd DataLabel="Capacidade acordada" Style="text-align:center">
+                                                    <MudNumericField T="decimal" Format="N0" Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="8"
                                                     @bind-Value="@Turma.CapacidadeFisicaAcordada"></MudNumericField>
                                                 </MudTd>
                                                 <MudTd Style="text-align:center">
-                                                    <MudIconButton Title="Excluir turma" Color="Color.Error" Icon="@Icons.Material.Filled.Delete"
-                                                                   OnClick="(() => ExcluirTurma(SerieAno, Turma))"></MudIconButton>
+                                                    <MudTooltip Text="Excluir turma">
+                                                        <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete"
+                                                                       OnClick="(() => ExcluirTurma(SerieAno, Turma))"></MudIconButton>
+                                                    </MudTooltip>
                                                 </MudTd>
                                             </RowTemplate>
                                         </MudTable>
@@ -235,8 +261,8 @@
         </MudCardContent>
     </MudCard>
 
-    <div style="position: fixed; bottom: 30px; right: 30px;">
-        <MudTooltip Text="Cancelar" Placement="Placement.Top">
+    <div style="position: fixed; bottom: 30px; right: 30px; z-index: 999999999">
+        <MudTooltip Text="Sair" Placement="Placement.Top">
             <MudFab StartIcon="@Icons.Material.Filled.Close" Color="Color.Default" Size="Size.Small"
                     OnClick="@(() => OpenRoute(BackRoute))"
                     DisableElevation="true" />

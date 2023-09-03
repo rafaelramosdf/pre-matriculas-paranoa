@@ -6,7 +6,7 @@
 
 @inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.FormPageBase<Escola, EscolaFilter, EscolaViewModel, IEscolaSalaApiContract>
 
-<EditForm Model="@Model" OnSubmit="OnSubmit">
+<EditForm Model="@Model" OnSubmit="SubmitAndExit">
 
     <DataAnnotationsValidator />
     <ObjectGraphDataAnnotationsValidator />
