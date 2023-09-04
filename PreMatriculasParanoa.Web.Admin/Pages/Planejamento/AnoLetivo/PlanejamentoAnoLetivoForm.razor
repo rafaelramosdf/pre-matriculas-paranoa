@@ -24,9 +24,9 @@
                     <EscolaSelect Label="Escola" @bind-Id="@Model.IdEscola" Dense="true" OnSelected="((e) => Model.Escola = e)" />
                 </MudItem>
                 <MudItem md="2" xs="12">
-                    <MudNumericField Label="Ano Letivo" Placeholder="Ano Letivo"
-                    @bind-Value="Model.AnoLetivo"
-                                     For="@(() => Model.AnoLetivo)"
+                    <MudNumericField Label="Ano Letivo" 
+                                     Value="Model.AnoLetivo"
+                                     ReadOnly="true"
                                      Variant="Variant.Outlined"
                                      Margin="Margin.Dense"
                                      MaxLength="4" />
@@ -148,7 +148,7 @@
                         @bind-Value="@SerieAno.SaidaAprovadosAnoAtual" OnBlur="(() => SomarSequencialAprovadosAnoAnterior(SerieAno))"></MudNumericField>
                     </MudTd>
                     <MudTd DataLabel="Retidos">
-                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6" 
+                        <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="6"
                         @bind-Value="@SerieAno.EntradaRetidosSerieAnoAtual"></MudNumericField>
                     </MudTd>
                     <MudTd DataLabel="Central mat. (156)">

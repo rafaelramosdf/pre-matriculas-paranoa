@@ -25,7 +25,7 @@
     <ToolBarContent>
         <MudSpacer />
         <MudTextField T="string" ValueChanged="@(s => OnSearch(s))"
-                      Placeholder="Pesquisar por Ano"
+                      Placeholder="Pesquisar por Escola"
                       Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search"
                       IconSize="Size.Medium"
@@ -33,12 +33,12 @@
         </MudTextField>
     </ToolBarContent>
     <HeaderContent>
+        <MudTh>Ano Letivo</MudTh>
         <MudTh>
-            <MudTableSortLabel T="PlanejamentoAnoLetivoViewModel" SortLabel="@nameof(PlanejamentoAnoLetivoViewModel.AnoLetivo)" InitialDirection="SortDirection.Descending">
-                Ano Letivo
+            <MudTableSortLabel T="PlanejamentoAnoLetivoViewModel" SortLabel="@nameof(PlanejamentoAnoLetivoViewModel.Escola)" InitialDirection="SortDirection.Ascending">
+                Escola
             </MudTableSortLabel>
         </MudTh>
-        <MudTh>Escola</MudTh>
         <MudTh Style="text-align: center">Turmas cadastradas</MudTh>
         <MudTh Style="text-align: center">Capacidade física</MudTh>
         <MudTh Style="text-align: center">Vagas disponíveis</MudTh>
@@ -60,7 +60,7 @@
         </MudTd>
     </RowTemplate>
     <PagerContent>
-        <MudTablePager Style="float: left;"
+        <MudTablePager Style="float: left;" 
                        RowsPerPageString="Itens por página: "
                        PageSizeOptions="new int[] { 5, 10, 20, 50, 100 }"
                        InfoFormat="{first_item}-{last_item} de {all_items}" />

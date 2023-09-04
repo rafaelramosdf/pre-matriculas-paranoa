@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-@inject StateContainer State
+@inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.PageBase
 
 <MudGrid>
     <MudItem md="12" xs="12">
@@ -39,14 +39,8 @@
 </MudGrid>
 
 @code{
-    protected override void OnInitialized()
+    protected override void OnInit()
     {
-        State.OnChange += StateHasChanged;
         State.TituloPagina = "Página Inicial";
-    }
-
-    public void Dispose()
-    {
-        State.OnChange -= StateHasChanged;
     }
 }

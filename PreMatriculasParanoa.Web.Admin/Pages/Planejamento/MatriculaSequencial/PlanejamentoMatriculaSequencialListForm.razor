@@ -23,8 +23,8 @@
             </MudItem>
             <MudItem md="2" xs="12">
                 <MudNumericField Label="Ano Letivo" Placeholder="Ano Letivo"
-                @bind-Value="Filtro.AnoLetivo"
-                                 For="@(() => Filtro.AnoLetivo)"
+                                 Value="Filtro.Year"
+                                 ReadOnly="true"
                                  Variant="Variant.Outlined"
                                  Margin="Margin.Dense"
                                  MaxLength="4" />

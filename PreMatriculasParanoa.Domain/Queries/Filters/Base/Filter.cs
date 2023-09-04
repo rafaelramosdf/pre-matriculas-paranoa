@@ -1,3 +1,5 @@
+using System;
+
 namespace PreMatriculasParanoa.Domain.Queries.Filters.Base
 {
     public class Filter : IFilter
@@ -7,5 +9,6 @@ namespace PreMatriculasParanoa.Domain.Queries.Filters.Base
         public int? Limit { get; set; } = 10;
         public string SortingField { get; set; } = "";
         public bool? Desc { get; set; } = false;
+        public int Year { get; set; } = (DateTime.Now.Year + 1);
     }
 }

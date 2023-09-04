@@ -80,7 +80,7 @@ namespace PreMatriculasParanoa.Api.Controllers.v1
             var filtro = new PlanejamentoMatriculaSequencialFilter 
             {
                 IdEscolaDestino = idEscolaDestino,
-                AnoLetivo = ano
+                Year = ano
             };
             var result = await handler.Execute(filtro);
             return StatusCode(StatusCodes.Status200OK, result);

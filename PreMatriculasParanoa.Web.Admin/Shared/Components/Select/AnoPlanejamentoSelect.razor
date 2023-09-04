@@ -1,0 +1,29 @@
+﻿@namespace PreMatriculasParanoa.Web.Admin.Shared.Components.Select
+
+@using PreMatriculasParanoa.Domain.Models.Enumerations
+
+<MudMenu Label='@($"Ano letivo: {Value}")' Variant="@Variant" EndIcon="@Icons.Material.Filled.CalendarMonth" Color="Color.Inherit" IconColor="Color.Success">
+    @{
+        var anoAtual = DateTime.Now.Year;
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual - 4)">@(anoAtual - 4)</MudMenuItem>
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual - 3)">@(anoAtual - 3)</MudMenuItem>
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual - 2)">@(anoAtual - 2)</MudMenuItem>
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual - 1)">@(anoAtual - 1)</MudMenuItem>
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual - 0)">@(anoAtual - 0)</MudMenuItem>
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual + 1)">@(anoAtual + 1)</MudMenuItem>
+        <MudMenuItem OnClick="() => OnValueChanged(anoAtual + 2)">@(anoAtual + 2)</MudMenuItem>
+    }
+</MudMenu>
+
+@code {
+    [Parameter] public int Value { get; set; }
+    [Parameter] public string Label { get; set; }
+    [Parameter] public Variant Variant { get; set; } = Variant.Outlined;
+    [Parameter] public bool Dense { get; set; } = false;
+    [Parameter] public EventCallback<int> ValueChanged { get; set; }
+
+    private void OnValueChanged(int value)
+    {
+        ValueChanged.InvokeAsync(value);
+    }
+}

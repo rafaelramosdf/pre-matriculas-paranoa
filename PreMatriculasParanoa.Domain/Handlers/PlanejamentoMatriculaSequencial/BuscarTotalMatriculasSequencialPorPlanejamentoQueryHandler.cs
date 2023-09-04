@@ -29,7 +29,7 @@ public class BuscarTotalMatriculasSequencialPorPlanejamentoQueryHandler : IBusca
         {
             logger.LogInformation($"Iniciando handler BuscarTotalMatriculasSequencialPorPlanejamentoQueryHandler");
 
-            var totalMatriculasSequencial = repository.GetQuery(x => x.IdEscolaDestino == filtro.IdEscolaDestino && x.AnoLetivo == filtro.AnoLetivo)
+            var totalMatriculasSequencial = repository.GetQuery(x => x.IdEscolaDestino == filtro.IdEscolaDestino && x.AnoLetivo == filtro.Year)
                     .ToList()?.Sum(s => s.TotalMatriculas) ?? 0;
 
             return totalMatriculasSequencial;

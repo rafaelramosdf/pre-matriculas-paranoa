@@ -19,6 +19,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.AnoLetivo
             State.TituloPagina = "Planejamento Ano Letivo / Formulário";
             BackRoute = "/planejamento/ano-letivo";
             Model = new PlanejamentoAnoLetivoViewModel();
+            Model.AnoLetivo = State.AnoLetivo;
         }
 
         protected override async Task GetModel()

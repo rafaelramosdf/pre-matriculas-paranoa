@@ -21,6 +21,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.MatriculaSequencial
         protected override void OnInit()
         {
             State.TituloPagina = "Planejamento Matrícula Sequencial";
+            Filtro.Year = State.AnoLetivo;
         }
 
         protected async Task Buscar()
@@ -33,7 +34,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.MatriculaSequencial
             }
             else
             {
-                Alert(Severity.Error, "Preencha os campos: \"Período\", \"Região\" e \"Ano Letivo\"");
+                Alert(Severity.Error, "Preencha os campos: \"Período\" e \"Região\"!");
             }
             
             State.Carregando = false;
@@ -41,7 +42,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.MatriculaSequencial
 
         protected bool ValidarFiltro()
         {
-            if (Filtro.AnoLetivo >= 1000 && Filtro.Regiao != Domain.Models.Enumerations.EnumRegiao.Indefinido) 
+            if (Filtro.Year >= 1000 && Filtro.Regiao != Domain.Models.Enumerations.EnumRegiao.Indefinido) 
             {
                 return true;
             }

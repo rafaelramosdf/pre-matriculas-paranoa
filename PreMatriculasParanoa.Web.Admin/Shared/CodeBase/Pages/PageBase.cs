@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
 using Newtonsoft.Json;
@@ -15,6 +16,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
     {
         [Inject] protected StateContainer State { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected ISyncLocalStorageService LocalStorage { get; set; }
         [Inject] protected IJSRuntime JSRun { get; set; }
         [Inject] ISnackbar Snackbar { get; set; }
 
@@ -26,6 +28,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         protected override void OnInitialized()
         {
             State.OnChange += StateHasChanged;
+            SetAnoLetivo();
             OnInit();
         }
 
@@ -111,6 +114,23 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
             {
                 State.OnChange -= StateHasChanged;
             });
+        }
+
+        private void SetAnoLetivo() 
+        {
+            if (!LocalStorage.ContainKey(nameof(State.AnoLetivo)))
+                LocalStorage.SetItem(nameof(State.AnoLetivo), (DateTime.Now.Year + 1));
+
+            State.AnoLetivo = LocalStorage.GetItem<int>(nameof(State.AnoLetivo));
+
+            State.OnAnoLetivoChange += () =>
+            {
+                if (State.AnoLetivo != LocalStorage.GetItem<int>(nameof(State.AnoLetivo)))
+                {
+                    LocalStorage.SetItem(nameof(State.AnoLetivo), State.AnoLetivo);
+                    NavigationManager.NavigateTo("/");
+                }
+            };
         }
     }
 }

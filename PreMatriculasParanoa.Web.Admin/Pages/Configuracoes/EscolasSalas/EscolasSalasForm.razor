@@ -87,6 +87,17 @@
                 </RowTemplate>
             </MudTable>
         </MudCardContent>
+        @if (Model.Salas.Count > 4)
+        {
+            <MudCardActions>
+                <MudSpacer></MudSpacer>
+                <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => AdicionarSala())">
+                    <MudIcon Icon="@Icons.Material.Filled.Add"></MudIcon>
+                    <MudSpacer></MudSpacer>
+                    Adicionar Sala
+                </MudButton>
+            </MudCardActions>
+        }
     </MudCard>
 
     <div style="position: fixed; bottom: 30px; right: 30px;">

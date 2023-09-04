@@ -11,9 +11,10 @@ namespace PreMatriculasParanoa.Domain.Queries
         public Expression<Func<PlanejamentoAnoLetivo, bool>> ObterPesquisa(PlanejamentoAnoLetivoFilter filtro)
         {
             if (string.IsNullOrEmpty(filtro?.Search))
-                return _ => true;
+                return x => x.AnoLetivo == filtro.Year;
 
-            return x => x.AnoLetivo.ToString() == filtro.Search;
+            return x => x.AnoLetivo == filtro.Year
+                && x.Escola.Nome.Contains(filtro.Search);
         }
 
         public Expression<Func<PlanejamentoAnoLetivo, object>> ObterOrdenacao(string campo)
@@ -21,7 +22,7 @@ namespace PreMatriculasParanoa.Domain.Queries
             switch (campo)
             {
                 default:
-                    return x => x.AnoLetivo;
+                    return x => x.Escola.Nome;
             }
         }
     }

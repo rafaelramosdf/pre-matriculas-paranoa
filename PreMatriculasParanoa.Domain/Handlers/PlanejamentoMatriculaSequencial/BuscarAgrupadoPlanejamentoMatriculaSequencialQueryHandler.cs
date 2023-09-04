@@ -54,12 +54,12 @@ public class BuscarAgrupadoPlanejamentoMatriculaSequencialQueryHandler : IBuscar
         planejamentoMatriculaSequencialAgrupadoViewModel.EscolasOrigem = new List<EscolaViewModel>();
         planejamentoMatriculaSequencialAgrupadoViewModel.EscolasDestino = new List<EscolaViewModel>();
         planejamentoMatriculaSequencialAgrupadoViewModel.PeriodoMatriculaSequencial = filtro.PeriodoMatriculaSequencial;
-        planejamentoMatriculaSequencialAgrupadoViewModel.AnoLetivo = filtro.AnoLetivo;
+        planejamentoMatriculaSequencialAgrupadoViewModel.AnoLetivo = filtro.Year;
 
         IQueryable<Models.Entities.PlanejamentoMatriculaSequencial> queryListSequencial =
             repository.GetQuery(query.ObterPesquisa(filtro)).Include(i => i.EscolaOrigem).Include(i => i.EscolaDestino);
 
-        queryListSequencial = queryListSequencial.Where(query.ObterFiltroAnoLetivo(filtro.AnoLetivo));
+        queryListSequencial = queryListSequencial.Where(query.ObterFiltroAnoLetivo(filtro.Year));
         queryListSequencial = queryListSequencial.Where(query.ObterFiltroMatriculaSequencial(filtro));
         queryListSequencial = queryListSequencial.Where(m => m.EscolaOrigem.Regiao == filtro.Regiao && m.EscolaDestino.Regiao == filtro.Regiao);
 

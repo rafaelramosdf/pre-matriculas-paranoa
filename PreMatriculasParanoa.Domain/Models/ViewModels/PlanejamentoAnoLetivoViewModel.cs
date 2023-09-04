@@ -50,11 +50,13 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         {
             var result = new CommandResult();
             var comparer = new PlanejamentoTurmaViewModelComparer();
+
+            var todasAsTurmas = SeriesAnos.SelectMany(s => s.Turmas).ToList();
+            if (todasAsTurmas.Distinct(comparer).Count() != todasAsTurmas.Count)
+                result.Errors.Add($"Existem turmas duplicadas! Não podem existir mais de uma turma para o mesmo turno e mesma sala.");
+
             foreach (var serieAno in SeriesAnos)
             {
-                if (serieAno.Turmas.Distinct(comparer).Count() != serieAno.Turmas.Count)
-                    result.Errors.Add($"A série/ano \"{serieAno.EnumSerieAnoEscolar.EnumDescription()}\" possui turma duplicada!");
-
                 if (serieAno.TotalValoresInformados > serieAno.TotalCapacidadeFisicaAcordada)
                     result.Errors.Add($"O total de matrículas informadas na série/ano \"{serieAno.EnumSerieAnoEscolar.EnumDescription()}\", " +
                         $"ultrapassou a CAPACIDADE física acordada! ");

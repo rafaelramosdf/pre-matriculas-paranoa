@@ -26,6 +26,21 @@ namespace PreMatriculasParanoa.Web.Admin.Shared
             }
         }
 
+        private int anoLetivo { get; set; }
+        public int AnoLetivo
+        {
+            get => anoLetivo;
+            set
+            {
+                anoLetivo = value;
+                NotifyStateChanged();
+                NotifyAnoLetivoChanged();
+            }
+        }
+
+        public event Action OnAnoLetivoChange;
+        private void NotifyAnoLetivoChanged() => OnAnoLetivoChange?.Invoke();
+
         public event Action OnChange;
         private void NotifyStateChanged() => OnChange?.Invoke();
     }

@@ -38,6 +38,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         {
             DataTable = new DataTableModel<TViewModel>();
 
+            Filtro.Year = State.AnoLetivo;
             Filtro.Desc = state.SortDirection == SortDirection.Descending;
             Filtro.SortingField = state.SortLabel;
 
@@ -52,6 +53,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         protected virtual async Task<DataTableModel<TViewModel>> Buscar(TFilter filtro)
         {
             State.Carregando = true;
+            filtro.Year = State.AnoLetivo;
             var dataTable = await ApiService.Buscar(filtro);
             State.Carregando = false;
             return dataTable;
