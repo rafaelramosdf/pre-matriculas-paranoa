@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\azure-dotnet-api.yml = .github\workflows\azure-dotnet-api.yml
 		.github\workflows\azure-dotnet-web-admin.yml = .github\workflows\azure-dotnet-web-admin.yml
-		.github\workflows\azure-static-web-apps-kind-hill-06d9d8110.yml = .github\workflows\azure-static-web-apps-kind-hill-06d9d8110.yml
 	EndProjectSection
 EndProject
 Global

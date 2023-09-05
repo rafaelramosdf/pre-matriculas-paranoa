@@ -8,6 +8,7 @@ on:
       - 'PreMatriculasParanoa.Web.Admin/**/*'
       - 'PreMatriculasParanoa.Domain/**/*'
       - 'PreMatriculasParanoa.Infra/**/*'
+      - '**/*/azure-dotnet-web-admin.yml'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
@@ -16,6 +17,7 @@ on:
       - 'PreMatriculasParanoa.Web.Admin/**/*'
       - 'PreMatriculasParanoa.Domain/**/*'
       - 'PreMatriculasParanoa.Infra/**/*'
+      - '**/*/azure-dotnet-web-admin.yml'
 
 jobs:
   build_and_deploy_job:
