@@ -15,5 +15,11 @@ namespace PreMatriculasParanoa.Domain.Models.Enumerations
         CBM = 3,
         [Description("CE - Classe Especial")]
         CE = 4,
+        [Description("SR - Sala de Recursos")]
+        SR = 5,
+        [Description("ECM - Educação Com Movimento")]
+        CM = 6,
+        [Description("CID")]
+        CID = 7,
     }
 }
