@@ -1,4 +1,5 @@
-﻿using PreMatriculasParanoa.Domain.Models.Entities;
+﻿using PreMatriculasParanoa.Domain.Extensions;
+using PreMatriculasParanoa.Domain.Models.Entities;
 using PreMatriculasParanoa.Domain.Models.ViewModels;
 using PreMatriculasParanoa.Domain.Queries.Filters;
 using PreMatriculasParanoa.Web.Admin.Services.ApiContracts;
@@ -23,16 +24,14 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Configuracoes.EscolasSalas
             {
                 Model.Salas.Add(new SalaViewModel
                 {
-                    IdEscola = Model.IdEscola,
-                    Numero = 1
+                    IdEscola = Model.IdEscola
                 });
             }
             else 
             {
                 Model.Salas.Add(new SalaViewModel
                 {
-                    IdEscola = Model.IdEscola,
-                    Numero = Model.Salas.OrderBy(o => o.Numero).Last().Numero + 1
+                    IdEscola = Model.IdEscola
                 });
 
                 await OrdenarListaSalas();

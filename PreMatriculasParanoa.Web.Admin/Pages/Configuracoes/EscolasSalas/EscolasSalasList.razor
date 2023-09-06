@@ -47,7 +47,7 @@
         <MudTd DataLabel="Nome">@context.Nome</MudTd>
         <MudTd DataLabel="Modalidade ensino">@context.ModalidadeEnsino.EnumDescription()</MudTd>
         <MudTd DataLabel="Salas" Style="text-align: center">@context.Salas.Count</MudTd>
-        <MudTd DataLabel="Capacidade física" Style="text-align: center">@context.CapacidadeFisica</MudTd>
+        <MudTd DataLabel="Capacidade física" Style="text-align: center">@context.CapacidadeFisica.ToString("N0")</MudTd>
         <MudTd Style="text-align: right">
             <MudTooltip Text="Editar/Visualizar">
                 <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenRoute($"/configuracoes/escolas-salas/formulario/{context.Id}"))"></MudIconButton>

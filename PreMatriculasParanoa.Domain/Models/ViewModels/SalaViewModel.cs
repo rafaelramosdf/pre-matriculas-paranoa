@@ -13,7 +13,7 @@ namespace PreMatriculasParanoa.Domain.Models.ViewModels
         public int IdSala { get; set; }
 
         [RequiredValidation("Número da Sala")]
-        public int Numero { get; set; }
+        public string Numero { get; set; }
 
         public string Bloco { get; set; }
 

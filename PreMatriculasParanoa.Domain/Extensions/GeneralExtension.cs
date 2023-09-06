@@ -1183,7 +1183,7 @@ namespace PreMatriculasParanoa.Domain.Extensions
         /// </summary>
         /// <param name="texto"></param>
         /// <returns></returns>
-        public static string GetNumeros(this string texto)
+        public static string ObterNumeros(this string texto)
         {
             string resultString = null;
             try
@@ -1208,7 +1208,7 @@ namespace PreMatriculasParanoa.Domain.Extensions
         /// </summary>
         /// <param name="texto"></param>
         /// <returns></returns>
-        public static string GetLetras(this string texto)
+        public static string ObterLetras(this string texto)
         {
             string resultString = null;
             try
