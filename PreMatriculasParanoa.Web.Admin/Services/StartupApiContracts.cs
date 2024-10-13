@@ -41,6 +41,11 @@ namespace PreMatriculasParanoa.Web.Admin.Services
             {
                 c.BaseAddress = new Uri($"{urlBase}/selects");
             });
+
+            builder.Services.AddRefitClient<IDashboardApiContract>(settings).ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri($"{urlBase}/dashboard");
+            });
         }
     }
 }

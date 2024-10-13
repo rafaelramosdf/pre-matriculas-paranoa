@@ -23,6 +23,7 @@ using System.Text.Json.Serialization;
 using PreMatriculasParanoa.Domain.Handlers.PlanejamentoAnoLetivo;
 using PreMatriculasParanoa.Domain.Handlers.Select;
 using PreMatriculasParanoa.Domain.Handlers.PlanejamentoMatriculaSequencial;
+using PreMatriculasParanoa.Domain.Handlers.Dashboard;
 
 namespace PreMatriculasParanoa.Api
 {
@@ -198,6 +199,10 @@ namespace PreMatriculasParanoa.Api
             services.AddScoped<IEscolaPorIdSelectQueryHandler, EscolaPorIdSelectQueryHandler>();
             services.AddScoped<ISalaSelectQueryHandler, SalaSelectQueryHandler>();
             services.AddScoped<ISalaPorIdSelectQueryHandler, SalaPorIdSelectQueryHandler>();
+            #endregion
+
+            #region Dashboard 
+            services.AddScoped<IBuscarTotalizadoresQueryHandler, BuscarTotalizadoresQueryHandler>();
             #endregion
         }
     }

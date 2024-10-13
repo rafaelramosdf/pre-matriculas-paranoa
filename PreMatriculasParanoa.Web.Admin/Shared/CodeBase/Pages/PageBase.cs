@@ -119,7 +119,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
         private void SetAnoLetivo() 
         {
             if (!LocalStorage.ContainKey(nameof(State.AnoLetivo)))
-                LocalStorage.SetItem(nameof(State.AnoLetivo), (DateTime.Now.Year + 1));
+                LocalStorage.SetItem(nameof(State.AnoLetivo), DateTime.Now.Year + 1);
 
             State.AnoLetivo = LocalStorage.GetItem<int>(nameof(State.AnoLetivo));
 

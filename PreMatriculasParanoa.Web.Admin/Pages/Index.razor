@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@using PreMatriculasParanoa.Domain.Models.ViewModels
+
 @inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.PageBase
 
 <MudGrid>
@@ -11,36 +13,71 @@
             </MudText>
         </MudPaper>
     </MudItem>
-
-    <MudItem md="3" xs="12">
-        <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" Square="true">
-            <MudText Typo="Typo.h3">10000</MudText>
-            <MudText>Total de Vagas na Rede</MudText>
-        </MudAlert>
+    <MudItem md="6" xs="12">
+        <MudGrid>
+            <MudItem md="6" xs="12">
+                <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" Square="true">
+                    <MudText Typo="Typo.h5">@dashboardTotalizadoresViewModel.TotalGeralVagas</MudText>
+                    <MudText>Total Geral de Vagas</MudText>
+                </MudAlert>
+            </MudItem>
+            <MudItem md="6" xs="12">
+                <MudAlert Severity="Severity.Warning" Variant="Variant.Filled" Square="true">
+                    <MudText Typo="Typo.h5">@dashboardTotalizadoresViewModel.TotalVagasPreenchidas</MudText>
+                    <MudText>Total de Vagas Preenchidas</MudText>
+                </MudAlert>
+            </MudItem>
+            <MudItem md="6" xs="12">
+                <MudAlert Severity="Severity.Info" Variant="Variant.Filled" Square="true">
+                    <MudText Typo="Typo.h5">@dashboardTotalizadoresViewModel.TotalVagasLiberadas</MudText>
+                    <MudText>Total de Vagas Liberadas</MudText>
+                </MudAlert>
+            </MudItem>
+            <MudItem md="6" xs="12">
+                <MudAlert Severity="Severity.Success" Variant="Variant.Filled" Square="true">
+                    <MudText Typo="Typo.h5">@dashboardTotalizadoresViewModel.TotalVagasDisponiveis</MudText>
+                    <MudText>Saldo de Vagas Disponíveis</MudText>
+                </MudAlert>
+            </MudItem>
+        </MudGrid>
     </MudItem>
-    <MudItem md="3" xs="12">
-        <MudAlert Severity="Severity.Warning" Variant="Variant.Filled" Square="true">
-            <MudText Typo="Typo.h3">9000</MudText>
-            <MudText>Total de Matrículas Ocupadas</MudText>
-        </MudAlert>
-    </MudItem>
-    <MudItem md="3" xs="12">
-        <MudAlert Severity="Severity.Info" Variant="Variant.Filled" Square="true">
-            <MudText Typo="Typo.h3">1000</MudText>
-            <MudText>Total de Matrículas Liberadas</MudText>
-        </MudAlert>
-    </MudItem>
-    <MudItem md="3" xs="12">
-        <MudAlert Severity="Severity.Success" Variant="Variant.Filled" Square="true">
-            <MudText Typo="Typo.h3">2000</MudText>
-            <MudText>Saldo de Matrículas Disponíveis</MudText>
-        </MudAlert>
+    <MudItem md="6" xs="12">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Status Planejamento Ano Letivo Atual</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" Href="/planejamento/ano-letivo" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent> 
+                <MudText>Status Planejamento Ano Letivo Atual</MudText>
+                <MudText Typo="Typo.body2">Informar a situação do preenchimento</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/planejamento/ano-letivo">Acessar Planejamento</MudButton>
+            </MudCardActions>
+        </MudCard>
     </MudItem>
 </MudGrid>
 
-@code{
+@code {
+    @inject PreMatriculasParanoa.Web.Admin.Services.ApiContracts.IDashboardApiContract Service
+
+    private DashboardTotalizadoresViewModel dashboardTotalizadoresViewModel { get; set; } = new DashboardTotalizadoresViewModel();
+
     protected override void OnInit()
     {
         State.TituloPagina = "Página Inicial";
+        BuscarTotalizadores();
+        
+        State.OnChange += BuscarTotalizadores;
     }
+
+    protected async void BuscarTotalizadores()
+    {
+        dashboardTotalizadoresViewModel = await Service.TotalizadoresVagas(State.AnoLetivo);
+        StateHasChanged();
+    } 
 }
