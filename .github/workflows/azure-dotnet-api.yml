@@ -1,7 +1,7 @@
 name: API - CI/CD
 
 env:
-  DOTNET_VERSION: '7.x'
+  DOTNET_VERSION: '8.x'
   PACKAGE_NAME: "pre-matriculas-paranoa-api"
   DIRECTORY_APP: "PreMatriculasParanoa.Api"
 
