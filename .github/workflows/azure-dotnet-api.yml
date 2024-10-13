@@ -1,4 +1,4 @@
-name: CI/CD - API
+name: API - CI/CD
 
 env:
   DOTNET_VERSION: '7.x'

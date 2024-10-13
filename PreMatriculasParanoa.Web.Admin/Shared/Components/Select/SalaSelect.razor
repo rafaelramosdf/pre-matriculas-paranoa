@@ -1,5 +1,6 @@
 ﻿@using PreMatriculasParanoa.Domain.Models.ViewModels
 @using PreMatriculasParanoa.Domain.Models.Base
+@using System.Threading
 
 @namespace PreMatriculasParanoa.Web.Admin.Shared.Components.Select
 
@@ -45,7 +46,7 @@
     private IEnumerable<SelectResult> Items { get; set; }
     private SelectResult Selected { get; set; }
 
-    private async Task<IEnumerable<SelectResult>> Search(string pesquisa)
+    private async Task<IEnumerable<SelectResult>> Search(string pesquisa, CancellationToken cancellationToken)
     {
         Items = await Service.Salas(new SelectSearchParam(pesquisa, 20, Id), IdEscola);
         return Items;

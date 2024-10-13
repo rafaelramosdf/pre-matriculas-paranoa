@@ -1,4 +1,4 @@
-name: CI/CD - WEB ADMIN
+name: WEB ADMIN - CI/CD
 
 on:
   push:

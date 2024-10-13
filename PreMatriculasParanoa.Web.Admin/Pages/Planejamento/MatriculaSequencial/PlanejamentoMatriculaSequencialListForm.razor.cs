@@ -42,14 +42,7 @@ namespace PreMatriculasParanoa.Web.Admin.Pages.Planejamento.MatriculaSequencial
 
         protected bool ValidarFiltro()
         {
-            if (Filtro.Year >= 1000 && Filtro.Regiao != Domain.Models.Enumerations.EnumRegiao.Indefinido) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Filtro.Year >= 1000 && Filtro.Regiao != Domain.Models.Enumerations.EnumRegiao.Indefinido;
         }
 
         protected async Task Salvar()
