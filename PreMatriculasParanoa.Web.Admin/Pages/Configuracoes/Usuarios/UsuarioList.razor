@@ -4,6 +4,7 @@
 @using Domain.Models.Entities
 @using PreMatriculasParanoa.Domain.Queries.Filters
 @using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+@using System.Threading
 
 @inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.ListPageBase<Usuario, UsuarioFilter, UsuarioViewModel, IUsuarioApiContract>
 @inject ISnackbar Snackbar
@@ -12,13 +13,13 @@
     <MudProgressCircular Color="Color.Success" Indeterminate="true" />
 </MudOverlay>
 
-<MudTable ServerData="@(new Func<TableState, Task<TableData<UsuarioViewModel>>>(ServerReload))"
+<MudTable ServerData="@(new Func<TableState, CancellationToken, Task<TableData<UsuarioViewModel>>>(ServerReload))"
 @ref="Table"
           Dense="true"
           Hover="true"
           ReadOnly="true"
           Striped="false"
-@bind-SelectedItem="ItemSelecionado"
+          @bind-SelectedItem="ItemSelecionado"
           SortLabel="Ordenar por"
           Elevation="0">
 

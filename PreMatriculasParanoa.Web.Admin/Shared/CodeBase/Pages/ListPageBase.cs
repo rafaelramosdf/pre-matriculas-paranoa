@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
 {
@@ -34,7 +35,7 @@ namespace PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages
             Table.ReloadServerData();
         }
 
-        protected async Task<TableData<TViewModel>> ServerReload(TableState state)
+        protected async Task<TableData<TViewModel>> ServerReload(TableState state, CancellationToken cancellationToken)
         {
             DataTable = new DataTableModel<TViewModel>();
 

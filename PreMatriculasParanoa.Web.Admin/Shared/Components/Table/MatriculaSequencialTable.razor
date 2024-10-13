@@ -2,36 +2,35 @@
 
 @inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.PageBase
 
-<MudSimpleTable Elevation="0" Striped="true">
+<MudSimpleTable Elevation="0" Striped="true" Dense="true" FixedHeader="true">
     <thead>
         <tr>
-            <th></th>
+            <th style="width: 50px;"></th>
             @foreach (var escolaDestino in Model.EscolasDestino)
             {
                 var totalVagas = (Model.MatriculasSequenciais.FirstOrDefault(m => m.IdEscolaDestino == escolaDestino.Id)?.TotalVagasDisponiveis ?? 0);
                 var vagasPreenchidas = Model.MatriculasSequenciais.Where(m => m.IdEscolaDestino == escolaDestino.Id).Sum(s => s.TotalMatriculas);
                 var vagasDisponiveis = totalVagas - vagasPreenchidas;
 
-                <th style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <th style="width: 50px;">
                     <MudTooltip Text="@escolaDestino.Nome">
                         @escolaDestino.Nome
                     </MudTooltip>
                     <MudDivider />
                     <MudText Style="font-size: 8pt;">
-                        TOTAL DE VAGAS:
-                        <MudChip Variant="Variant.Text" Size="Size.Small" Color="Color.Primary">
-                            @totalVagas
-                        </MudChip>
-                        &nbsp;&nbsp; PREENCHIDAS:
-                        <MudTooltip Text="Vagas preenchidas">
-                            <MudChip Variant="Variant.Text" Size="Size.Small" Color="@(vagasDisponiveis > 0 ? Color.Success : Color.Error)">
-                                @vagasPreenchidas
+                        <MudTooltip Text="Total de vagas">
+                            <MudChip T="string" Variant="Variant.Text" Size="Size.Small" Label="true" Color="Color.Primary">
+                                total: <strong>@totalVagas</strong>
                             </MudChip>
                         </MudTooltip>
-                        &nbsp;&nbsp; DISPONÍVEIS:
+                        <MudTooltip Text="Vagas preenchidas">
+                            <MudChip T="string" Variant="Variant.Text" Size="Size.Small" Label="true" Color="@(vagasDisponiveis > 0 ? Color.Success : Color.Error)">
+                                preenchidas: <strong>@vagasPreenchidas</strong>
+                            </MudChip>
+                        </MudTooltip>
                         <MudTooltip Text="Vagas disponíveis">
-                            <MudChip Variant="Variant.Text" Size="Size.Small" Color="@(vagasDisponiveis > 0 ? Color.Success : Color.Error)">
-                                @vagasDisponiveis
+                            <MudChip T="string" Variant="Variant.Text" Size="Size.Small" Label="true" Color="@(vagasDisponiveis > 0 ? Color.Success : Color.Error)">
+                                disponíveis: <strong>@vagasDisponiveis</strong>
                             </MudChip>
                         </MudTooltip>
                     </MudText>
@@ -43,7 +42,7 @@
         @foreach (var escolaOrigem in Model.EscolasOrigem)
         {
             <tr>
-                <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right;">
+                <td style="width: 50px;">
                     <MudTooltip Text="@escolaOrigem.Nome">
                         @escolaOrigem.Nome
                     </MudTooltip>
@@ -53,7 +52,7 @@
                     var matriculaSequencial = Model.MatriculasSequenciais
                     .First(m => m.IdEscolaOrigem == escolaOrigem.Id && m.IdEscolaDestino == escolaDestino.Id);
 
-                    <td style="text-align: center">
+                    <td style="width: 50px;">
                         <MudNumericField Variant="Variant.Outlined" Margin="Margin.Dense" MaxLength="2" @bind-Value="@matriculaSequencial.TotalMatriculas"
                                          OnInternalInputChanged="(() => AtualizarMatriculaSequencial(matriculaSequencial))">
                         </MudNumericField>

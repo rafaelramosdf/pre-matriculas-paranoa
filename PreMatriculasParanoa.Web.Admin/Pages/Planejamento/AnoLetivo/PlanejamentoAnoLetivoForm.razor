@@ -80,7 +80,7 @@
                         <td style="text-align: center">@Model.TotalRemanejamentoSaindo</td>
                         <td style="text-align: center">
                             <MudTooltip Text="Capacidade física total">
-                                <MudChip Variant="Variant.Text"
+                                <MudChip T="string" Variant="Variant.Text"
                                          Color="@(Model.TotalCapacidade > 0 ? Color.Primary : Color.Error)">
                                     <strong>@Model.TotalCapacidade</strong>
                                 </MudChip>
@@ -88,7 +88,7 @@
                         </td>
                         <td style="text-align: center">
                             <MudTooltip Text="Total de vagas disponíveis">
-                                <MudChip Variant="Variant.Text"
+                                <MudChip T="string" Variant="Variant.Text"
                                          Color="@(Model.TotalVagasDisponiveis > 0 && Model.TotalVagasDisponiveis <= Model.TotalCapacidade ? Color.Success : Color.Error)">
                                     <strong>@Model.TotalVagasDisponiveis</strong>
                                 </MudChip>
@@ -165,7 +165,7 @@
                     </MudTd>
                     <MudTd DataLabel="Capacidade" Style="text-align:center">
                         <MudTooltip Text="Capacidade física acordada">
-                            <MudChip Variant="Variant.Text"
+                            <MudChip T="string" Variant="Variant.Text"
                                      Color="@(SerieAno.TotalCapacidadeFisicaAcordada > 0 ? Color.Primary : Color.Error)">
                                 <strong>@SerieAno.TotalCapacidadeFisicaAcordada</strong>
                             </MudChip>
@@ -173,7 +173,7 @@
                     </MudTd>
                     <MudTd DataLabel="Vagas" Style="text-align:center">
                         <MudTooltip Text="Vagas disponíveis">
-                            <MudChip Variant="Variant.Text"
+                            <MudChip T="string" Variant="Variant.Text"
                                      Color="@(SerieAno.TotalVagasDisponiveis > 0 && SerieAno.TotalVagasDisponiveis <= SerieAno.TotalCapacidadeFisicaAcordada ? Color.Success : Color.Error)">
                                 <strong>@SerieAno.TotalVagasDisponiveis</strong>
                             </MudChip>

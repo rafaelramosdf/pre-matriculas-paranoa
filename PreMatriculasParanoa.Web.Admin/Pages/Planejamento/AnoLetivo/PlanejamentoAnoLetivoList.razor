@@ -4,6 +4,7 @@
 @using Domain.Models.Entities
 @using PreMatriculasParanoa.Domain.Queries.Filters
 @using PreMatriculasParanoa.Web.Admin.Services.ApiContracts
+@using System.Threading
 
 @inherits PreMatriculasParanoa.Web.Admin.Shared.CodeBase.Pages.ListPageBase<PlanejamentoAnoLetivo, PlanejamentoAnoLetivoFilter, PlanejamentoAnoLetivoViewModel, IPlanejamentoAnoLetivoApiContract>
 @inject ISnackbar Snackbar
@@ -12,7 +13,7 @@
     <MudProgressCircular Color="Color.Success" Indeterminate="true" />
 </MudOverlay>
 
-<MudTable ServerData="@(new Func<TableState, Task<TableData<PlanejamentoAnoLetivoViewModel>>>(ServerReload))"
+<MudTable ServerData="@(new Func<TableState, CancellationToken, Task<TableData<PlanejamentoAnoLetivoViewModel>>>(ServerReload))"
 @ref="Table"
           Dense="true"
           Hover="true"

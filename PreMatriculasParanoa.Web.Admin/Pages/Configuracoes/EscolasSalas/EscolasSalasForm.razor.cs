@@ -1,5 +1,4 @@
-﻿using PreMatriculasParanoa.Domain.Extensions;
-using PreMatriculasParanoa.Domain.Models.Entities;
+﻿using PreMatriculasParanoa.Domain.Models.Entities;
 using PreMatriculasParanoa.Domain.Models.ViewModels;
 using PreMatriculasParanoa.Domain.Queries.Filters;
 using PreMatriculasParanoa.Web.Admin.Services.ApiContracts;
