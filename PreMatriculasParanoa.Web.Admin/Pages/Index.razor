@@ -14,6 +14,52 @@
         </MudPaper>
     </MudItem>
     <MudItem md="6" xs="12">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Status Planejamento Ano Letivo: <strong>@State.AnoLetivo</strong>
+                    </MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.Filled.ViewList" Color="Color.Default"
+                        Href="/planejamento/ano-letivo" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudItem md="12">
+                    <MudChip T="string" Variant="Variant.Text" Size="Size.Large" Label="true" Color="Color.Primary">
+                        Escolas cadastradas: 
+                        <strong>@dashboardProgressoPreenchimentoViewModel.TotalEscolasCadastradas</strong>
+                    </MudChip>
+                    <MudChip T="string" Variant="Variant.Text" Size="Size.Large" Label="true" Color="Color.Primary">
+                        Escolas que já iniciaram o preenchimento: 
+                        <strong>@dashboardProgressoPreenchimentoViewModel.TotalEscolasPreenchendo</strong>
+                    </MudChip>
+                    <MudChip T="string" Variant="Variant.Text" Size="Size.Large" Label="true" Color="Color.Primary">
+                        Escolas que não iniciaram o preenchimento: 
+                        <strong>@dashboardProgressoPreenchimentoViewModel.TotalEscolasNaoPreenchendo</strong>
+                    </MudChip>
+                </MudItem>
+                <br />
+                <br />
+                <MudText>
+                    Progresso de preenchimento do planejamento pelas escolas
+                </MudText>
+                <MudProgressLinear Color="Color.Info" Size="Size.Large"
+                    Value="@dashboardProgressoPreenchimentoViewModel.PercentualEscolasPreenchendo" Class="my-7">
+                    <MudText Typo="Typo.subtitle1">
+                        <b>@(dashboardProgressoPreenchimentoViewModel.PercentualEscolasPreenchendo)%</b>
+                    </MudText>
+                </MudProgressLinear>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/planejamento/ano-letivo">
+                    Ir Para Planejamento
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+    <MudItem md="6" xs="12">
         <MudGrid>
             <MudItem md="6" xs="12">
                 <MudAlert Severity="Severity.Normal" Variant="Variant.Filled" Square="true">
@@ -41,43 +87,34 @@
             </MudItem>
         </MudGrid>
     </MudItem>
-    <MudItem md="6" xs="12">
-        <MudCard>
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">Status Planejamento Ano Letivo Atual</MudText>
-                </CardHeaderContent>
-                <CardHeaderActions>
-                    <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" Href="/planejamento/ano-letivo" />
-                </CardHeaderActions>
-            </MudCardHeader>
-            <MudCardContent> 
-                <MudText>Status Planejamento Ano Letivo Atual</MudText>
-                <MudText Typo="Typo.body2">Informar a situação do preenchimento</MudText>
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/planejamento/ano-letivo">Acessar Planejamento</MudButton>
-            </MudCardActions>
-        </MudCard>
-    </MudItem>
 </MudGrid>
 
 @code {
     @inject PreMatriculasParanoa.Web.Admin.Services.ApiContracts.IDashboardApiContract Service
 
-    private DashboardTotalizadoresViewModel dashboardTotalizadoresViewModel { get; set; } = new DashboardTotalizadoresViewModel();
+    private DashboardTotalizadoresViewModel dashboardTotalizadoresViewModel { get; set; } = new
+    DashboardTotalizadoresViewModel();
+    private DashboardProgressoPreenchimentoViewModel dashboardProgressoPreenchimentoViewModel { get; set; } = new
+    DashboardProgressoPreenchimentoViewModel();
 
     protected override void OnInit()
     {
         State.TituloPagina = "Página Inicial";
-        BuscarTotalizadores();
-        
-        State.OnChange += BuscarTotalizadores;
+        BuscarDadosDashboard();
+
+        State.OnChange += BuscarDadosDashboard;
     }
 
-    protected async void BuscarTotalizadores()
+    protected async void BuscarDadosDashboard()
     {
-        dashboardTotalizadoresViewModel = await Service.TotalizadoresVagas(State.AnoLetivo);
+
+        var dashboardTotalizadoresTask = Service.TotalizadoresVagas(State.AnoLetivo);
+        var dashboardProgressoPreenchimentoTask = Service.ProgressoPreenchimentoEscolas(State.AnoLetivo);
+        await Task.WhenAll(dashboardTotalizadoresTask, dashboardProgressoPreenchimentoTask);
+
+        dashboardTotalizadoresViewModel = dashboardTotalizadoresTask.Result;
+        dashboardProgressoPreenchimentoViewModel = dashboardProgressoPreenchimentoTask.Result;
+
         StateHasChanged();
-    } 
+    }
 }

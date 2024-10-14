@@ -47,10 +47,16 @@ public class IncluirOuAtualizarPlanejamentoAnoLetivoCommandHandler : IIncluirOuA
         {
             var novoRegistro = vm.IdPlanejamentoAnoLetivo < 1;
             var planejamentoAnoLetivo = mapper.Map<Models.Entities.PlanejamentoAnoLetivo>(vm);
+
+            var jaPossuiPlanejamentoSendoPreenchido = planejamentoAnoLetivoRepository.GetQuery(m => m.IdEscola == vm.IdEscola && m.AnoLetivo == vm.AnoLetivo).Any();
+            if(jaPossuiPlanejamentoSendoPreenchido)
+            {
+                return new CommandResult(400, vm, "Já existe planejamento para o Ano e Escola selecionados");
+            }
             
             if(novoRegistro) 
             {
-                planejamentoAnoLetivoRepository.Update(planejamentoAnoLetivo);
+                planejamentoAnoLetivoRepository.Add(planejamentoAnoLetivo);
                 unitOfWork.Commit();
                 return new CommandResult(StatusCodes.Status201Created, mapper.Map<PlanejamentoAnoLetivoViewModel>(planejamentoAnoLetivo));
             }

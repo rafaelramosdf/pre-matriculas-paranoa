@@ -8,5 +8,8 @@ namespace PreMatriculasParanoa.Web.Admin.Services.ApiContracts
     {
         [Get("/totalizadores-vagas")]
         Task<DashboardTotalizadoresViewModel> TotalizadoresVagas([Query] int anoLetivo);
+
+        [Get("/progresso-preenchimento-escolas")]
+        Task<DashboardProgressoPreenchimentoViewModel> ProgressoPreenchimentoEscolas([Query] int anoLetivo);
     }
 }

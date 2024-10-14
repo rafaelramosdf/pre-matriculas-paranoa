@@ -203,6 +203,7 @@ namespace PreMatriculasParanoa.Api
 
             #region Dashboard 
             services.AddScoped<IBuscarTotalizadoresQueryHandler, BuscarTotalizadoresQueryHandler>();
+            services.AddScoped<IBuscarProgressoPreenchimentoEscolasQueryHandler, BuscarProgressoPreenchimentoEscolasQueryHandler>();
             #endregion
         }
     }
