@@ -40,6 +40,9 @@ O SGPM inclui casos de uso principais para gerenciamento de matrículas e planej
 1. **Cadastrar e Manter Planejamento do Ano Letivo** - Para registro e controle de vagas disponíveis por escola.
 2. **Gerenciar Matrículas Sequenciais** - Para controle do fluxo de alunos entre escolas em razão de mudança de série.
 
+![image](https://github.com/user-attachments/assets/f2d40d98-f9e3-4786-9857-f0a5bb0d3960)
+
+
 ## 🚀 Implantação e Execução
 
 Para rodar o SGPM localmente ou em um ambiente de testes, siga estas instruções:
