@@ -74,5 +74,3 @@ Para rodar o SGPM localmente ou em um ambiente de testes, siga estas instruçõe
 Contribuições para o desenvolvimento do SGPM são bem-vindas. Sinta-se à vontade para abrir uma *issue* ou enviar uma *pull request*.
 
 ---
-
-Este README oferece uma base sólida para documentar e apresentar o Sistema de Gestão de Pré Matrículas.
