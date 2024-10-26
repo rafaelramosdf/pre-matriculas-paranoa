@@ -32,7 +32,8 @@ A tela de matrículas sequenciais permite gerenciar o fluxo de alunos entre dife
 ### Diagrama de Entidades e Relacionamentos (ERD)
 Aqui está um espaço reservado para o diagrama de entidades e relacionamentos, que ilustra a estrutura do banco de dados, incluindo as tabelas principais e as relações entre elas.
 
-![ERD Placeholder](link_do_arquivo.png)
+![diagrama-entidades-relacionamentos-sgpm](https://github.com/user-attachments/assets/3a3d8362-4f42-4426-851c-dfdae26763a8)
+
 
 ### Casos de Uso
 O SGPM inclui casos de uso principais para gerenciamento de matrículas e planejamento de vagas:
@@ -66,11 +67,8 @@ Para rodar o SGPM localmente ou em um ambiente de testes, siga estas instruçõe
 
 ## 🧩 Documentação Adicional
 
-- [Diagrama de Entidades e Relacionamentos (ERD)](#diagrama-de-entidades-e-relacionamentos-erd)
-- [Casos de Uso](#casos-de-uso)
+- [API do sistema de gestao de pre matriculas](https://pre-matriculas-paranoa-api.azurewebsites.net/index.html)
 
 ## 📝 Contribuições
 
 Contribuições para o desenvolvimento do SGPM são bem-vindas. Sinta-se à vontade para abrir uma *issue* ou enviar uma *pull request*.
-
----
